@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="ms" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta
+    name="description"
+    content="Ahmad Muzzammil Mohammad Najib, pensyarah FPIBA di KIAS. Fiqh perbandingan, usul fiqh, maqasid syariah, bahasa Arab dan aplikasi pendidikan Islam."
+  />
+  <title>Ahmad Muzzammil Mohammad Najib | Profil Akademik</title>
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath fill='%23103f31' d='M20 0 26 6H34V14L40 20 34 26V34H26L20 40 14 34H6V26L0 20 6 14V6H14Z'/%3E%3Cpath fill='%23d4bb7e' d='M20 10 30 20 20 30 10 20Z'/%3E%3C/svg%3E">
+
+  <!-- Google Fonts sahaja -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Baloo+2:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@500;600;700&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // Tetapkan tema, bahasa dan pembukaan sebelum paint supaya tiada kelipan.
+    (function () {
+      try {
+        var d = document.documentElement;
+        var theme = localStorage.getItem('research-profile-theme');
+        if (theme === 'light' || theme === 'dark') d.dataset.theme = theme;
+        var lang = new URLSearchParams(location.search).get('lang') || localStorage.getItem('profile-lang');
+        if (lang === 'en' || lang === 'ar') { d.lang = lang; d.dir = lang === 'ar' ? 'rtl' : 'ltr'; }
+        var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var paused = localStorage.getItem('research-profile-motion') === 'paused';
+        if (!reduced && !paused && !sessionStorage.getItem('profile-intro-seen')) d.classList.add('has-intro');
+      } catch (e) { /* Storan pilihan sahaja. */ }
+    })();
+  </script>
+</head>
+
+<body>
+  <a class="skip-link" href="#kandungan" data-i18n="skip">Langkau ke kandungan</a>
+
+  <!-- Ikon sijil (sprite) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-badge" viewBox="0 0 24 24"><path d="M12 2l2.4 2.1 3.2-.3.8 3.1 2.8 1.6-1.2 3 1.2 3-2.8 1.6-.8 3.1-3.2-.3L12 22l-2.4-2.1-3.2.3-.8-3.1L2.8 15.5l1.2-3-1.2-3 2.8-1.6.8-3.1 3.2.3Z"/><path d="m8.5 12 2.3 2.3 4.7-4.6"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M3 5.5C5.5 4 8.5 4 12 6c3.5-2 6.5-2 9-.5v13c-2.5-1.5-5.5-1.5-9 .5-3.5-2-6.5-2-9-.5Z"/><path d="M12 6v13"/></symbol>
+    <symbol id="i-scroll" viewBox="0 0 24 24"><path d="M7 3h11a2 2 0 0 1 2 2v2h-4"/><path d="M16 7v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2h11"/><path d="M7 3a2 2 0 0 0-2 2v12M9 9h4M9 13h4"/></symbol>
+    <symbol id="i-medal" viewBox="0 0 24 24"><path d="M7 2h4l1 5M17 2h-4l-1 5"/><circle cx="12" cy="15" r="6"/><path d="m12 12 .9 1.9 2.1.3-1.5 1.4.4 2.1-1.9-1-1.9 1 .4-2.1-1.5-1.4 2.1-.3Z"/></symbol>
+  </svg>
+
+  <div class="intro" id="intro" aria-label="Pembukaan laman">
+    <canvas class="intro-kaleido" data-kaleido="intro" aria-hidden="true"></canvas>
+    <div class="intro-veil" aria-hidden="true"></div>
+    <div class="intro-medallion" aria-hidden="true">
+      <span class="intro-photo"><img src="gambar/muzzammil.jpg" alt="" onerror="this.remove()"></span>
+      <span class="intro-ar" lang="ar" dir="rtl">أحمد مزمّل محمد نجيب</span>
+      <span class="intro-name">Ahmad Muzzammil</span>
+      <span class="intro-sub">FPIBA · KIAS</span>
+      <span class="intro-line"></span>
+    </div>
+    <button class="intro-skip" id="introSkip" type="button"><span data-i18n="introSkip">Langkau</span> <span class="intro-arrow" aria-hidden="true">→</span></button>
+  </div>
+
+  <header class="site-header" id="siteHeader">
+    <div class="container nav-wrap">
+      <a class="brand" href="#utama" aria-label="Ke bahagian utama" data-i18n-aria="brandAria">
+        <span class="brand-mark"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 2 26 8H32V14L38 20 32 26V32H26L20 38 14 32H8V26L2 20 8 14V8H14Z" stroke="currentColor"/><path d="M20 9 31 20 20 31 9 20Z M14 14H26V26H14Z" stroke="currentColor"/></svg></span>
+        <span class="brand-text">Ahmad Muzzammil<small data-i18n="brandTag">Ilmu · Penyelidikan · Impak</small></span>
+      </a>
+
+      <div class="nav-actions">
+        <nav class="nav-panel" id="navPanel" aria-label="Navigasi utama" data-i18n-aria="navAria">
+          <ul class="nav-links">
+            <li><a class="nav-link is-active" href="#utama" data-i18n="navHome">Utama</a></li>
+            <li class="nav-drop" id="navDrop">
+              <button class="nav-drop-toggle" id="dropToggle" type="button" aria-expanded="false" aria-controls="dropMenu">
+                <span data-i18n="navProfile">Profil</span> <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </button>
+              <ul class="dropdown-menu" id="dropMenu">
+                <li><a class="nav-link drop-link" href="#tentang"><span class="drop-star" aria-hidden="true"></span><span data-i18n="navAbout">Tentang saya</span></a></li>
+                <li><a class="nav-link drop-link" href="#akademik"><span class="drop-star" aria-hidden="true"></span><span data-i18n="navAcademic">Pendidikan akademik</span></a></li>
+                <li><a class="nav-link drop-link" href="#bidang"><span class="drop-star" aria-hidden="true"></span><span data-i18n="navFields">Bidang kepakaran</span></a></li>
+                <li><a class="nav-link drop-link" href="#pengalaman"><span class="drop-star" aria-hidden="true"></span><span data-i18n="navExperience">Pengalaman</span></a></li>
+              </ul>
+            </li>
+            <li><a class="nav-link" href="#pencapaian" data-i18n="navAchieve">Pencapaian</a></li>
+            <li><a class="nav-link" href="#penerbitan" data-i18n="navPubs">Penerbitan</a></li>
+            <li><a class="nav-link" href="#aplikasi" data-i18n="navApps">Aplikasi</a></li>
+            <li><a class="nav-link" href="#hubungi" data-i18n="navContact">Hubungi</a></li>
+          </ul>
+          <div class="lang-switch in-panel" role="group" aria-label="Bahasa" data-i18n-aria="langAria">
+            <button type="button" data-lang="ms" lang="ms">BM</button>
+            <button type="button" data-lang="en" lang="en">EN</button>
+            <button type="button" data-lang="ar" lang="ar">عربي</button>
+          </div>
+        </nav>
+
+        <div class="lang-switch in-header" role="group" aria-label="Bahasa" data-i18n-aria="langAria">
+          <button type="button" data-lang="ms" lang="ms">BM</button>
+          <button type="button" data-lang="en" lang="en">EN</button>
+          <button type="button" data-lang="ar" lang="ar">عربي</button>
+        </div>
+
+        <button class="theme-toggle" type="button" id="themeToggle" aria-label="Tukar tema warna">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5Z"/></svg>
+        </button>
+
+        <button
+          class="menu-toggle"
+          type="button"
+          id="menuToggle"
+          aria-label="Buka menu navigasi"
+          aria-expanded="false"
+          aria-controls="navPanel"
+        >
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="reading-progress" id="readingProgress" aria-hidden="true"></div>
+  </header>
+
+  <main id="kandungan">
+    <!-- ───────── Utama ───────── -->
+    <section class="hero section" id="utama" aria-labelledby="heroTitle">
+      <canvas class="hero-kaleido" data-kaleido="hero" aria-hidden="true"></canvas>
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="hero-kicker"><span class="status-dot" aria-hidden="true"></span><span data-i18n="heroKicker">Portfolio akademik digital</span></p>
+          <h1 class="hero-title" id="heroTitle" data-i18n="heroTitle">Ahmad<br><span class="sheen">Muzzammil</span><span class="hero-patronym">Mohammad Najib</span></h1>
+
+          <div class="hero-role">
+            <span data-i18n="heroRole">Pensyarah dan penyelidik</span>
+            <span aria-hidden="true">·</span>
+            <span>FPIBA · KIAS</span>
+          </div>
+
+          <p class="lead hero-intro" data-i18n="heroIntro">
+            Saya mengajar dan mengkaji fiqh perbandingan, usul fiqh dan maqasid syariah, serta membangunkan aplikasi pembelajaran pengajian Islam dan bahasa Arab.
+          </p>
+
+          <div class="hero-actions">
+            <a class="button button-primary" href="#pencapaian"><span data-i18n="heroCta1">Lihat pencapaian</span> <svg class="icon icon-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+            <a class="button button-secondary" href="#aplikasi" data-i18n="heroCta2">Cuba aplikasi saya</a>
+          </div>
+          <p class="hero-note"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M5.6 18.4 18.4 5.6"/></svg><span data-i18n="heroNote">Berakar pada ilmu. Berkembang dengan zaman.</span></p>
+        </div>
+
+        <aside class="hero-card" aria-label="Ringkasan profil" data-i18n-aria="heroCardAria">
+          <div class="heritage-art">
+            <canvas class="arch-kaleido" data-kaleido="arch" aria-hidden="true"></canvas>
+            <span class="art-star" aria-hidden="true"></span>
+            <svg class="rosette" viewBox="0 0 400 400" fill="none" stroke="currentColor" stroke-width=".7" aria-hidden="true">
+              <circle cx="200" cy="200" r="183" stroke-dasharray="1 9"/>
+              <rect x="78" y="78" width="244" height="244" transform="rotate(0 200 200)"/><rect x="78" y="78" width="244" height="244" transform="rotate(22.5 200 200)"/><rect x="78" y="78" width="244" height="244" transform="rotate(45 200 200)"/><rect x="78" y="78" width="244" height="244" transform="rotate(67.5 200 200)"/><polygon points="374.00,200.00 323.04,323.04 200.00,374.00 76.96,323.04 26.00,200.00 76.96,76.96 200.00,26.00 323.04,76.96"/><polygon points="333.96,255.49 255.49,333.96 144.51,333.96 66.04,255.49 66.04,144.51 144.51,66.04 255.49,66.04 333.96,144.51"/><polygon points="313.00,200.00 279.90,279.90 200.00,313.00 120.10,279.90 87.00,200.00 120.10,120.10 200.00,87.00 279.90,120.10"/>
+              <g class="rosette-inner"><path d="M200 34 249 151 366 200 249 249 200 366 151 249 34 200 151 151Z" transform="rotate(0 200 200)"/><path d="M200 34 249 151 366 200 249 249 200 366 151 249 34 200 151 151Z" transform="rotate(45 200 200)"/></g>
+            </svg>
+            <figure class="portrait">
+              <span class="portrait-window"><img src="gambar/muzzammil.jpg" alt="Potret Ahmad Muzzammil Mohammad Najib" data-i18n-alt="portraitAlt" width="880" height="1100" decoding="async" fetchpriority="high" onerror="this.closest('.portrait').classList.add('is-missing')"></span>
+              <span class="portrait-star s1" aria-hidden="true"></span><span class="portrait-star s2" aria-hidden="true"></span>
+              <figcaption class="portrait-nameplate" aria-hidden="true"><span lang="ar" dir="rtl">أحمد مزمّل محمد نجيب</span></figcaption>
+            </figure>
+            <span class="art-caption" aria-hidden="true" data-i18n="artCaption">Warisan ilmu · Cakrawala digital</span>
+          </div>
+          <div class="avatar-wrap">
+            <div class="avatar" aria-hidden="true"><img src="gambar/muzzammil.jpg" alt="" onerror="this.remove()"><span>AM</span></div>
+            <div class="identity">
+              <small data-i18n="focusLabel">Fokus kajian</small>
+              <strong data-i18n="focusText">Fiqh perbandingan, usul fiqh dan bahasa Arab</strong>
+            </div>
+          </div>
+
+          <div class="dossier">
+            <div class="dossier-row">
+              <span data-i18n="dFaculty">Fakulti</span>
+              <b data-i18n="dFacultyV">Pengajian Islam dan Bahasa Arab (FPIBA)</b>
+            </div>
+            <div class="dossier-row">
+              <span data-i18n="dInst">Institusi</span>
+              <b data-i18n="dInstV">Kolej Universiti Islam Antarabangsa Sultan Ismail Petra (KIAS)</b>
+            </div>
+            <div class="dossier-row">
+              <span data-i18n="dLoc">Lokasi</span>
+              <b data-i18n="dLocV">Nilam Puri, Kelantan</b>
+            </div>
+            <div class="dossier-row">
+              <span data-i18n="dEmail">E-mel</span>
+              <b><a href="mailto:muzzammil@kias.edu.my" dir="ltr">muzzammil@kias.edu.my</a></b>
+            </div>
+          </div>
+        </aside>
+      </div>
+      <div class="container hero-bottom">
+        <a href="#tentang" class="scroll-cue"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16m-5-5 5 5 5-5"/></svg><span data-i18n="scrollCue">Terokai profil</span></a>
+        <span class="edition" data-i18n="edition">Tradisi keilmuan, sentuhan digital</span>
+        <div class="motion-control"><span id="motionLabel">Animasi aktif</span><button class="motion-toggle" id="motionToggle" type="button" aria-label="Jeda animasi" aria-pressed="false"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5v14M15 5v14"/></svg></button></div>
+      </div>
+    </section>
+
+    <section class="stats-shell" aria-label="Angka ringkas" data-i18n-aria="statsAria">
+      <div class="container">
+        <div class="stats-grid" id="stats">
+          <article class="stat lively"><span class="stat-number" data-target="10" data-suffix="+">10+</span><div class="stat-label" data-i18n="stat1">Tahun pengalaman bahasa Arab</div></article>
+          <article class="stat lively"><span class="stat-number" data-target="9">9</span><div class="stat-label" data-i18n="stat2">Aplikasi diterbitkan</div></article>
+          <article class="stat lively"><span class="stat-number" data-target="3.98" data-decimals="2">3.98</span><div class="stat-label" data-i18n="stat3">PNGK sarjana muda (Mumtaz)</div></article>
+          <article class="stat lively"><span class="stat-number">C1</span><div class="stat-label" data-i18n="stat4">Ujian Hamza: Mutaqaddim</div></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── Tentang ───────── -->
+    <section class="section" id="tentang" aria-labelledby="tentangTitle">
+      <div class="container about-grid">
+        <div class="about-note">
+          <p class="eyebrow" data-i18n="aboutEyebrow">Tentang saya</p>
+          <div class="big" data-i18n="aboutBig">Fiqh, bahasa Arab dan teknologi dalam pendidikan Islam.</div>
+        </div>
+
+        <div class="about-copy">
+          <div>
+            <h2 id="tentangTitle" data-i18n="aboutTitle">Profil ringkas</h2>
+            <p class="lead about-lead" data-i18n="aboutLead">
+              Saya Ahmad Muzzammil Mohammad Najib, pensyarah di Fakulti Pengajian Islam dan Bahasa Arab (FPIBA), Kolej Universiti Islam Antarabangsa Sultan Ismail Petra (KIAS), Nilam Puri, Kelantan.
+            </p>
+          </div>
+
+          <p data-i18n="aboutBody">
+            Kepakaran saya ialah fiqh mazhab Hanbali dan Syafie, usul fiqh dan maqasid syariah, termasuk analisis usul fiqh dalam teks turath dan maqasid syariah dalam fatwa ulama. Saya mempunyai lebih daripada 10 tahun pengalaman menulis, berkomunikasi dan mengajar dalam bahasa Arab, serta menerima latihan kehakiman di Institut Kehakiman Tinggi, Riyadh. Di KIAS, tumpuan saya ialah pembangunan kurikulum dan kualiti akademik.
+          </p>
+
+          <div class="tags" aria-label="Bidang kajian" data-i18n-aria="tagsAria">
+            <span class="tag" data-i18n="tag1">Fiqh perbandingan</span>
+            <span class="tag" data-i18n="tag2">Usul fiqh</span>
+            <span class="tag" data-i18n="tag3">Maqasid syariah</span>
+            <span class="tag" data-i18n="tag4">Bahasa Arab</span>
+            <span class="tag" data-i18n="tag5">Turath dan manuskrip</span>
+            <span class="tag" data-i18n="tag6">Pendidikan digital</span>
+          </div>
+          <p class="languages"><strong data-i18n="langsLabel">Bahasa:</strong> <span data-i18n="langsText">Melayu (tinggi), Arab (tinggi), Inggeris (tinggi)</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── Akademik ───────── -->
+    <section class="section" id="akademik" aria-labelledby="akademikTitle">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow" data-i18n="acadEyebrow">Pendidikan akademik</p>
+            <h2 id="akademikTitle" data-i18n="acadTitle">Perjalanan menuntut ilmu</h2>
+          </div>
+          <p class="lead" data-i18n="acadLead">Pengajian syariah dan bahasa Arab di Riyadh, berakar pada hafazan al-Quran di Kelantan.</p>
+        </div>
+
+        <div class="timeline" id="timeline">
+          <div class="timeline-line" aria-hidden="true"></div>
+
+          <article class="timeline-item">
+            <div class="timeline-dot"><svg class="icon" aria-hidden="true"><use href="#i-scroll"/></svg></div>
+            <div class="timeline-card lively">
+              <div class="timeline-top"><h3 data-i18n="ed1t">Sarjana Fiqh Perbandingan</h3><span class="grade">Mumtaz · 3.74/4</span></div>
+              <div class="timeline-meta"><span data-i18n="ed1m">Institut Kehakiman Tinggi, Universiti Islam Imam Muhammad bin Saud, Riyadh</span> · 2022–2024</div>
+            </div>
+          </article>
+
+          <article class="timeline-item">
+            <div class="timeline-dot"><svg class="icon" aria-hidden="true"><use href="#i-scroll"/></svg></div>
+            <div class="timeline-card lively">
+              <div class="timeline-top"><h3 data-i18n="ed2t">Sarjana Muda Syariah (Kepujian)</h3><span class="grade">Mumtaz · 3.98/4</span></div>
+              <div class="timeline-meta"><span data-i18n="ed2m">Fakulti Syariah, Universiti Islam Imam Muhammad bin Saud, Riyadh</span> · 2017–2020</div>
+            </div>
+          </article>
+
+          <article class="timeline-item">
+            <div class="timeline-dot"><svg class="icon" aria-hidden="true"><use href="#i-scroll"/></svg></div>
+            <div class="timeline-card lively">
+              <div class="timeline-top"><h3 data-i18n="ed3t">Diploma Bahasa Arab dan Pengajian Islam</h3><span class="grade">Mumtaz · 3.94/4</span></div>
+              <div class="timeline-meta"><span data-i18n="ed3m">Fakulti Bahasa Arab, Universiti Islam Imam Muhammad bin Saud, Riyadh</span> · 2015–2017</div>
+            </div>
+          </article>
+
+          <article class="timeline-item">
+            <div class="timeline-dot"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg></div>
+            <div class="timeline-card lively">
+              <div class="timeline-top"><h3 data-i18n="ed4t">Asas Bahasa Arab</h3><span class="grade">Mumtaz</span></div>
+              <div class="timeline-meta"><span data-i18n="ed4m">Kolej Dakwah Islamiah, Tripoli, Libya</span> · 2014–2015</div>
+            </div>
+          </article>
+
+          <article class="timeline-item">
+            <div class="timeline-dot"><svg class="icon" aria-hidden="true"><use href="#i-badge"/></svg></div>
+            <div class="timeline-card lively">
+              <div class="timeline-top"><h3 data-i18n="ed5t">Ujian Kecekapan Bahasa Arab (Hamza)</h3><span class="grade" data-i18n="ed5g">Mutaqaddim · C1</span></div>
+              <div class="timeline-meta"><span data-i18n="ed5m">Akademi Global Raja Salman untuk Bahasa Arab, Arab Saudi</span> · 2026</div>
+            </div>
+          </article>
+
+          <article class="timeline-item">
+            <div class="timeline-dot"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg></div>
+            <div class="timeline-card lively">
+              <div class="timeline-top"><h3 data-i18n="ed6t">Diploma Pascasiswazah Pengajaran</h3><span class="grade" data-i18n="ongoing">Sedang berjalan</span></div>
+              <div class="timeline-meta"><span data-i18n="ed6m">Open University Malaysia (OUM)</span></div>
+            </div>
+          </article>
+
+          <article class="timeline-item">
+            <div class="timeline-dot"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg></div>
+            <div class="timeline-card lively">
+              <div class="timeline-top"><h3 data-i18n="ed7t">Pendidikan Tahfiz al-Quran</h3></div>
+              <div class="timeline-meta" data-i18n="ed7m">Maahad Tahfiz al-Quran wal Qiraat, Pulai Chondong, Kelantan (2007–2011) · Jamiyyah al-Furqan li Tahfiz al-Quran, Taif, Arab Saudi (2015–2016)</div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── Bidang ───────── -->
+    <section class="section" id="bidang" aria-labelledby="bidangTitle">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow" data-i18n="fieldEyebrow">Bidang kepakaran</p>
+            <h2 id="bidangTitle" data-i18n="fieldTitle">Bidang yang saya tekuni</h2>
+          </div>
+          <p class="lead" data-i18n="fieldLead">Tumpuan kerja saya ialah fiqh dan usulnya, bahasa Arab dan teks turath, serta teknologi dalam pembelajaran Islam.</p>
+        </div>
+
+        <div class="research-grid">
+          <article class="research-card lively featured">
+            <span class="number">01</span>
+            <h3 data-i18n="f1t">Fiqh perbandingan dan usul fiqh</h3>
+            <p data-i18n="f1d">Fiqh mazhab Hanbali dan Syafie, analisis ta'lil dalam al-Mughni, kaedah fiqhiyyah dan maqasid syariah dalam fatwa.</p>
+          </article>
+          <article class="research-card lively">
+            <span class="number">02</span>
+            <h3 data-i18n="f2t">Fiqh keluarga dan harta</h3>
+            <p data-i18n="f2d">Munakahat, faraid dan wakaf, termasuk persoalan keluarga Islam dalam konteks Malaysia.</p>
+          </article>
+          <article class="research-card lively">
+            <span class="number">03</span>
+            <h3 data-i18n="f3t">Bahasa Arab, turath dan digital</h3>
+            <p data-i18n="f3d">Pengajaran bahasa Arab, terjemahan dan kajian manuskrip, serta aplikasi pembelajaran interaktif.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── Pencapaian ───────── -->
+    <section class="section" id="pencapaian" aria-labelledby="pencapaianTitle">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow" data-i18n="achEyebrow">Pencapaian</p>
+            <h2 id="pencapaianTitle" data-i18n="achTitle">Anugerah dan kecemerlangan</h2>
+          </div>
+          <p class="lead" data-i18n="achLead">Pengiktirafan dalam inovasi pengajaran dan pencapaian akademik.</p>
+        </div>
+
+        <div class="achieve-grid">
+          <article class="award-card lively">
+            <canvas class="award-kaleido" data-kaleido="contact" aria-hidden="true"></canvas>
+            <div class="award-medal" aria-hidden="true"><svg class="icon"><use href="#i-medal"/></svg></div>
+            <p class="award-kicker">ITeLIC'26 · UMK</p>
+            <h3 data-i18n="awTitle">Anugerah Perak</h3>
+            <p class="award-event">International Teaching Enhancement and Learning Innovation Carnival 2026</p>
+            <p class="award-desc" data-i18n="awDesc">Kategori C: Inovasi dalam Pembelajaran dan Pengajaran, bagi <b>e-Hadis40: Modul Penghayatan Hadis 40</b>.</p>
+            <p class="award-team" data-i18n="awTeam">Bersama Saeid Ramadhan Mohd Shakri dan Muhammad Adam Abd Azid.</p>
+            <a class="award-link" href="https://www.ehadis40.my/" target="_blank" rel="noopener"><span data-i18n="awLink">Lihat e-Hadis40</span> <span aria-hidden="true">↗</span></a>
+          </article>
+
+          <div class="honours">
+            <article class="honour lively">
+              <span class="honour-big">Mumtaz ×3</span>
+              <p data-i18n="h1">Sarjana, sarjana muda dan diploma di Universiti Islam Imam Muhammad bin Saud, Riyadh.</p>
+            </article>
+            <article class="honour lively">
+              <span class="honour-big">C1</span>
+              <p data-i18n="h2">Ujian Hamza (2026), tahap Mutaqaddim, Akademi Global Raja Salman untuk Bahasa Arab.</p>
+            </article>
+            <article class="honour lively">
+              <span class="honour-big">100%</span>
+              <p data-i18n="h3">Sijil Perakuan Cemerlang KIAS: dokumentasi proforma kursus lengkap, Semester II 2025/2026.</p>
+            </article>
+            <article class="honour lively">
+              <span class="honour-big" lang="ar" dir="rtl">حافظ</span>
+              <p data-i18n="h4">Sijil Khatam Hafazan al-Quran, Yayasan Islam Kelantan (2010).</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="cert-head">
+          <h3 class="cert-heading" data-i18n="certTitle">Sijil, daurah dan ijazah</h3>
+          <div class="chip-row" role="group" aria-label="Tapis sijil" data-i18n-aria="certFilterAria" data-filter-for="certGrid">
+            <button class="chip" type="button" data-filter="all" aria-pressed="true" data-i18n="fAll">Semua</button>
+            <button class="chip" type="button" data-filter="pro" aria-pressed="false" data-i18n="fPro">Profesional</button>
+            <button class="chip" type="button" data-filter="daurah" aria-pressed="false" data-i18n="fDaurah">Daurah</button>
+            <button class="chip" type="button" data-filter="ijazah" aria-pressed="false" data-i18n="fIjazah">Ijazah dan tahfiz</button>
+          </div>
+        </div>
+
+        <div class="cert-grid" id="certGrid">
+          <article class="cert-card lively" data-cat="daurah">
+            <span class="cert-seal"><svg class="icon"><use href="#i-book"/></svg></span>
+            <h4 data-i18n="c1t">Program Ta'hili Fiqh Kewangan Islam dan Penyelesaian Pertikaian (Edisi Kedua)</h4>
+            <p class="cert-issuer" data-i18n="c1i">Persatuan Ilmiah Kehakiman Saudi</p>
+            <p class="cert-detail" data-i18n="c1d">Tujuh kursus, 45 jam latihan: perakaunan zakat, sukuk, perbendaharaan bank, kontrak pembiayaan, broker kewangan, takaful dan perbankan Islam.</p>
+            <span class="cert-year">2021</span>
+          </article>
+          <article class="cert-card lively" data-cat="daurah">
+            <span class="cert-seal"><svg class="icon"><use href="#i-book"/></svg></span>
+            <h4 data-i18n="c2t">Daurah al-Ta'hil al-Maqasidi</h4>
+            <p class="cert-issuer" data-i18n="c2i">Akademi Ulum Antarabangsa (ISA)</p>
+            <p class="cert-detail" data-i18n="c2d">4–24 Jun 2021, dengan pangkat Mumtaz.</p>
+            <span class="cert-year">2021</span>
+          </article>
+          <article class="cert-card lively" data-cat="ijazah">
+            <span class="cert-seal"><svg class="icon"><use href="#i-scroll"/></svg></span>
+            <h4 data-i18n="c3t">Ijazah Riwayah Hadis</h4>
+            <p class="cert-issuer" data-i18n="c3i">Syeikh Dr. Mahir Yasin al-Fahl</p>
+            <p class="cert-detail" data-i18n="c3d">Ijazah meriwayatkan al-Muwatta', al-Sahihain, al-Sunan al-Arba'ah dan lain-lain.</p>
+          </article>
+          <article class="cert-card lively" data-cat="pro">
+            <span class="cert-seal"><svg class="icon"><use href="#i-badge"/></svg></span>
+            <h4>Google Certified Educator (Level 1 &amp; 2)</h4>
+            <p class="cert-issuer">Google for Education</p>
+            <p class="cert-detail" data-i18n="c4d">Sah hingga 2029.</p>
+            <span class="cert-year">2026</span>
+          </article>
+          <article class="cert-card lively" data-cat="pro">
+            <span class="cert-seal"><svg class="icon"><use href="#i-badge"/></svg></span>
+            <h4>Gemini Certified Educator · Gemini Certified Student (University)</h4>
+            <p class="cert-issuer">Google for Education</p>
+            <p class="cert-detail" data-i18n="c4d">Sah hingga 2029.</p>
+            <span class="cert-year">2026</span>
+          </article>
+          <article class="cert-card lively" data-cat="pro">
+            <span class="cert-seal"><svg class="icon"><use href="#i-badge"/></svg></span>
+            <h4 data-i18n="c6t">Kursus Mudarris Program Membina Generasi Solat (MGS)</h4>
+            <p class="cert-issuer" data-i18n="c6i">Jabatan Hal Ehwal Agama Islam Negeri Kelantan</p>
+            <p class="cert-detail" data-i18n="c6d">16 Mei 2026 (28 Zulkaedah 1447H).</p>
+            <span class="cert-year">2026</span>
+          </article>
+          <article class="cert-card lively" data-cat="daurah">
+            <span class="cert-seal"><svg class="icon"><use href="#i-book"/></svg></span>
+            <h4 data-i18n="c7t">Pengantar Ekonomi Islam: Asas dan Aplikasi Semasa</h4>
+            <p class="cert-issuer" data-i18n="c7i">Prof. Dr. Ali Muhyiddin al-Qaradaghi · Platform Bayan</p>
+            <p class="cert-detail" data-i18n="c7d">26 Jun 2021.</p>
+            <span class="cert-year">2021</span>
+          </article>
+          <article class="cert-card lively" data-cat="daurah">
+            <span class="cert-seal"><svg class="icon"><use href="#i-book"/></svg></span>
+            <h4 data-i18n="c8t">Bacaan Penerokaan Kitab <i>Handasat al-Riba</i></h4>
+            <p class="cert-issuer" data-i18n="c8i">Dr. Riyad Mansur al-Khulayfi · Platform Bayan</p>
+            <p class="cert-detail" data-i18n="c8d">10 Julai 2021.</p>
+            <span class="cert-year">2021</span>
+          </article>
+          <article class="cert-card lively" data-cat="daurah">
+            <span class="cert-seal"><svg class="icon"><use href="#i-book"/></svg></span>
+            <h4 data-i18n="c9t">Syarahan “Muqaddimat al-Nuhud al-Hadari”</h4>
+            <p class="cert-issuer" data-i18n="c9i">Persidangan Antarabangsa al-Nuhud al-Hadari, bersama Akademi Pengajian Islam Universiti Malaya</p>
+            <p class="cert-detail" data-i18n="c9d">Prof. Dr. Abdul Karim Bakkar · 9 Jun 2023.</p>
+            <span class="cert-year">2023</span>
+          </article>
+          <article class="cert-card lively" data-cat="ijazah">
+            <span class="cert-seal"><svg class="icon"><use href="#i-scroll"/></svg></span>
+            <h4 data-i18n="c10t">Sijil Tahfiz al-Quran Peringkat Thanawi</h4>
+            <p class="cert-issuer" data-i18n="c10i">Lembaga Peperiksaan Sijil Agama, Yayasan Islam Kelantan</p>
+            <p class="cert-detail" data-i18n="c10d">Pangkat Mumtaz.</p>
+            <span class="cert-year">2010</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── Penerbitan ───────── -->
+    <section class="section" id="penerbitan" aria-labelledby="penerbitanTitle">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow" data-i18n="pubEyebrow">Penerbitan dan kajian</p>
+            <h2 id="penerbitanTitle" data-i18n="pubTitle">Penulisan ilmiah</h2>
+          </div>
+          <p class="lead" data-i18n="pubLead">Artikel jurnal, disertasi, terjemahan dan kajian yang sedang berjalan.</p>
+        </div>
+
+        <div class="publication-tools">
+          <label class="search-field" for="publicationSearch">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 21l-5-5M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0"/></svg>
+            <span class="sr-only" data-i18n="searchLabel">Cari penerbitan mengikut tajuk atau bidang</span>
+            <input id="publicationSearch" type="search" placeholder="Cari tajuk, jurnal atau bidang…" data-i18n-ph="searchPh" autocomplete="off" aria-controls="publicationList">
+          </label>
+          <div class="chip-row" role="group" aria-label="Tapis penerbitan" data-i18n-aria="pubFilterAria" data-filter-for="publicationList">
+            <button class="chip" type="button" data-filter="all" aria-pressed="true" data-i18n="fAll">Semua</button>
+            <button class="chip" type="button" data-filter="article" aria-pressed="false" data-i18n="fArticle">Artikel</button>
+            <button class="chip" type="button" data-filter="thesis" aria-pressed="false" data-i18n="fThesis">Disertasi</button>
+            <button class="chip" type="button" data-filter="translation" aria-pressed="false" data-i18n="fTranslation">Terjemahan</button>
+            <button class="chip" type="button" data-filter="progress" aria-pressed="false" data-i18n="fProgress">Dalam penulisan</button>
+          </div>
+        </div>
+        <p class="publication-count" id="publicationCount" role="status" aria-live="polite">9 karya dipaparkan</p>
+
+        <div class="publication-list" id="publicationList">
+          <article class="publication lively" data-cat="article">
+            <div class="publication-year">2026</div>
+            <div><div class="publication-title" lang="en" dir="ltr">The Application of Qawa'id Fiqhiyyah in Forming Employees' Morality and Work Ethics: A Comprehensive Analysis of Ethical Value Framework</div><div class="publication-meta">Dirasatica, KIAS</div></div>
+            <span class="publication-status" data-i18n="tArticle">Artikel jurnal</span>
+          </article>
+          <article class="publication lively" data-cat="article">
+            <div class="publication-year">—</div>
+            <div><div class="publication-title" lang="ms" dir="ltr">Pragmatik dan Siyaq: Implikasinya terhadap Kefahaman Hukum Hadis</div><div class="publication-meta"><span>Rabbanica</span> · <span data-i18n="pub2a">Bersama Mohd Ikhwan, Saeid Ramadhan, Rohaidi Habil, Mohd Abalkhair dan Ahmad Syahmi</span></div></div>
+            <span class="publication-status" data-i18n="tArticle">Artikel jurnal</span>
+          </article>
+          <article class="publication lively" data-cat="article">
+            <div class="publication-year">—</div>
+            <div><div class="publication-title" lang="ms" dir="ltr">Identifikasi Kodikologi dan Analisis Filologi Naskhah <i>Ghāyat al-Taqrīb fī al-Irth wa al-Taʿṣīb</i> Karangan Syeikh Daud bin Abdullah al-Fatani: Suatu Kajian Perbandingan Tiga Naskhah Manuskrip</div><div class="publication-meta"><span>UniSZA</span> · <span data-i18n="pub3a">Bersama Muhammad Farhan bin Wan Abdul Razak (penulis utama)</span></div></div>
+            <span class="publication-status" data-i18n="tArticle">Artikel jurnal</span>
+          </article>
+          <article class="publication lively" data-cat="thesis">
+            <div class="publication-year">2024</div>
+            <div><div class="publication-title" lang="en" dir="ltr">Issues of Justification Presented by Ibn Qudamah in His Book al-Mughni: Financial Transactions</div><div class="publication-meta" data-i18n="pub4m">Disertasi sarjana · Institut Kehakiman Tinggi, Riyadh</div></div>
+            <span class="publication-status" data-i18n="tThesis">Disertasi</span>
+          </article>
+          <article class="publication lively" data-cat="thesis">
+            <div class="publication-year">2019</div>
+            <div><div class="publication-title" lang="en" dir="ltr">Lab-Grown Meat</div><div class="publication-meta" data-i18n="pub5m">Disertasi sarjana muda · Shariah College Journal</div></div>
+            <span class="publication-status" data-i18n="tThesis">Disertasi</span>
+          </article>
+          <article class="publication lively" data-cat="translation">
+            <div class="publication-year">2016</div>
+            <div><div class="publication-title" data-i18n="pub6t">Sirah Imam al-Bukhari</div><div class="publication-meta" data-i18n="pub6m">Karya Syeikh Abdul Salam al-Mubarakfuri · Terjemahan daripada bahasa Arab ke bahasa Melayu</div></div>
+            <span class="publication-status" data-i18n="tTranslation">Terjemahan</span>
+          </article>
+          <article class="publication lively" data-cat="progress">
+            <div class="publication-year">—</div>
+            <div><div class="publication-title" data-i18n="pub7t">Kewalian Bapa yang Dipenjarakan sebagai Wali Nikah</div><div class="publication-meta" data-i18n="pub7m">Fiqh munakahat · Undang-undang keluarga Islam</div></div>
+            <span class="publication-status is-progress" data-i18n="tProgress">Dalam penulisan</span>
+          </article>
+          <article class="publication lively" data-cat="progress">
+            <div class="publication-year">—</div>
+            <div><div class="publication-title" data-i18n="pub8t">Istibdal Wakaf dan Kaedah Tabaddul Sabab al-Milk</div><div class="publication-meta" data-i18n="pub8m">Fiqh wakaf · Pemilikan harta</div></div>
+            <span class="publication-status is-progress" data-i18n="tProgress">Dalam penulisan</span>
+          </article>
+          <article class="publication lively" data-cat="progress">
+            <div class="publication-year">—</div>
+            <div><div class="publication-title" data-i18n="pub9t">Status Pemilikan Harta Suami Banduan Seumur Hidup</div><div class="publication-meta" data-i18n="pub9m">Fiqh keluarga · Harta</div></div>
+            <span class="publication-status is-progress" data-i18n="tProgress">Dalam penulisan</span>
+          </article>
+        </div>
+        <p class="empty-state" id="publicationEmpty" hidden data-i18n="empty">Tiada padanan. Cuba kata kunci atau tapisan lain.</p>
+      </div>
+    </section>
+
+    <!-- ───────── Aplikasi ───────── -->
+    <section class="section" id="aplikasi" aria-labelledby="aplikasiTitle">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow" data-i18n="appEyebrow">Aplikasi dan projek digital</p>
+            <h2 id="aplikasiTitle" data-i18n="appTitle">Ilmu dalam bentuk interaktif</h2>
+          </div>
+          <p class="lead" data-i18n="appLead">Sembilan aplikasi yang saya bina dan terbitkan secara terbuka di GitHub. Semuanya boleh dicuba terus dalam pelayar.</p>
+        </div>
+
+        <div class="app-grid">
+          <article class="app-card lively is-featured">
+            <div class="app-head"><span class="app-mono">e40</span><div><h3>e-Hadis40</h3><span class="app-tech">Web</span></div><span class="app-award" data-i18n="appAward">Anugerah Perak</span></div>
+            <p data-i18n="a1">Platform pengajaran dan pembelajaran interaktif bagi Modul Penghayatan Hadis 40 Imam al-Nawawi.</p>
+            <div class="app-links"><a href="https://www.ehadis40.my/" target="_blank" rel="noopener"><span data-i18n="open">Buka aplikasi</span> ↗</a><a href="https://github.com/muzzammilKIAS/e-hadis40" target="_blank" rel="noopener" data-i18n="code">Kod sumber</a></div>
+          </article>
+          <article class="app-card lively">
+            <div class="app-head"><span class="app-mono">HP</span><div><h3>Haji Pintar</h3><span class="app-tech">Flutter</span></div></div>
+            <p data-i18n="a2">Aplikasi pembelajaran manasik haji dalam bentuk digital.</p>
+            <div class="app-links"><a href="https://www.hajipintar.my/" target="_blank" rel="noopener"><span data-i18n="open">Buka aplikasi</span> ↗</a><a href="https://github.com/muzzammilKIAS/aplikasi_haji_pintar" target="_blank" rel="noopener" data-i18n="code">Kod sumber</a></div>
+          </article>
+          <article class="app-card lively">
+            <div class="app-head"><span class="app-mono" lang="ar">ر</span><div><h3>Rabbaniyyah</h3><span class="app-tech">Flutter</span></div></div>
+            <p data-i18n="a3">Modul interaktif Bahasa Arab Rabbani (KIAS), Semester 1: empat unit dan 12 dars.</p>
+            <div class="app-links"><a href="https://muzzammilkias.github.io/rabbaniyyah_app/" target="_blank" rel="noopener"><span data-i18n="open">Buka aplikasi</span> ↗</a><a href="https://github.com/muzzammilKIAS/rabbaniyyah_app" target="_blank" rel="noopener" data-i18n="code">Kod sumber</a></div>
+          </article>
+          <article class="app-card lively">
+            <div class="app-head"><span class="app-mono">UMT</span><div><h3 data-i18n="a4n">Bahasa Arab Asas untuk Muamalat</h3><span class="app-tech">Flutter · UMT3033</span></div></div>
+            <p data-i18n="a4">Buku teks digital luar talian yang meliputi 14 unit sukatan: kosa kata, hiwar beraudio, qawaid, bacaan dan latihan.</p>
+            <div class="app-links"><a href="https://muzzammilkias.github.io/umt3033_flutter/" target="_blank" rel="noopener"><span data-i18n="open">Buka aplikasi</span> ↗</a><a href="https://github.com/muzzammilKIAS/umt3033_flutter" target="_blank" rel="noopener" data-i18n="code">Kod sumber</a></div>
+          </article>
+          <article class="app-card lively">
+            <div class="app-head"><span class="app-mono" lang="ar">فقه</span><div><h3>Fiqh Manhaji</h3><span class="app-tech">Web</span></div></div>
+            <p data-i18n="a5">Ensiklopedia al-Fiqh al-Manhaji bahagian ibadah mazhab Syafie, dengan susunan tajuk, ringkasan, peta konsep dan studio slaid pengajaran.</p>
+            <div class="app-links"><a href="https://muzzammilkias.github.io/fiqh-manhaji/" target="_blank" rel="noopener"><span data-i18n="open">Buka aplikasi</span> ↗</a><a href="https://github.com/muzzammilKIAS/fiqh-manhaji" target="_blank" rel="noopener" data-i18n="code">Kod sumber</a></div>
+          </article>
+          <article class="app-card lively">
+            <div class="app-head"><span class="app-mono">FPIB</span><div><h3 data-i18n="a6n">Interaktif Bersama FPIB</h3><span class="app-tech">Web</span></div></div>
+            <p data-i18n="a6">Portal aktiviti interaktif FPIB KIAS: Arabic Chess, Misi Mencari Hikmah dan Sirah Journey.</p>
+            <div class="app-links"><a href="https://muzzammilkias.github.io/interaktif-bersama-fpib/" target="_blank" rel="noopener"><span data-i18n="open">Buka aplikasi</span> ↗</a><a href="https://github.com/muzzammilKIAS/interaktif-bersama-fpib" target="_blank" rel="noopener" data-i18n="code">Kod sumber</a></div>
+          </article>
+          <article class="app-card lively">
+            <div class="app-head"><span class="app-mono">ASR</span><div><h3>Arabic Speed Racer</h3><span class="app-tech">Web · 3D</span></div></div>
+            <p data-i18n="a7">Permainan lumba bahasa Arab untuk kelas: 100 soalan, mod solo dan mod berbilang pemain untuk dua hingga 10 telefon.</p>
+            <div class="app-links"><a href="https://muzzammilkias.github.io/Arabic-Speed-Racer/" target="_blank" rel="noopener"><span data-i18n="open">Buka aplikasi</span> ↗</a><a href="https://github.com/muzzammilKIAS/Arabic-Speed-Racer" target="_blank" rel="noopener" data-i18n="code">Kod sumber</a></div>
+          </article>
+          <article class="app-card lively">
+            <div class="app-head"><span class="app-mono">TQ</span><div><h3>Tayammum Quest</h3><span class="app-tech">Web</span></div></div>
+            <p data-i18n="a8">Permainan interaktif langkah tayammum dengan kamera, kad terapung dan kawalan gerakan tangan.</p>
+            <div class="app-links"><a href="https://muzzammilkias.github.io/tayammum-quest/" target="_blank" rel="noopener"><span data-i18n="open">Buka aplikasi</span> ↗</a><a href="https://github.com/muzzammilKIAS/tayammum-quest" target="_blank" rel="noopener" data-i18n="code">Kod sumber</a></div>
+          </article>
+          <article class="app-card lively">
+            <div class="app-head"><span class="app-mono">T2</span><div><h3 data-i18n="a9n">Permainan Tayammum T2</h3><span class="app-tech">Flutter</span></div></div>
+            <p data-i18n="a9">Permainan kelas tayammum Tingkatan 2 (Pendidikan Islam KSSM, SK 4.10).</p>
+            <div class="app-links"><a href="https://muzzammilkias.github.io/tayammum-t2-games/" target="_blank" rel="noopener"><span data-i18n="open">Buka aplikasi</span> ↗</a><a href="https://github.com/muzzammilKIAS/tayammum-t2-games" target="_blank" rel="noopener" data-i18n="code">Kod sumber</a></div>
+          </article>
+        </div>
+        <p class="app-more"><a href="https://github.com/muzzammilKIAS" target="_blank" rel="noopener"><span data-i18n="ghAll">Lihat semua di GitHub</span> <span dir="ltr">· github.com/muzzammilKIAS</span> ↗</a></p>
+      </div>
+    </section>
+
+    <!-- ───────── Pengalaman ───────── -->
+    <section class="section" id="pengalaman" aria-labelledby="pengalamanTitle">
+      <div class="container split-grid">
+        <article class="panel lively">
+          <p class="eyebrow" data-i18n="expEyebrow">Pengalaman</p>
+          <h2 id="pengalamanTitle" data-i18n="expTitle">Mengajar dan berdakwah</h2>
+          <ul class="panel-list">
+            <li><strong data-i18n="x1t">Pensyarah</strong><span>KIAS · <span data-i18n="now">kini</span></span></li>
+            <li><strong data-i18n="x2t">Pensyarah sambilan</strong><span data-i18n="x2d">UNISIRAJ, Fakulti Pengajian Islam · 2024–2025</span></li>
+            <li><strong data-i18n="x3t">Pendakwah</strong><span data-i18n="x3d">Komuniti Malaysia di Riyadh, Arab Saudi · 2015–2024</span></li>
+            <li><strong data-i18n="x4t">Tutor dalam talian</strong><span data-i18n="x4d">Al-Quran dan KAFA, Akademi Al-Quran Ar-Riyadh (2020–kini) · Kursus bahasa Arab, Al-Ajami Online Centre (2025–kini)</span></li>
+            <li><strong data-i18n="x5t">Guru</strong><span>SMU(A) Sullamiah (2013) · Darul Hadith Annabawiy (2014) · Maahad Tahfiz al-Hashimi (2021)</span></li>
+            <li><strong data-i18n="x6t">Mutawif sambilan</strong><span>TM Travel &amp; Tours · 2016–2017</span></li>
+          </ul>
+        </article>
+        <article class="panel lively">
+          <p class="eyebrow" data-i18n="crsEyebrow">Kursus diajar</p>
+          <h2 data-i18n="crsTitle">Di bilik kuliah KIAS</h2>
+          <ul class="panel-list course-list">
+            <li><strong>ESY3013</strong><span>Fiqh al-Quran dan Sunnah</span></li>
+            <li><strong>KDQ2053 · KDT2073 · KTQ2053</strong><span>Fiqh al-Ibadah</span></li>
+            <li><strong>KPH2213</strong><span>Fiqh Halal dan Haram</span></li>
+            <li><strong>PIA0214</strong><span>Tasawwur Islam</span></li>
+            <li><strong>RC3141</strong><span>Al-Quran Manhaj Hayat 4</span></li>
+            <li><strong>UMT3033</strong><span>Bahasa Arab Asas untuk Muamalat (Arabic for Muamalat)</span></li>
+            <li><strong data-i18n="crsOther">Kursus bahasa</strong><span>Bahasa Arab Rabbani</span></li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- ───────── Hubungi ───────── -->
+    <section class="section contact" id="hubungi" aria-labelledby="hubungiTitle">
+      <div class="container">
+        <div class="contact-box">
+          <canvas class="contact-kaleido" data-kaleido="contact" aria-hidden="true"></canvas>
+          <p class="eyebrow" data-i18n="ctEyebrow">Hubungi</p>
+          <h2 id="hubungiTitle" data-i18n="ctTitle">Untuk kolaborasi, jemputan akademik atau pertanyaan penyelidikan</h2>
+          <p class="lead contact-lead" data-i18n="ctLead">
+            Hubungi saya melalui e-mel rasmi untuk urusan pengajaran, penyelidikan, terjemahan atau pembangunan bahan pendidikan.
+          </p>
+
+          <div class="contact-links" aria-label="Pautan untuk dihubungi" data-i18n-aria="ctLinksAria">
+            <a class="contact-link" href="mailto:muzzammil@kias.edu.my" dir="ltr">muzzammil@kias.edu.my <span aria-hidden="true">&nbsp;↗</span></a>
+            <a class="contact-link" href="https://github.com/muzzammilKIAS" target="_blank" rel="noopener" dir="ltr">GitHub · muzzammilKIAS <span aria-hidden="true">&nbsp;↗</span></a>
+          </div>
+          <p class="contact-location">FPIBA · KIAS · Nilam Puri, Kelantan</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>© <span id="year"></span> Ahmad Muzzammil Mohammad Najib. <span data-i18n="rights">Hak cipta terpelihara.</span></span>
+      <span data-i18n="footerTag">Ilmu yang bermakna, manfaat yang berpanjangan.</span>
+    </div>
+  </footer>
+
+  <script src="i18n.js" defer></script>
+  <script src="script.js" defer></script>
+</body>
+</html>
