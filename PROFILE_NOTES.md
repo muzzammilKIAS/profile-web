@@ -4,7 +4,7 @@ Laman `preview.html` diisi berdasarkan profil peribadi yang tersedia dalam skill
 
 ## Maklumat dimasukkan
 
-- Ahmad Muzzammil bin Mohammad Najib; pensyarah dan penyelidik FPIBA, Kolej Universiti Islam Antarabangsa Sultan Ismail Petra (KIAS), Nilam Puri, Kelantan.
+- Ahmad Muzzammil bin Mohammad Najib; pensyarah dan penyelidik FPIB, Kolej Universiti Islam Antarabangsa Sultan Ismail Petra (KIAS), Nilam Puri, Kelantan.
 - E-mel rasmi: muzzammil@kias.edu.my.
 - Bidang fiqh, undang-undang keluarga Islam Malaysia, bahasa Arab, hadis dan tafsir; kerja terjemahan serta pendidikan digital.
 - Tema penulisan tentang kewalian bapa dipenjarakan, istibdal wakaf dan pemilikan harta suami banduan. Ini **tema kajian**, bukan rekod artikel yang telah diterbitkan.
