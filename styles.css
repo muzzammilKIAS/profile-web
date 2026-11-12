@@ -218,7 +218,7 @@ html.has-intro:not(.intro-done) { --intro-delay: 2.6s; }
 .reveal.is-visible { opacity: 1; transform: none; }
 @keyframes enter { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
 @keyframes dropIn { 0% { opacity: 0; transform: translateY(-48px); } 60% { opacity: 1; transform: translateY(5px); } 100% { opacity: 1; transform: none; } }
-@keyframes zoomIn { 0% { opacity: 0; transform: scale(.82); filter: blur(6px); } 100% { opacity: 1; transform: none; filter: none; } }
+@keyframes zoomIn { 0% { opacity: 0; transform: scale(.82); } 100% { opacity: 1; transform: none; } }
 @keyframes rosetteTurn { to { transform: rotate(360deg); } }
 @keyframes scrollHint { 0%, 100% { transform: translateY(-2px); } 50% { transform: translateY(3px); } }
 html[data-motion='paused'] *, html[data-motion='paused'] *::before, html[data-motion='paused'] *::after { animation-play-state: paused !important; }
@@ -350,7 +350,7 @@ html.has-intro .intro { display: grid; }
 .intro-skip { position: absolute; right: 24px; bottom: calc(24px + env(safe-area-inset-bottom)); min-height: 44px; padding: 0 18px; border: 1px solid #dcc48b66; border-radius: 30px; background: #06161166; color: var(--cream); font-size: 10px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
 .intro-skip:hover { background: #dcc48b22; }
 @keyframes introZoom { 0% { transform: scale(.22) rotate(-45deg); opacity: 0; } 14% { opacity: 1; } 48% { transform: scale(1.2) rotate(8deg); } 76% { transform: scale(.86) rotate(-3deg); } 100% { transform: scale(1) rotate(0); opacity: 1; } }
-@keyframes introMedal { 0%, 16% { opacity: 0; transform: scale(1.6); filter: blur(12px); } 46% { opacity: 1; transform: scale(.94); filter: none; } 72% { transform: scale(1.03); } 100% { opacity: 1; transform: scale(1); } }
+@keyframes introMedal { 0%, 16% { opacity: 0; transform: scale(1.6); } 46% { opacity: 1; transform: scale(.94); } 72% { transform: scale(1.03); } 100% { opacity: 1; transform: scale(1); } }
 @keyframes lineGrow { to { transform: scaleX(1); } }
 @keyframes introFallback { to { visibility: hidden; opacity: 0; pointer-events: none; } }
 

@@ -291,7 +291,7 @@
     function resize() {
       width = canvas.offsetWidth; height = canvas.offsetHeight;
       // Kanvas hiasan dilukis pada resolusi terhad dan diskalakan oleh CSS; ini memotong kos lukisan dengan banyak.
-      const cap = canvas.dataset.kaleido === 'intro' ? 720 : 640;
+      const cap = canvas.dataset.kaleido === 'intro' ? 480 : 640;
       const ratio = Math.max(.3, Math.min(devicePixelRatio || 1, 1.5, cap / Math.max(1, width, height)));
       canvas.width = Math.max(1, Math.round(width * ratio));
       canvas.height = Math.max(1, Math.round(height * ratio));
@@ -356,7 +356,7 @@
     // Semasa pembukaan hanya kanvas pembukaan dilukis; selepas itu hanya yang kelihatan.
     const live = kaleidos.filter(k => k.canvas.isConnected && k.visible && (!introOn || k.canvas.dataset.kaleido === 'intro'));
     if (motionPaused() || !live.length) { kaleidoRunning = false; return; }
-    if (now - lastKaleidoDraw >= 32) {
+    if (now - lastKaleidoDraw >= (introOn ? 66 : 32)) {
       lastKaleidoDraw = now;
       frozenTime = (now - kaleidoStart) / 1000 + 2.5;
       live.forEach(k => k.draw(frozenTime));
