@@ -693,4 +693,21 @@ html[dir='rtl'] .intro-skip { right: auto; left: 24px; }
 }
 
 /* ── Prestasi: lapisan GPU untuk kanvas bergerak, dan elak lukis semula bahagian di luar skrin. ── */
-.hero-kaleido, .arch-kaleido, .contact-kaleido, .award-kaleido { will-change: transform; }
+
+/* ── Dua anugerah e-Hadis40: kad emas di atas kad perak. ── */
+.award-stack { display: grid; gap: 20px; align-content: start; }
+.award-medal.is-gold { color: #5a4310; background: conic-gradient(from 200deg, #f7e7b0, #c9a24a, #fff3c9, #a8832f, #f7e7b0); }
+.app-award.is-gold { color: #4a380d; background: linear-gradient(135deg, #f6e4a6, #c9a24a); }
+.award-card-gold { box-shadow: inset 0 3px 0 #dcc48b, 0 24px 60px #0d3a2d30; }
+.achieve-grid { grid-template-columns: 1fr; }
+.award-stack { grid-template-columns: 1fr 1fr; }
+.honours { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+@media (max-width: 900px) { .award-stack { grid-template-columns: 1fr; } }
+
+/* ── Kaleidoskop: putaran perlahan dengan CSS (property 'rotate' berasingan daripada 'transform'). ── */
+@keyframes kaleidoSpin { to { rotate: 360deg; } }
+@keyframes kaleidoSpinBack { to { rotate: -360deg; } }
+.hero-kaleido { animation: kaleidoSpin 260s linear infinite; will-change: transform; }
+.arch-kaleido { animation: breathe 16s ease-in-out infinite, kaleidoSpinBack 160s linear infinite; }
+.contact-kaleido { animation: breathe 22s ease-in-out infinite, kaleidoSpin 210s linear infinite; }
+.award-kaleido { animation: breathe 18s ease-in-out infinite, kaleidoSpin 210s linear infinite; }

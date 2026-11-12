@@ -290,9 +290,9 @@
     let width = 0, height = 0, radius = 0;
     function resize() {
       width = canvas.offsetWidth; height = canvas.offsetHeight;
-      // Kanvas hiasan dilukis pada resolusi terhad dan diskalakan oleh CSS; ini memotong kos lukisan dengan banyak.
-      const cap = canvas.dataset.kaleido === 'intro' ? 480 : 640;
-      const ratio = Math.max(.3, Math.min(devicePixelRatio || 1, 1.5, cap / Math.max(1, width, height)));
+      // Dilukis sekali sahaja pada resolusi tajam; putaran dikendalikan CSS (pada GPU).
+      const cap = canvas.dataset.kaleido === 'intro' ? 1100 : 1400;
+      const ratio = Math.max(.5, Math.min(devicePixelRatio || 1, 2, cap / Math.max(1, width, height)));
       canvas.width = Math.max(1, Math.round(width * ratio));
       canvas.height = Math.max(1, Math.round(height * ratio));
       ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
@@ -346,41 +346,17 @@
     return { canvas, draw, resize, visible: true };
   }
   const kaleidos = $$('canvas[data-kaleido]').map(createKaleido);
-  const kaleidoStart = performance.now();
-  let frozenTime = 2.5;
-  let kaleidoRunning = false;
-  let lastKaleidoDraw = 0;
-  function kaleidoFrame(now) {
-    const introEl = document.getElementById('intro');
-    const introOn = introEl && introEl.isConnected;
-    // Semasa pembukaan hanya kanvas pembukaan dilukis; selepas itu hanya yang kelihatan.
-    const live = kaleidos.filter(k => k.canvas.isConnected && k.visible && (!introOn || k.canvas.dataset.kaleido === 'intro'));
-    if (motionPaused() || !live.length) { kaleidoRunning = false; return; }
-    if (now - lastKaleidoDraw >= (introOn ? 66 : 32)) {
-      lastKaleidoDraw = now;
-      frozenTime = (now - kaleidoStart) / 1000 + 2.5;
-      live.forEach(k => k.draw(frozenTime));
-    }
-    requestAnimationFrame(kaleidoFrame);
-  }
+  // Kaleidoskop dilukis sekali (dan semula bila saiz berubah). Gerakan datang daripada animasi CSS
+  // (putaran perlahan), jadi tiada gelung JavaScript dan gerakan sentiasa lancar.
+  const kaleidoTime = 2.5;
   function startKaleido() {
-    kaleidos.forEach(k => { if (k.canvas.isConnected) k.draw(frozenTime); });
-    if (!kaleidoRunning && !motionPaused()) { kaleidoRunning = true; requestAnimationFrame(kaleidoFrame); }
-  }
-  if ('IntersectionObserver' in window) {
-    const kaleidoObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => { kaleidos.find(k => k.canvas === entry.target).visible = entry.isIntersecting; });
-      startKaleido();
-    });
-    kaleidos.forEach(k => kaleidoObserver.observe(k.canvas));
+    kaleidos.forEach(k => { if (k.canvas.isConnected) k.draw(kaleidoTime); });
   }
   let resizeTimer;
   addEventListener('resize', () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => { kaleidos.forEach(k => k.resize()); startKaleido(); }, 150);
   }, { passive: true });
-  $('#motionToggle').addEventListener('click', startKaleido);
-  reducedMotion.addEventListener('change', startKaleido);
   startKaleido();
 
   // ── Kotak hidup: cahaya emas mengikut kursor dan condong 3D yang halus. ──
