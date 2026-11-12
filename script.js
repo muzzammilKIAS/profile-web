@@ -158,31 +158,59 @@
     .sort((a, b) => (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1));
   const hero = $('#utama');
   let scrollPending = false;
-  function updateScroll() {
-    const scroll = window.scrollY;
-    $('#siteHeader').classList.toggle('is-scrolled', scroll > 12);
-    const total = doc.scrollHeight - innerHeight;
-    $('#readingProgress').style.transform = `scaleX(${total > 0 ? Math.min(1, scroll / total) : 0})`;
-    let active = sections[0].id;
-    sections.forEach(section => { if (section.getBoundingClientRect().top <= innerHeight * .4) active = section.id; });
-    $$('.nav-link').forEach(link => {
+  // Kedudukan bahagian disimpan sekali (dikira semula bila saiz berubah) supaya tatalan tidak memaksa layout.
+  const siteHeader = $('#siteHeader'), progressBar = $('#readingProgress');
+  const navLinks = $$('.nav-link'), dropLinks = $$('.drop-link');
+  const heroKaleidoEl = hero.querySelector('.hero-kaleido');
+  let sectionTops = [], heroHeight = 1, pageTotal = 0, activeId = null, headerOn = null, zoomKey = '';
+  function measure() {
+    const base = window.scrollY;
+    sectionTops = sections.map(section => section.getBoundingClientRect().top + base);
+    heroHeight = Math.max(1, hero.offsetHeight);
+    pageTotal = doc.scrollHeight - innerHeight;
+  }
+  function setActive(active) {
+    activeId = active;
+    navLinks.forEach(link => {
       const selected = link.getAttribute('href') === `#${active}`;
       link.classList.toggle('is-active', selected);
       if (selected) link.setAttribute('aria-current', 'location');
       else link.removeAttribute('aria-current');
     });
-    $('#dropToggle').classList.toggle('is-active', $$('.drop-link').some(link => link.classList.contains('is-active')));
-    // Kaleidoskop hero zoom masuk dan berpusing perlahan mengikut tatalan.
-    const heroProgress = Math.min(1, scroll / Math.max(1, hero.offsetHeight));
-    hero.style.setProperty('--scroll-zoom', (1 + heroProgress * .45).toFixed(3));
-    hero.style.setProperty('--scroll-turn', `${(heroProgress * 40).toFixed(1)}deg`);
+    dropToggle.classList.toggle('is-active', dropLinks.some(link => link.classList.contains('is-active')));
+  }
+  function updateScroll() {
+    const scroll = window.scrollY;
+    const scrolled = scroll > 12;
+    if (scrolled !== headerOn) { headerOn = scrolled; siteHeader.classList.toggle('is-scrolled', scrolled); }
+    progressBar.style.transform = `scaleX(${pageTotal > 0 ? Math.min(1, scroll / pageTotal) : 0})`;
+    let active = sections[0].id;
+    for (let i = 0; i < sections.length; i++) if (sectionTops[i] - scroll <= innerHeight * .4) active = sections[i].id;
+    if (active !== activeId) setActive(active);
+    // Kaleidoskop hero zoom masuk dan berpusing perlahan mengikut tatalan (hanya selagi hero kelihatan).
+    if (heroKaleidoEl && scroll < heroHeight * 1.3) {
+      const heroProgress = Math.min(1, scroll / heroHeight);
+      const zoom = (1 + heroProgress * .45).toFixed(3), turn = (heroProgress * 40).toFixed(1);
+      const key = zoom + '|' + turn;
+      if (key !== zoomKey) {
+        zoomKey = key;
+        heroKaleidoEl.style.setProperty('--scroll-zoom', zoom);
+        heroKaleidoEl.style.setProperty('--scroll-turn', turn + 'deg');
+      }
+    }
     scrollPending = false;
+  }
+  measure();
+  addEventListener('load', () => { measure(); updateScroll(); });
+  if ('ResizeObserver' in window) {
+    let measureTimer;
+    new ResizeObserver(() => { clearTimeout(measureTimer); measureTimer = setTimeout(() => { measure(); requestScrollUpdate(); }, 120); }).observe(document.body);
   }
   function requestScrollUpdate() {
     if (!scrollPending) { scrollPending = true; requestAnimationFrame(updateScroll); }
   }
   addEventListener('scroll', requestScrollUpdate, { passive: true });
-  addEventListener('resize', requestScrollUpdate, { passive: true });
+  addEventListener('resize', () => { measure(); requestScrollUpdate(); }, { passive: true });
   updateScroll();
 
   if ('IntersectionObserver' in window) {
@@ -261,8 +289,10 @@
     }));
     let width = 0, height = 0, radius = 0;
     function resize() {
-      const ratio = Math.min(devicePixelRatio || 1, 2);
       width = canvas.offsetWidth; height = canvas.offsetHeight;
+      // Kanvas hiasan dilukis pada resolusi terhad dan diskalakan oleh CSS; ini memotong kos lukisan dengan banyak.
+      const cap = canvas.dataset.kaleido === 'intro' ? 720 : 640;
+      const ratio = Math.max(.3, Math.min(devicePixelRatio || 1, 1.5, cap / Math.max(1, width, height)));
       canvas.width = Math.max(1, Math.round(width * ratio));
       canvas.height = Math.max(1, Math.round(height * ratio));
       ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
@@ -319,11 +349,18 @@
   const kaleidoStart = performance.now();
   let frozenTime = 2.5;
   let kaleidoRunning = false;
+  let lastKaleidoDraw = 0;
   function kaleidoFrame(now) {
-    const live = kaleidos.filter(k => k.canvas.isConnected && k.visible);
+    const introEl = document.getElementById('intro');
+    const introOn = introEl && introEl.isConnected;
+    // Semasa pembukaan hanya kanvas pembukaan dilukis; selepas itu hanya yang kelihatan.
+    const live = kaleidos.filter(k => k.canvas.isConnected && k.visible && (!introOn || k.canvas.dataset.kaleido === 'intro'));
     if (motionPaused() || !live.length) { kaleidoRunning = false; return; }
-    frozenTime = (now - kaleidoStart) / 1000 + 2.5;
-    live.forEach(k => k.draw(frozenTime));
+    if (now - lastKaleidoDraw >= 32) {
+      lastKaleidoDraw = now;
+      frozenTime = (now - kaleidoStart) / 1000 + 2.5;
+      live.forEach(k => k.draw(frozenTime));
+    }
     requestAnimationFrame(kaleidoFrame);
   }
   function startKaleido() {
@@ -349,8 +386,11 @@
   // ── Kotak hidup: cahaya emas mengikut kursor dan condong 3D yang halus. ──
   const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
   $$('.lively').forEach(card => {
-    card.addEventListener('pointermove', (event) => {
-      if (!finePointer.matches) return;
+    let moveEvent = null, moveQueued = false;
+    function applyMove() {
+      moveQueued = false;
+      const event = moveEvent;
+      if (!event) return;
       const rect = card.getBoundingClientRect();
       const x = (event.clientX - rect.left) / rect.width;
       const y = (event.clientY - rect.top) / rect.height;
@@ -360,8 +400,13 @@
       const dx = x - .5, dy = y - .5;
       const tilt = Math.min(6, Math.hypot(dx, dy) * 10);
       card.style.rotate = `${(-dy).toFixed(3)} ${dx.toFixed(3)} 0 ${tilt.toFixed(2)}deg`;
-    });
-    card.addEventListener('pointerleave', () => { card.style.rotate = ''; });
+    }
+    card.addEventListener('pointermove', (event) => {
+      if (!finePointer.matches) return;
+      moveEvent = event;
+      if (!moveQueued) { moveQueued = true; requestAnimationFrame(applyMove); }
+    }, { passive: true });
+    card.addEventListener('pointerleave', () => { moveEvent = null; card.style.rotate = ''; });
   });
 
   // ── Pembukaan: zoom masuk, zoom keluar, kemudian tirai jatuh. Sekali bagi setiap sesi. ──

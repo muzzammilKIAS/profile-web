@@ -62,7 +62,7 @@ svg.icon { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-w
 .container { width: var(--container); margin-inline: auto; }
 .skip-link { position: fixed; top: 12px; left: 12px; z-index: 200; padding: 12px 20px; background: var(--text); color: var(--bg); transform: translateY(-160%); }
 .skip-link:focus { transform: none; }
-.site-header { position: fixed; inset: 0 0 auto; z-index: 100; background: color-mix(in srgb, var(--bg) 94%, transparent); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); padding-top: env(safe-area-inset-top); transition: box-shadow .3s; }
+.site-header { position: fixed; inset: 0 0 auto; z-index: 100; background: color-mix(in srgb, var(--bg) 94%, transparent); border-bottom: 1px solid var(--border); padding-top: env(safe-area-inset-top); transition: box-shadow .3s; }
 .site-header.is-scrolled { box-shadow: var(--shadow); }
 .reading-progress { position: absolute; bottom: -1px; height: 2px; width: 100%; background: var(--gold); transform: scaleX(0); transform-origin: left; }
 .nav-wrap { height: var(--nav-height); display: flex; align-items: center; justify-content: space-between; gap: 24px; }
@@ -364,7 +364,7 @@ html[data-theme='dark'] .hero-kaleido { opacity: .32; }
 @keyframes breathe { 0%, 100% { transform: scale(1) rotate(0); } 50% { transform: scale(1.17) rotate(7deg); } }
 
 /* ── Nama berkilau emas ── */
-.sheen { background: linear-gradient(100deg, var(--text) 0 36%, var(--gold) 46%, var(--gold-soft) 50%, var(--gold) 54%, var(--text) 64% 100%); background-size: 260% 100%; background-position: 100% 0; -webkit-background-clip: text; background-clip: text; color: transparent; animation: sheen 8s ease-in-out infinite; animation-delay: calc(1.6s + var(--intro-delay, 0s)); }
+.sheen { background: linear-gradient(100deg, var(--text) 0 36%, var(--gold) 46%, var(--gold-soft) 50%, var(--gold) 54%, var(--text) 64% 100%); background-size: 260% 100%; background-position: 100% 0; -webkit-background-clip: text; background-clip: text; color: transparent; animation: sheen 8s ease-in-out 3; animation-delay: calc(1.6s + var(--intro-delay, 0s)); }
 @keyframes sheen { 0% { background-position: 100% 0; } 45%, 100% { background-position: 0 0; } }
 @media (forced-colors: active) { .sheen { background: none; color: CanvasText; } }
 
@@ -691,3 +691,6 @@ html[dir='rtl'] .intro-skip { right: auto; left: 24px; }
   .stat-number { font-size: 34px; }
   .research-card .number { font-size: 28px; }
 }
+
+/* ── Prestasi: lapisan GPU untuk kanvas bergerak, dan elak lukis semula bahagian di luar skrin. ── */
+.hero-kaleido, .arch-kaleido, .contact-kaleido, .award-kaleido { will-change: transform; }
