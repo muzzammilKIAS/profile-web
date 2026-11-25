@@ -26,5 +26,13 @@
 - Peralihan **portal gerbang runcing** berbingkai emas ke dalam setiap bab 3D.
 - Scrim versi Pagi, susun lapis Makmal, pembingkaian buku mobile, lantai studio, bahan pingat dan manuskrip, lajur teks Jamiah.
 
+### Pusingan 4 (26 Nov 2026, permintaan pemilik)
+- **Buku ketiga dalam Pustaka 3D:** *Bahasa Arab Asas untuk Muamalat* (اللغة العربية الأساسية للمعاملات), kulit sebenar daripada halaman 1 PDF. PDF 201 halaman dimampatkan daripada 43 MB kepada 6 MB (imej 150 dpi). eISBN ditulis "dalam permohonan" kerana PNM belum mengeluarkan nombor. Koreografi Pustaka ditulis semula untuk tiga buku: setiap buku mara sambil berputar 360°, berhenti pada kulit, terbuka dan diselak; buku lain beralih ke sisi bertentangan dengan teks.
+- **Artikel Rabbanica** (*Analisis Pragmatik dan Siyāq Hadis Adab Membuang Air serta Implikasi Hukumnya*) dinaikkan sebagai artikel pertama dan ditanda "Disember 2026" atas makluman pemilik. Jilid, halaman dan pautan tidak ditambah: setakat 26 Nov 2026 laman jurnal masih memaparkan Vol. 7 No. 1 (Mei 2026) sebagai isu terkini.
+- **Dibuang atas permintaan pemilik:** tajuk "Kitab di atas rehal" dan ayat arahannya; ayat pembuka Jamiah ("Tiga kelayakan saya diperoleh di sini…"); tiga label hotspot (pintu gerbang berkekisi, kubah masjid, menara).
+- **Kitab di atas rehal:** halaman berhias roset geometri emas (tanpa teks), helaian mempunyai muka depan dan belakang berasingan, kamera lebih rapat, dan susunan gerakan baharu: pusingan penuh, mendekati halaman, kemudian helaian diselak. Skrub dilicinkan (1.1 s bagi babak ciri, 0.8 s bagi bab berpin).
+- **Pepijat dibaiki:** kad "Bidang" dan panel "Pengalaman" tidak pernah muncul kerana animasi masuknya menggunakan `clip-path` penuh, yang menjadikan luas elemen sifar bagi IntersectionObserver. Kini menggunakan topeng (`mask-size`).
+- Inventori kini 13 penerbitan (3 buku). QA automatik: 31/31 lulus.
+
 ### Tidak diubah
-- Semua fakta akademik, terjemahan, potret, PDF dan pautan. Inventori disahkan sama dengan baseline: 7 pendidikan, 3 bidang, 2 anugerah, 4 kepujian, 10 sijil, 12 penerbitan, 9 aplikasi, 6 pengalaman, 7 kursus.
+- Semua fakta akademik, terjemahan, potret, PDF dan pautan. Inventori disahkan sama dengan baseline: 7 pendidikan, 3 bidang, 2 anugerah, 4 kepujian, 10 sijil, 13 penerbitan (12 asal + buku ketiga), 9 aplikasi, 6 pengalaman, 7 kursus.

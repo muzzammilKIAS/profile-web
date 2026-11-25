@@ -120,5 +120,58 @@
     "aspect_ratio": 0.706670435450384,
     "dominant_color_hex": "#022B59",
     "dominant_color_method": "Most populous of 8 median-cut colors from full cover resized within 128px; suggested neutral spine color, not an extracted spine."
+  },
+  {
+    "slug": "bahasa-arab-muamalat",
+    "title": "Bahasa Arab Asas untuk Muamalat",
+    "pdf": "kitab/Bahasa-Arab-Asas-untuk-Muamalat_Ahmad-Muzzammil_2026.pdf",
+    "front_page_index": 0,
+    "back_page_index": null,
+    "back_cover_status": "Tiada kulit belakang dalam PDF.",
+    "pdf_sha256": "2cd70051496773a5c4410629c3c23fe7dbfd245ac3564b5228624b0931478718",
+    "page_count": 201,
+    "pdf_magic": "%PDF",
+    "page_index_base": 0,
+    "render_dpi": 300,
+    "textures": [
+      {
+        "side": "front",
+        "page_index": 0,
+        "path": "assets/textures/books/bahasa-arab-muamalat-front-2048.webp",
+        "long_edge": 2048,
+        "width": 1448,
+        "height": 2048,
+        "bytes": 360830,
+        "aspect_ratio": 0.70703125,
+        "sha256": "ae2fed874b2ed1c07274af931bdf3869d19f21476a3f6413a1c05e3dcbb38d70",
+        "format": "image/webp",
+        "quality": 95
+      },
+      {
+        "side": "front",
+        "page_index": 0,
+        "path": "assets/textures/books/bahasa-arab-muamalat-front-1024.webp",
+        "long_edge": 1024,
+        "width": 724,
+        "height": 1024,
+        "bytes": 141426,
+        "aspect_ratio": 0.70703125,
+        "sha256": "5a92bc54514b20cc544effb459bc7782820851e34ffc391339a0d080edf5d494",
+        "format": "image/webp",
+        "quality": 95
+      }
+    ],
+    "front_page_size_points": [
+      595.2000122070312,
+      841.9199829101562
+    ],
+    "front_render_pixels": [
+      2480,
+      3508
+    ],
+    "aspect_ratio": 0.7069555590659342,
+    "dominant_color_hex": "#5a4630",
+    "dominant_color_method": "Warna tulang dipilih daripada perang tajuk kulit (kulit dominan krim; krim tidak sesuai sebagai kulit jilid).",
+    "source_note": "PDF dimampatkan (imej 150 dpi) daripada UMT3033_Modul_Premium_v7_2.pdf; eISBN belum dikeluarkan PNM."
   }
 ]

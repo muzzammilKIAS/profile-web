@@ -291,11 +291,6 @@
             <img class="stage-poster" src="assets/posters/jamiah-night.webp" data-poster="jamiah" alt="Model 3D pintu gerbang Universiti Islam Imam Muhammad bin Saud" data-i18n-alt="jmAlt" loading="lazy" decoding="async" onerror="this.remove()">
             <img class="stage-snapshot" alt="" aria-hidden="true">
             <div class="stage-mount"></div>
-            <div class="stage-hotspots">
-              <button class="hotspot" type="button" data-spot="gate" tabindex="-1"><span data-i18n="hsGate">Pintu gerbang berkekisi</span></button>
-              <button class="hotspot" type="button" data-spot="dome" tabindex="-1"><span data-i18n="hsDome">Kubah masjid</span></button>
-              <button class="hotspot" type="button" data-spot="minaret" tabindex="-1"><span data-i18n="hsMinaret">Menara</span></button>
-            </div>
             <p class="stage-loading" data-i18n="stLoading">Memuat model 3D…</p>
           </div>
           <div class="chapter-hud">
@@ -303,7 +298,6 @@
               <li class="story-card" data-side="start">
                 <p class="eyebrow" data-i18n="jmEyebrow">Riyadh · 2015–2024</p>
                 <h3 id="jamiahTitle" data-i18n="jmTitle">Universiti Islam Imam Muhammad bin Saud</h3>
-                <p data-i18n="jmLead">Tiga kelayakan saya diperoleh di sini. Tatal untuk mengelilingi pintu gerbangnya satu pusingan penuh.</p>
               </li>
               <li class="story-card" data-side="end">
                 <p class="eyebrow">2015–2017</p>
@@ -428,8 +422,6 @@
           </div>
           <div class="feature-copy">
             <p class="eyebrow" data-i18n="msEyebrow">Turath dan manuskrip</p>
-            <h3 data-i18n="msTitle">Kitab di atas rehal</h3>
-            <p data-i18n="msBody">Tatal untuk memutar kitab ini satu pusingan penuh, mendekati halamannya dan melihat helaian diselak.</p>
             <ul class="field-list" aria-label="Bidang kajian" data-i18n-aria="tagsAria">
               <li data-i18n="tag1">Fiqh perbandingan</li>
               <li data-i18n="tag2">Usul fiqh</li>
@@ -437,7 +429,7 @@
               <li data-i18n="tag4">Bahasa Arab</li>
               <li data-i18n="tag5">Turath dan manuskrip</li>
             </ul>
-            <p class="stage-note" data-i18n="msNote">Model 3D generik. Halaman bertekstur neutral tanpa sebarang teks.</p>
+            <p class="stage-note" data-i18n="msNote">Model 3D generik. Halaman berhias geometri tanpa sebarang teks.</p>
           </div>
         </div>
 
@@ -626,18 +618,18 @@
         </div>
       </div>
 
-      <div class="chapter" id="pustaka" data-chapter="pustaka" style="--len: 4.4" role="group" aria-label="Pustaka digital 3D" data-i18n-aria="bkAria">
+      <div class="chapter" id="pustaka" data-chapter="pustaka" style="--len: 6.2" role="group" aria-label="Pustaka digital 3D" data-i18n-aria="bkAria">
         <div class="chapter-sticky">
           <div class="stage" data-scene="pustaka">
             <canvas class="stage-kaleido" data-kaleido="contact" aria-hidden="true"></canvas>
-            <img class="stage-poster" src="assets/posters/pustaka-night.webp" data-poster="pustaka" alt="Model 3D dua buku dengan kulit sebenar" data-i18n-alt="bkAlt" loading="lazy" decoding="async" onerror="this.remove()">
+            <img class="stage-poster" src="assets/posters/pustaka-night.webp" data-poster="pustaka" alt="Model 3D tiga buku dengan kulit sebenar" data-i18n-alt="bkAlt" loading="lazy" decoding="async" onerror="this.remove()">
             <img class="stage-snapshot" alt="" aria-hidden="true">
             <div class="stage-mount"></div>
             <p class="stage-loading" data-i18n="stLoading">Memuat model 3D…</p>
           </div>
           <div class="chapter-hud">
             <ol class="story">
-              <li class="story-card book-card" data-at="0.22" data-side="start" data-book="fiqh-halal-haram">
+              <li class="story-card book-card" data-at="0.145" data-side="start" data-book="fiqh-halal-haram">
                 <p class="eyebrow"><span data-i18n="tBook">Buku</span> · 2026</p>
                 <h3 lang="ms" dir="ltr">Fiqh Halal dan Haram: Prinsip, Kaedah dan Isu Semasa</h3>
                 <p class="story-meta"><span dir="ltr">eISBN 978-629-93371-1-9</span> · <span data-i18n="bkEd">Cetakan pertama</span></p>
@@ -647,7 +639,7 @@
                   <a class="button button-ghost" href="kitab/Fiqh-Halal-dan-Haram_Ahmad-Muzzammil_2026.pdf" download data-i18n="pdfDl">Muat turun PDF</a>
                 </div>
               </li>
-              <li class="story-card book-card" data-at="0.78" data-side="end" data-book="fiqh-quran-sunnah">
+              <li class="story-card book-card" data-at="0.465" data-side="end" data-book="fiqh-quran-sunnah">
                 <p class="eyebrow"><span data-i18n="tBook">Buku</span> · 2026</p>
                 <h3 lang="ms" dir="ltr">Fiqh Al-Quran dan Sunnah: Ayat-ayat Hukum Pilihan daripada Surah al-Baqarah dan Hadis-hadis Hukum Ibadat</h3>
                 <p class="story-meta"><span dir="ltr">eISBN 978-629-93371-0-2</span> · <span data-i18n="bkEd">Cetakan pertama</span></p>
@@ -655,6 +647,17 @@
                   <button class="button button-gold" type="button" data-book-view="fiqh-quran-sunnah" data-i18n="bkView">Lihat buku 3D</button>
                   <a class="button button-ghost" href="kitab/Fiqh-Al-Quran-dan-Sunnah_Ahmad-Muzzammil_2026.pdf" target="_blank" rel="noopener" data-i18n="bkPreview">Pratonton PDF</a>
                   <a class="button button-ghost" href="kitab/Fiqh-Al-Quran-dan-Sunnah_Ahmad-Muzzammil_2026.pdf" download data-i18n="pdfDl">Muat turun PDF</a>
+                </div>
+              </li>
+              <li class="story-card book-card" data-at="0.785" data-side="start" data-book="bahasa-arab-muamalat">
+                <p class="eyebrow"><span data-i18n="tBook">Buku</span> · 2026</p>
+                <h3 lang="ms" dir="ltr">Bahasa Arab Asas untuk Muamalat</h3>
+                <p class="story-parallel" lang="ar" dir="rtl">اللغة العربية الأساسية للمعاملات</p>
+                <p class="story-meta"><span data-i18n="bkIsbnPending">eISBN dalam permohonan</span> · <span data-i18n="bkEd">Cetakan pertama</span></p>
+                <div class="story-actions">
+                  <button class="button button-gold" type="button" data-book-view="bahasa-arab-muamalat" data-i18n="bkView">Lihat buku 3D</button>
+                  <a class="button button-ghost" href="kitab/Bahasa-Arab-Asas-untuk-Muamalat_Ahmad-Muzzammil_2026.pdf" target="_blank" rel="noopener" data-i18n="bkPreview">Pratonton PDF</a>
+                  <a class="button button-ghost" href="kitab/Bahasa-Arab-Asas-untuk-Muamalat_Ahmad-Muzzammil_2026.pdf" download data-i18n="pdfDl">Muat turun PDF</a>
                 </div>
               </li>
             </ol>
@@ -684,7 +687,7 @@
             <button class="chip" type="button" data-filter="progress" aria-pressed="false" data-i18n="fProgress">Dalam penulisan</button>
           </div>
         </div>
-        <p class="publication-count" id="publicationCount" role="status" aria-live="polite">12 karya dipaparkan</p>
+        <p class="publication-count" id="publicationCount" role="status" aria-live="polite">13 karya dipaparkan</p>
 
         <div class="publication-list" id="publicationList">
           <article class="publication lively" data-cat="book">
@@ -696,6 +699,16 @@
             <div class="publication-year">2026</div>
             <div><div class="publication-title" lang="ms" dir="ltr">Fiqh Al-Quran dan Sunnah: Ayat-ayat Hukum Pilihan daripada Surah al-Baqarah dan Hadis-hadis Hukum Ibadat</div><div class="publication-meta"><span dir="ltr">eISBN 978-629-93371-0-2</span> · <span data-i18n="bkEd">Cetakan pertama</span></div><a class="publication-link" href="kitab/Fiqh-Al-Quran-dan-Sunnah_Ahmad-Muzzammil_2026.pdf" target="_blank" rel="noopener" data-i18n="pdfDl">Muat turun PDF</a></div>
             <span class="publication-status" data-i18n="tBook">Buku</span>
+          </article>
+          <article class="publication lively" data-cat="book">
+            <div class="publication-year">2026</div>
+            <div><div class="publication-title" lang="ms" dir="ltr">Bahasa Arab Asas untuk Muamalat <span lang="ar" dir="rtl">(اللغة العربية الأساسية للمعاملات)</span></div><div class="publication-meta"><span data-i18n="bkIsbnPending">eISBN dalam permohonan</span> · <span data-i18n="bkEd">Cetakan pertama</span></div><a class="publication-link" href="kitab/Bahasa-Arab-Asas-untuk-Muamalat_Ahmad-Muzzammil_2026.pdf" target="_blank" rel="noopener" data-i18n="pdfDl">Muat turun PDF</a></div>
+            <span class="publication-status" data-i18n="tBook">Buku</span>
+          </article>
+          <article class="publication lively" data-cat="article">
+            <div class="publication-year">2026</div>
+            <div><div class="publication-title" lang="ms" dir="ltr">Analisis Pragmatik dan Siyāq Hadis Adab Membuang Air serta Implikasi Hukumnya</div><div class="publication-meta"><span>Rabbanica</span> · <span data-i18n="pubDec26">Disember 2026</span> · <span data-i18n="pub2a">Bersama Mohd Ikhwan, Saeid Ramadhan, Rohaidi Habil, Mohd Abalkhair dan Ahmad Syahmi</span></div></div>
+            <span class="publication-status" data-i18n="tArticle">Artikel jurnal</span>
           </article>
           <article class="publication lively" data-cat="article">
             <div class="publication-year">2026</div>
@@ -711,11 +724,6 @@
             <div class="publication-year">2026</div>
             <div><div class="publication-title" lang="ms" dir="ltr">Kewalian Bapa yang Dipenjarakan dalam Akad Nikah: Analisis Fiqh Perbandingan dan Akta 303 di Wilayah-Wilayah Persekutuan</div><div class="publication-meta" data-i18n="pub7c">IVCIJP 2026 · Akademi Pengajian Islam, Universiti Malaya · 2–6 November 2026 · Bersama Saeid Ramadhan Mohd Shakri</div></div>
             <span class="publication-status" data-i18n="tConf">Kertas persidangan</span>
-          </article>
-          <article class="publication lively" data-cat="article">
-            <div class="publication-year">2026</div>
-            <div><div class="publication-title" lang="ms" dir="ltr">Analisis Pragmatik dan Siyāq Hadis Adab Membuang Air serta Implikasi Hukumnya</div><div class="publication-meta"><span>Rabbanica</span> · <span data-i18n="pub2a">Bersama Mohd Ikhwan, Saeid Ramadhan, Rohaidi Habil, Mohd Abalkhair dan Ahmad Syahmi</span></div></div>
-            <span class="publication-status" data-i18n="tArticle">Artikel jurnal</span>
           </article>
           <article class="publication lively" data-cat="article">
             <div class="publication-year">—</div>

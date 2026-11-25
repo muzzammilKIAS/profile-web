@@ -217,7 +217,7 @@ export function controller(s, { name, radius, keys, targetAt, pose, stable = 0.5
   const rig = new SceneRig({ camera, canvas: ctx.canvas, stage, radius, keys, targetAt, minDist: 0.15, maxDist: 2.4 });
   // scrollProgress owns its GSAP triggers; capture only the synchronously-created pair.
   const previous = new Set(window.ScrollTrigger?.getAll() || []);
-  const progress = scrollProgress(trigger, pin ? 'pin' : 'pass', 0.65);
+  const progress = scrollProgress(trigger, pin ? 'pin' : 'pass', pin ? 0.8 : 1.1);
   const triggers = (window.ScrollTrigger?.getAll() || []).filter(t => !previous.has(t));
   const ui = pin ? chapterUI(trigger) : null;
   const hud = mountHud(stage, rig, { onExplore: () => ctx.requestRender() });

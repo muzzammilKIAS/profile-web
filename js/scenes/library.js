@@ -1,19 +1,26 @@
 import { THREE, TAU, studio, controller, rounded, leafGeometry, surfaceTexture, sample, ramp, pulse } from './common.js';
 
-const KEYS = [
-  { p: 0, d: 1.08, e: 23, sx: 0, syPortrait: 0.3, focus: 0 },
-  { p: 0.16, d: 0.68, e: 8, sx: 0.42, syPortrait: 0.36, focus: -1 },
-  { p: 0.28, d: 0.68, e: 8, sx: 0.42, syPortrait: 0.36, focus: -1 },
-  { p: 0.315, d: 0.36, e: 9, sx: 0.3, syPortrait: 0.32, focus: -1 },
-  { p: 0.4, d: 0.82, e: 30, sx: 0.12, syPortrait: 0.32, focus: -0.65 },
-  { p: 0.5, d: 1.1, e: 16, sx: 0, syPortrait: 0.25, focus: 0 },
-  { p: 0.64, d: 0.85, e: 25, sx: -0.12, syPortrait: 0.32, focus: 0.55 },
-  { p: 0.72, d: 0.68, e: 8, sx: -0.42, syPortrait: 0.36, focus: 1 },
-  { p: 0.84, d: 0.68, e: 8, sx: -0.42, syPortrait: 0.36, focus: 1 },
-  { p: 0.865, d: 0.36, e: 9, sx: -0.3, syPortrait: 0.32, focus: 1 },
-  { p: 0.93, d: 0.74, e: 32, sx: -0.08, syPortrait: 0.3, focus: 0.75 },
-  { p: 1, d: 1.08, e: 23, sx: 0, syPortrait: 0.3, focus: 0 },
-];
+// Tiga buku, tiga babak sama panjang. Setiap babak: buku mara sambil berputar 360°,
+// berhenti menghadap kamera (titik semak kulit), kamera merapati kulit sebenar, buku terbuka,
+// helaian diselak, buku tertutup dan berundur. Semuanya fungsi tulen kedudukan skrol.
+const SLUGS = ['fiqh-halal-haram', 'fiqh-quran-sunnah', 'bahasa-arab-muamalat'];
+const STARTS = [0.03, 0.35, 0.67];
+export const CHECKPOINTS = STARTS.map(a => a + 0.115);
+const ease = t => t; // ramp() dan pulse() sudah dilicinkan
+const focusOf = (p, i) => ease(pulse(p, STARTS[i], STARTS[i] + 0.085, STARTS[i] + 0.262, STARTS[i] + 0.31));
+const KEYS = [{ p: 0, d: 1.2, e: 18, sx: 0, syPortrait: 0.3 }];
+STARTS.forEach((a, i) => {
+  const side = i % 2 === 0 ? 1 : -1;
+  KEYS.push(
+    { p: a + 0.09, d: 0.68, e: 8, sx: 0.42 * side, syPortrait: 0.36 },
+    { p: a + 0.138, d: 0.68, e: 8, sx: 0.42 * side, syPortrait: 0.36 },
+    { p: a + 0.166, d: 0.78, e: 14, sx: 0.3 * side, syPortrait: 0.34 },
+    { p: a + 0.218, d: 0.98, e: 30, sx: 0.3 * side, syPortrait: 0.32 },
+    { p: a + 0.262, d: 1.0, e: 24, sx: 0.16 * side, syPortrait: 0.32 },
+    { p: Math.min(1, a + 0.32), d: i === 2 ? 1.24 : 1.14, e: i === 2 ? 21 : 17, sx: 0, syPortrait: 0.28 },
+  );
+});
+KEYS.push({ p: 1, d: 1.24, e: 21, sx: 0, syPortrait: 0.3 });
 
 function book(s, entry, cover, paper, edges) {
   const root = new THREE.Group(); s.scene.add(root);
@@ -46,7 +53,7 @@ export default async function create(ctx) {
     const response = await fetch('assets/textures/books/manifest.json');
     if (!response.ok) throw new Error(`Manifest buku: HTTP ${response.status}`);
     const manifest = await response.json();
-    const slugs = ['fiqh-halal-haram', 'fiqh-quran-sunnah'];
+    const slugs = SLUGS;
     const entries = slugs.map(slug => {
       const entry = manifest.find(item => item.slug === slug);
       if (!entry) throw new Error(`Buku tiada dalam manifest: ${slug}`);
@@ -60,41 +67,56 @@ export default async function create(ctx) {
     const edges = s.material({ map: edgeMap, roughness: 0.93, color: 0xe4d9bd });
     const books = entries.map((entry, i) => book(s, entry, covers[i], paper, edges));
     const k = {}, target = new THREE.Vector3();
+    // Kedudukan buku: tiga sebaris; buku yang difokus mara ke hadapan, yang lain berundur dan merenggang.
+    const place = (p, i, out) => {
+      const focus = focusOf(p, i), base = (i - 1) * 1.9;
+      let other = 0, lead = -1;
+      for (let j = 0; j < 3; j++) if (j !== i && focusOf(p, j) > other) { other = focusOf(p, j); lead = j; }
+      let x = base * (1 - 0.5 * focus);
+      if (lead >= 0) {
+        // Buku lain beralih ke sisi bertentangan dengan kad teks buku yang difokus.
+        const side = lead % 2 === 0 ? 1 : -1, rank = [0, 1, 2].filter(j => j !== lead).indexOf(i);
+        const order = side > 0 ? rank : 1 - rank;
+        x += ((lead - 1) * 0.81 + side * (1.5 + 1.05 * order) - x) * other;
+      }
+      return out.set(x, 1.85 + 0.1 * Math.sin(p * Math.PI) + 0.05 * focus, -0.8 + focus * 1.3 - other * 0.75 - (i === 1 ? 0.12 : 0));
+    };
     let pausedAt = 0;
     const api = controller(s, {
-      name: 'pustaka', radius: 2.8, keys: KEYS, pin: true, stable: () => pausedAt,
+      name: 'pustaka', radius: 2.9, keys: KEYS, pin: true, stable: () => pausedAt,
       targetAt(p, key, out) {
         out.set(0, 1.85, 0);
-        const which = key.focus < 0 ? 0 : 1;
-        target.copy(books[which].root.position);
+        let which = 0, most = 0;
+        for (let i = 0; i < books.length; i++) { const f = focusOf(p, i); if (f > most) { most = f; which = i; } }
+        if (!most) return;
+        place(p, which, target);
         target.z += 0.1;
-        out.lerp(target, Math.abs(key.focus));
+        out.lerp(target, most);
       },
       pose(p, rig, state) {
         sample(KEYS, p, k);
-        const az = 0.16 * Math.sin(TAU * p);
+        const az = 0.14 * Math.sin(TAU * p);
         rig.azimuth = az;
-        for (let i = 0; i < 2; i++) {
-          const b = books[i];
-          const focus = i === 0 ? pulse(p, 0.04, 0.16, 0.28, 0.47) : pulse(p, 0.57, 0.72, 0.84, 1);
-          b.root.position.set((i === 0 ? -1 : 1) * (1.18 + focus * 0.35), 1.85 + 0.13 * Math.sin(p * Math.PI), -0.65 + focus * 1.05);
-          // Each book completes one whole revolution, outside its reading plateau.
-          const turn = i === 0 ? ramp(p, 0.28, 0.68) : ramp(p, 0.06, 0.7);
-          b.root.rotation.set(-k.e * Math.PI / 180 * focus, TAU * turn + az, (i === 0 ? -1 : 1) * 0.07 * (1 - focus));
-          const opening = i === 0 ? pulse(p, 0.3, 0.38, 0.46, 0.6) : pulse(p, 0.85, 0.91, 0.96, 1);
+        for (let i = 0; i < books.length; i++) {
+          const b = books[i], a = STARTS[i], focus = focusOf(p, i);
+          place(p, i, b.root.position);
+          // Satu pusingan penuh semasa mara; berakhir tepat menghadap kamera di titik semak kulit.
+          const turn = ease(ramp(p, a - 0.012, a + 0.088));
+          const rest = (i - 1) * -0.2;
+          b.root.rotation.set(-k.e * Math.PI / 180 * focus, TAU * turn + az + rest * (1 - focus), (i - 1) * 0.05 * (1 - focus));
+          const opening = ease(pulse(p, a + 0.15, a + 0.192, a + 0.236, a + 0.27));
           b.hinge.rotation.y = -2.58 * opening;
           for (let j = 0; j < b.leaves.length; j++) {
-            const turnPage = i === 0 ? pulse(p, 0.33 + j * 0.009, 0.405 + j * 0.009, 0.49, 0.59) : pulse(p, 0.87 + j * 0.004, 0.93 + j * 0.004, 0.96, 1);
+            const turnPage = ease(pulse(p, a + 0.166 + j * 0.006, a + 0.206 + j * 0.006, a + 0.238, a + 0.266));
             b.leaves[j].rotation.y = -2.35 * turnPage;
             // Helaian melengkung hanya wujud semasa kulit dibuka; jika tidak ia menembusi kulit depan
             // dan menutup kulit PDF sebenar (dikesan dalam semakan browser Claude).
             b.leaves[j].visible = opening > 0.002 || turnPage > 0.002;
           }
           b.shadow.position.x = b.root.position.x; b.shadow.position.z = b.root.position.z;
+          state[['yawDeg', 'secondYawDeg', 'thirdYawDeg'][i]] = turn * 360;
+          state[['firstOpen', 'secondOpen', 'thirdOpen'][i]] = -b.hinge.rotation.y;
         }
-        state.yawDeg = ramp(p, 0.28, 0.68) * 360;
-        state.secondYawDeg = ramp(p, 0.06, 0.7) * 360;
-        state.firstOpen = -books[0].hinge.rotation.y; state.secondOpen = -books[1].hinge.rotation.y;
       },
     });
     const chapter = ctx.stage.closest('.chapter');
@@ -103,7 +125,7 @@ export default async function create(ctx) {
       if (!button) return;
       const index = slugs.indexOf(button.dataset.bookView);
       if (index < 0) return;
-      const at = index === 0 ? 0.22 : 0.78;
+      const at = CHECKPOINTS[index];
       pausedAt = at;
       if (api.rig.mode === 'explore') api.rig.exitExplore();
       api.rig.blend = null;
