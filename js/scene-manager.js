@@ -8,6 +8,9 @@ const root = document.documentElement;
 export const motionPaused = () => root.dataset.motion === 'paused';
 export const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 export const isRTL = () => root.dir === 'rtl';
+// Versi Pagi / Malam mengikut suis tema laman (atau tetapan sistem jika pelawat belum memilih).
+const systemDark = matchMedia('(prefers-color-scheme: dark)');
+export const isNight = () => (root.dataset.theme ? root.dataset.theme === 'dark' : systemDark.matches);
 
 function pickTier() {
   const small = matchMedia('(max-width: 900px), (pointer: coarse)').matches;
@@ -41,9 +44,10 @@ export class SceneManager {
         entry.near = record.isIntersecting;
       });
       this.evaluate();
-    }, { threshold: [0, 0.1, 0.25, 0.5, 0.75, 1], rootMargin: '35% 0px 35% 0px' });
+    }, { threshold: [0, 0.1, 0.25, 0.5, 0.75, 1], rootMargin: '90% 0px 90% 0px' });
     this.ro = new ResizeObserver(() => this.resize());
     document.addEventListener('visibilitychange', () => { if (!document.hidden) this.kick(); });
+    systemDark.addEventListener('change', () => { this.force = true; this.kick(); });
     new MutationObserver(() => { this.force = true; this.kick(); })
       .observe(root, { attributes: true, attributeFilter: ['data-motion', 'data-theme', 'dir', 'lang'] });
   }
@@ -64,7 +68,7 @@ export class SceneManager {
       const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
       renderer.outputColorSpace = THREE.SRGBColorSpace;
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      renderer.toneMappingExposure = 1.0;
+      renderer.toneMappingExposure = 1.12;
       renderer.shadowMap.enabled = true;
       renderer.shadowMap.type = this.tier === 'high' ? THREE.VSMShadowMap : THREE.PCFShadowMap;
       renderer.setPixelRatio(this.dpr);

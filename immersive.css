@@ -283,3 +283,186 @@ html[data-motion='paused'] .stage-kaleido, html[data-motion='paused'] .hotspot::
   .tool, .story-card, .hotspot span, .to-top { border: 1px solid CanvasText; }
   .chapter::before { display: none; }
 }
+
+/* Rel bahagian disembunyikan semasa bab gelap 3D supaya tidak bertindih dengan pentas. */
+html.over-dark .section-rail { opacity: 0; visibility: hidden; }
+.section-rail { transition: opacity var(--dur-2), visibility var(--dur-2); }
+
+/* ═════════ Pusingan 2: mikro-interaksi premium dan identiti gerakan setiap bahagian ═════════ */
+@property --spin { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+
+/* Butang magnetik: tarikan melalui property translate (berasingan daripada transform hover). */
+.button, .tool, .contact-link, .award-link, .app-links a, .chip, .lang-switch button, .theme-toggle, .to-top { translate: var(--mag-x, 0) var(--mag-y, 0); transition-property: transform, translate, background-color, border-color, box-shadow, color, opacity; transition-duration: var(--dur-2); transition-timing-function: var(--ease-out); }
+.is-magnet { transition-duration: .18s, .18s, var(--dur-1), var(--dur-1), var(--dur-2), var(--dur-1), var(--dur-2); }
+/* Sempadan beranimasi: garis emas berputar mengelilingi butang semasa hover/fokus. */
+.button { isolation: isolate; overflow: hidden; }
+.button::after { content: ''; position: absolute; inset: 0; z-index: -1; padding: 1px; border-radius: inherit; background: conic-gradient(from var(--spin), transparent 0 62%, var(--gold-soft) 72%, #fff4d6 76%, var(--gold) 82%, transparent 92%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); opacity: 0; transition: opacity var(--dur-2); }
+.button:hover::after, .button:focus-visible::after { opacity: 1; animation: borderSpin 2.4s linear infinite; }
+/* Kilau cahaya mengikut kedudukan penuding di dalam butang. */
+.button::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: radial-gradient(120px circle at var(--glow-x, 50%) 50%, #ffffff26, transparent 70%); opacity: 0; transition: opacity var(--dur-2); pointer-events: none; }
+.button:hover::before { opacity: 1; }
+.button-secondary::before { background: radial-gradient(120px circle at var(--glow-x, 50%) 50%, color-mix(in srgb, var(--gold-soft) 30%, transparent), transparent 70%); }
+.button:active { transform: translateY(0) scale(.985); }
+@keyframes borderSpin { to { --spin: 360deg; } }
+
+/* Bayang mashrabiyya: cahaya melalui kekisi bintang lapan jatuh merentasi bahagian ketika ia masuk. */
+main > .section:not(.hero) { position: relative; isolation: isolate; }
+main > .section:not(.hero) > * { position: relative; z-index: 1; }
+main > .section:not(.hero):not(.contact)::after { content: ''; position: absolute; z-index: 0; inset: 0; pointer-events: none; opacity: calc(var(--enter, 0) * .07); background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96' fill='none' stroke='%230d3a2d' stroke-width='3'%3E%3Cpath d='M48 6 60 36 90 48 60 60 48 90 36 60 6 48 36 36Z'/%3E%3Cpath d='M18 18 52 30 78 18 66 52 78 78 44 66 18 78 30 44Z' transform='rotate(0 48 48)'/%3E%3Cpath d='M0 0 18 18M96 0 78 18M0 96 18 78M96 96 78 78'/%3E%3C/svg%3E") 0 0 / 96px 96px; background-position: calc(var(--enter, 0) * 120px) calc(var(--enter, 0) * -60px); -webkit-mask: radial-gradient(ellipse 46% 60% at calc(18% + var(--enter, 0) * 30%) 40%, #000 10%, transparent 70%); mask: radial-gradient(ellipse 46% 60% at calc(18% + var(--enter, 0) * 30%) 40%, #000 10%, transparent 70%); transform: skewX(-14deg); }
+html[data-theme='dark'] main > .section:not(.hero):not(.contact)::after { filter: invert(1); opacity: calc(var(--enter, 0) * .05); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme='light']) main > .section:not(.hero):not(.contact)::after { filter: invert(1); opacity: calc(var(--enter, 0) * .05); } }
+
+/* Tajuk bahagian: pendedahan bertopeng (mask) baris demi baris, bukan pudar biasa. */
+.section-header h2, .about-copy h2, .panel h2 { clip-path: inset(0 0 calc((1 - min(1, var(--enter, 1) * 2.2)) * 100%) 0); translate: 0 calc((1 - min(1, var(--enter, 1) * 2.2)) * 18px); }
+html[data-motion='paused'] .section-header h2, html[data-motion='paused'] .about-copy h2, html[data-motion='paused'] .panel h2 { clip-path: none; translate: none; }
+
+/* Tentang — "unveil": panel zamrud terbuka seperti gerbang dari bawah. */
+.motion-unveil .about-note.reveal { opacity: 1; transform: none; clip-path: inset(100% 0 0 0 round 3px 80px 3px 3px); transition: clip-path 1.2s var(--ease-in-out); }
+.motion-unveil .about-note.reveal.is-visible { clip-path: inset(0 0 0 0 round 3px 80px 3px 3px); }
+.motion-unveil .about-copy.reveal { transform: translateX(28px); }
+html[dir='rtl'] .motion-unveil .about-copy.reveal { transform: translateX(-28px); }
+.motion-unveil .about-copy.reveal.is-visible { transform: none; }
+
+/* Akademik — "trace": titik garis masa menyala satu demi satu, kad meluncur dari arah garis. */
+.motion-trace .timeline-item.reveal { opacity: 0; transform: none; }
+.motion-trace .timeline-item.reveal .timeline-card { transform: translateX(-34px); transition: transform 1s var(--ease-out); }
+html[dir='rtl'] .motion-trace .timeline-item.reveal .timeline-card { transform: translateX(34px); }
+.motion-trace .timeline-item.reveal .timeline-dot { scale: .4; transition: scale .8s var(--ease-out) .1s; }
+.motion-trace .timeline-item.reveal.is-visible { opacity: 1; }
+.motion-trace .timeline-item.reveal.is-visible .timeline-card { transform: none; }
+.motion-trace .timeline-item.reveal.is-visible .timeline-dot { scale: 1; }
+
+/* Bidang dan pengalaman — "ledger": garis atas dilukis dahulu, kemudian isi didedahkan seperti lejar. */
+.motion-ledger .research-card.reveal, .motion-ledger .panel.reveal { opacity: 1; transform: none; clip-path: inset(0 100% 0 0); transition: clip-path 1.1s var(--ease-in-out); transition-delay: var(--reveal-delay, 0ms); }
+html[dir='rtl'] .motion-ledger .research-card.reveal, html[dir='rtl'] .motion-ledger .panel.reveal { clip-path: inset(0 0 0 100%); }
+.motion-ledger .research-card.reveal.is-visible, .motion-ledger .panel.reveal.is-visible { clip-path: inset(0 0 0 0); }
+.motion-ledger .panel-list li { transition: opacity .6s, transform .8s var(--ease-out); }
+.motion-ledger .panel.reveal:not(.is-visible) .panel-list li { opacity: 0; transform: translateY(10px); }
+.motion-ledger .panel.reveal.is-visible .panel-list li:nth-child(2) { transition-delay: .08s; }
+.motion-ledger .panel.reveal.is-visible .panel-list li:nth-child(3) { transition-delay: .16s; }
+.motion-ledger .panel.reveal.is-visible .panel-list li:nth-child(4) { transition-delay: .24s; }
+.motion-ledger .panel.reveal.is-visible .panel-list li:nth-child(5) { transition-delay: .32s; }
+.motion-ledger .panel.reveal.is-visible .panel-list li:nth-child(n+6) { transition-delay: .4s; }
+
+/* Pencapaian — "strike": kad anugerah ditempa (condong perspektif → rata), angka kepujian mengecil ke tempat. */
+.motion-strike .award-card.reveal { transform: perspective(1100px) rotateX(16deg) translateY(40px); transform-origin: 50% 100%; transition: opacity .9s, transform 1.3s var(--ease-out); }
+.motion-strike .award-card.reveal.is-visible { transform: none; }
+.motion-strike .honour.reveal .honour-big { display: inline-block; scale: 1.35; letter-spacing: .08em; transition: scale 1.2s var(--ease-out), letter-spacing 1.2s var(--ease-out); transition-delay: var(--reveal-delay, 0ms); }
+.motion-strike .honour.reveal.is-visible .honour-big { scale: 1; letter-spacing: normal; }
+.motion-strike .cert-card.reveal { transform: translateY(18px) rotate(-1.2deg); }
+.motion-strike .cert-card.reveal.is-visible { transform: none; }
+
+/* Aplikasi — "deck": kad masuk dari kedalaman seperti dek kad disusun. */
+.motion-deck .app-grid { perspective: 1400px; }
+.motion-deck .app-card.reveal { transform: translateZ(-160px) rotateY(-9deg); transform-origin: 0 50%; transition: opacity .9s, transform 1.2s var(--ease-out); transition-delay: var(--reveal-delay, 0ms); }
+html[dir='rtl'] .motion-deck .app-card.reveal { transform: translateZ(-160px) rotateY(9deg); transform-origin: 100% 50%; }
+.motion-deck .app-card.reveal.is-visible { transform: none; }
+
+/* Hubungi — "portal": kotak penutup terbuka sebagai pintu gerbang dari tengah bawah. */
+.motion-portal .contact-box.reveal { opacity: 1; transform: none; clip-path: inset(30% 38% 0 38% round 999px 999px 0 0); transition: clip-path 1.4s var(--ease-in-out); }
+.motion-portal .contact-box.reveal.is-visible { clip-path: inset(0 0 0 0 round 5px); }
+
+html[data-motion='paused'] .reveal, html[data-motion='paused'] .reveal * { clip-path: none !important; scale: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .button:hover::after { animation: none; }
+  main > .section:not(.hero)::after { display: none; }
+  .section-header h2, .about-copy h2, .panel h2 { clip-path: none; translate: none; }
+}
+
+/* ═════════ Versi Pagi / Malam ═════════ */
+.theme-toggle.mood-toggle { width: auto; min-width: 44px; padding: 0 14px 0 11px; gap: 7px; display: inline-flex; align-items: center; border-radius: 30px; font-size: 12.5px; font-weight: 600; }
+.mood-toggle svg { transition: rotate .7s var(--ease-out); }
+.mood-toggle[data-mood='day'] svg { rotate: 90deg; color: #b98a2e; }
+.mood-word { line-height: 1; }
+@media (max-width: 420px) { .mood-word { display: none; } .theme-toggle.mood-toggle { padding: 0; width: 44px; justify-content: center; } }
+/* Bab 3D pada waktu pagi: latar gading-batu pasir, kad cerita kekal zamrud untuk bacaan. */
+html[data-mood='day'] { --night-1: #e9e0cf; --night-2: #efe7d8; --night-3: #f7f1e4; }
+html[data-mood='day'] .chapter, html[data-mood='day'] .stage { color: var(--text); }
+html[data-mood='day'] .chapter::after { background: linear-gradient(90deg, transparent, var(--gold) 30%, var(--gold) 70%, transparent); }
+html[data-mood='day'] .chapter > .chapter-sticky::after { background: linear-gradient(180deg, transparent, #f3ecdfe6); }
+html[data-mood='day'] .stage-note, html[data-mood='day'] .chapter > .chapter-sticky > .stage-note { color: var(--text-soft); }
+html[data-mood='day'] .dial-ring { stroke: #98712b40; }
+html[data-mood='day'] .dial-ring-value { stroke: var(--gold); }
+html[data-mood='day'] .dial-degree { color: var(--text); }
+html[data-mood='day'] .rail-dot::before { border-color: var(--gold); }
+html[data-mood='day'] .rail-dot[aria-current]::before, html[data-mood='day'] .rail-dot:hover::before { background: var(--gold); }
+html[data-mood='day'] .tool { background: #fffdf8cc; border-color: #98712b55; color: var(--text); }
+html[data-mood='day'] .tool:hover { background: #fff; border-color: var(--gold); }
+html[data-mood='day'] .tool-exit { background: var(--forest); border-color: var(--forest); color: var(--cream); }
+html[data-mood='day'] .stage-loading, html[data-mood='day'] .stage-hint { background: #fffdf8e6; color: var(--text); border-color: #98712b40; }
+html[data-mood='day'] .story-card { background: linear-gradient(160deg, #134433f2, #0b2a20f5); box-shadow: 0 30px 70px #0d3a2d33; }
+html[data-mood='day'] .stage-kaleido { opacity: .12; mix-blend-mode: multiply; }
+
+
+/* ═════════ Pusingan 2: buang "AI slop" (semakan Gemini §6) ═════════ */
+/* #1 & #7: tiada pembahagi gerbang bergigi dan tiada friz bintang berulang; ruang negatif sahaja. */
+.chapter::before, main > .section:not(.hero)::before { display: none !important; }
+.chapter { border-block: 1px solid color-mix(in srgb, var(--gold-soft) 30%, transparent); }
+/* #3: eyebrow editorial menggantikan pil SaaS. */
+.hero-eyebrow { margin-bottom: 26px; color: var(--gold); }
+/* #4: tiada gradien kilau pada nama; dakwat penuh, patronim italik. */
+.sheen { background: none !important; -webkit-background-clip: border-box !important; background-clip: border-box !important; color: var(--text) !important; animation: none !important; text-decoration: none !important; }
+.hero-patronym { font-style: italic; font-weight: 500; color: var(--text-soft); }
+/* #6: blok editorial berkadar, tanpa aksara Unicode gergasi. */
+.about-note, html[dir='rtl'] .about-note { border-radius: 4px; border: 1px solid #dcc48b40; }
+.about-note::after { display: none; }
+.motion-unveil .about-note.reveal { clip-path: inset(100% 0 0 0 round 4px); }
+.motion-unveil .about-note.reveal.is-visible { clip-path: inset(0 0 0 0 round 4px); }
+/* #10: satu sistem geometri sahaja dalam kotak hubungi. */
+.contact-box::after { display: none !important; }
+/* #11: pengepala pejal bersih di atas bab gelap. */
+html.over-dark .site-header { background: rgba(5, 10, 8, .9); -webkit-backdrop-filter: none; backdrop-filter: none; }
+/* #12: butang ke atas tidak bertindih dengan pentas 3D. */
+html.in-chapter .to-top { opacity: 0; visibility: hidden; transform: translateY(12px); }
+
+/* #5: teks cerita editorial tanpa kotak kaca — garis paksi emas 1px dan scrim sisi lembut pada pentas. */
+html:not([data-motion='paused']) .chapter.is-enhanced .story-card { background: none; border: 0; border-radius: 0; padding: 6px 0 6px 26px; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none; }
+html[dir='rtl']:not([data-motion='paused']) .chapter.is-enhanced .story-card { padding: 6px 26px 6px 0; }
+html:not([data-motion='paused']) .chapter.is-enhanced .story-card::before { inset: 0 auto 0 0; width: 1px; height: auto; background: linear-gradient(180deg, transparent, var(--gold-hi) 18%, var(--gold-hi) 82%, transparent); }
+html[dir='rtl']:not([data-motion='paused']) .chapter.is-enhanced .story-card::before { inset: 0 0 0 auto; }
+html:not([data-motion='paused']) .chapter.is-enhanced .story-card h3 { font-size: clamp(2rem, 3vw, 3.1rem); line-height: 1.02; text-shadow: 0 2px 24px #000a; }
+html:not([data-motion='paused']) .chapter.is-enhanced .story-card .story-big { font-size: clamp(3.4rem, 6vw, 5.6rem); }
+html:not([data-motion='paused']) .chapter.is-enhanced .story-card p:not(.eyebrow) { text-shadow: 0 1px 16px #000c; font-size: 15px; }
+/* Scrim sisi mengikut kad aktif supaya teks terbaca tanpa kotak. */
+html:not([data-motion='paused']) .chapter.is-enhanced .chapter-sticky::before { content: ''; position: absolute; z-index: 3; inset: 0; pointer-events: none; opacity: 0; transition: opacity var(--dur-3), background var(--dur-3); }
+html:not([data-motion='paused']) .chapter.is-enhanced:has(.story-card.is-active[data-side='start']) .chapter-sticky::before { opacity: 1; background: linear-gradient(90deg, #050d0ad9 0%, #050d0a8c 30%, transparent 55%); }
+html:not([data-motion='paused']) .chapter.is-enhanced:has(.story-card.is-active[data-side='end']) .chapter-sticky::before { opacity: 1; background: linear-gradient(270deg, #050d0ad9 0%, #050d0a8c 30%, transparent 55%); }
+html[dir='rtl']:not([data-motion='paused']) .chapter.is-enhanced:has(.story-card.is-active[data-side='start']) .chapter-sticky::before { background: linear-gradient(270deg, #050d0ad9 0%, #050d0a8c 30%, transparent 55%); }
+html[dir='rtl']:not([data-motion='paused']) .chapter.is-enhanced:has(.story-card.is-active[data-side='end']) .chapter-sticky::before { background: linear-gradient(90deg, #050d0ad9 0%, #050d0a8c 30%, transparent 55%); }
+/* Pagi: teks gelap atas scrim gading. */
+html[data-mood='day']:not([data-motion='paused']) .chapter.is-enhanced .story-card { background: none; box-shadow: none; }
+html[data-mood='day']:not([data-motion='paused']) .chapter.is-enhanced .story-card h3 { color: var(--text); text-shadow: 0 2px 24px #fffaf0; }
+html[data-mood='day']:not([data-motion='paused']) .chapter.is-enhanced .story-card .story-big { color: var(--gold); }
+html[data-mood='day']:not([data-motion='paused']) .chapter.is-enhanced .story-card p:not(.eyebrow) { color: var(--text-soft); text-shadow: 0 1px 14px #fffaf0; }
+html[data-mood='day']:not([data-motion='paused']) .chapter.is-enhanced .story-card .eyebrow { color: var(--gold); }
+html[data-mood='day']:not([data-motion='paused']) .chapter.is-enhanced .story-card .grade { color: var(--gold); border-color: #98712b66; }
+html[data-mood='day']:not([data-motion='paused']) .chapter.is-enhanced .story-card::before { background: linear-gradient(180deg, transparent, var(--gold) 18%, var(--gold) 82%, transparent); }
+html[data-mood='day']:not([data-motion='paused']) .chapter.is-enhanced:has(.story-card.is-active[data-side='start']) .chapter-sticky::before { background: linear-gradient(90deg, #f6efe2e6 0%, #f6efe28c 30%, transparent 55%); }
+html[data-mood='day']:not([data-motion='paused']) .chapter.is-enhanced:has(.story-card.is-active[data-side='end']) .chapter-sticky::before { background: linear-gradient(270deg, #f6efe2e6 0%, #f6efe28c 30%, transparent 55%); }
+html[data-mood='day'][dir='rtl']:not([data-motion='paused']) .chapter.is-enhanced:has(.story-card.is-active[data-side='start']) .chapter-sticky::before { background: linear-gradient(270deg, #f6efe2e6 0%, #f6efe28c 30%, transparent 55%); }
+html[data-mood='day'][dir='rtl']:not([data-motion='paused']) .chapter.is-enhanced:has(.story-card.is-active[data-side='end']) .chapter-sticky::before { background: linear-gradient(90deg, #f6efe2e6 0%, #f6efe28c 30%, transparent 55%); }
+html[data-mood='day'] .button-ghost { background: #ffffffa6; border-color: #98712b66; color: var(--text); }
+@media (max-width: 900px) {
+  html:not([data-motion='paused']) .chapter.is-enhanced .story-card { padding: 4px 0 4px 18px; }
+  html:not([data-motion='paused']) .chapter.is-enhanced .chapter-sticky::before { opacity: 1 !important; background: linear-gradient(0deg, #050d0ae6 0%, #050d0a99 34%, transparent 58%) !important; }
+  html[data-mood='day']:not([data-motion='paused']) .chapter.is-enhanced .chapter-sticky::before { background: linear-gradient(0deg, #f6efe2f2 0%, #f6efe299 34%, transparent 58%) !important; }
+  html:not([data-motion='paused']) .chapter.is-enhanced .story-card h3 { font-size: 1.75rem; }
+}
+
+/* #8: nota sumber sebagai butang (i). */
+.note-wrap { position: relative; display: inline-flex; align-items: center; gap: 10px; }
+.note-toggle { display: inline-grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; background: none; color: inherit; }
+.note-toggle span { display: grid; place-items: center; width: 22px; height: 22px; border: 1px solid currentColor; border-radius: 50%; font-family: var(--font-heading); font-style: italic; font-size: 14px; font-weight: 600; opacity: .7; transition: opacity var(--dur-1), background-color var(--dur-1); }
+.note-toggle:hover span, .note-toggle:focus-visible span, .note-wrap.is-open .note-toggle span { opacity: 1; background: #dcc48b26; }
+.note-wrap .stage-note { position: absolute; inset-block-end: calc(100% + 6px); inset-inline-start: 0; width: max-content; max-width: min(340px, 80vw); padding: 10px 14px; border: 1px solid #dcc48b40; border-radius: 8px; background: #061611f0; color: var(--on-dark-soft) !important; font-size: 12px; opacity: 0; visibility: hidden; translate: 0 6px; transition: opacity var(--dur-1), translate var(--dur-2) var(--ease-out), visibility var(--dur-1); }
+.note-wrap:hover .stage-note, .note-toggle:focus-visible + .stage-note, .note-wrap.is-open .stage-note { opacity: 1; visibility: visible; translate: 0 0; }
+html:not([data-motion='paused']) .chapter.is-enhanced > .chapter-sticky > .note-wrap { position: absolute; z-index: 6; inset-block-end: 22px; inset-inline-start: max(14px, calc((100% - 1180px) / 2 - 12px)); color: var(--on-dark); }
+html[data-mood='day'] .chapter.is-enhanced > .chapter-sticky > .note-wrap { color: var(--text); }
+.chapter > .chapter-sticky > .note-wrap { width: var(--container); margin-inline: auto; }
+.feature-copy .note-wrap { color: var(--muted); }
+.feature-copy .note-wrap .stage-note { inset-block-end: auto; inset-block-start: calc(100% + 4px); }
+/* Scrim berada di antara kanvas (z 2) dan kawalan pentas (z 4–6): pentas tidak mengasingkan susunan lapisan dalam bab. */
+html:not([data-motion='paused']) .chapter.is-enhanced .stage { isolation: auto; }
+html:not([data-motion='paused']) .chapter.is-enhanced .chapter-sticky::before { z-index: 3; }
+html:not([data-motion='paused']) .chapter.is-enhanced .stage-hotspots { z-index: 4; }
+html.in-chapter .section-rail { opacity: 0; visibility: hidden; }

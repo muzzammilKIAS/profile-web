@@ -44,11 +44,14 @@ export class Rig {
     const camera = this.camera;
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
+    // Jarak asas dikira pada FOV rujukan supaya perubahan FOV berskrip tidak mengubah skala storyboard.
+    this.refFov ??= camera.fov;
+    const refV = this.refFov * DEG / 2, refH = Math.atan(Math.tan(refV) * camera.aspect);
     const vHalf = camera.fov * DEG / 2;
     const hHalf = Math.atan(Math.tan(vHalf) * camera.aspect);
     this.hHalf = hHalf; this.vHalf = vHalf;
     this.portrait = camera.aspect < 0.9;
-    this.base = this.radius / Math.sin(Math.min(vHalf, hHalf));
+    this.base = this.radius / Math.sin(Math.min(refV, refH));
     this.controls.minDistance = this.base * this.minDist;
     this.controls.maxDistance = this.base * this.maxDist;
     this.dirty = true;
@@ -57,9 +60,16 @@ export class Rig {
   scripted(p, outPos, outTarget) {
     const key = sampleKeys(this.keys, p);
     this.targetAt(p, key, outTarget);
+    // FOV dan azimut boleh dikunci-bingkai: kanta lebih rapat untuk close-up, ayunan orbit kecil antara titik semak.
+    if (key.fov && Math.abs(this.camera.fov - key.fov) > 0.01) {
+      this.camera.fov = key.fov;
+      this.camera.updateProjectionMatrix();
+      this.vHalf = key.fov * DEG / 2;
+      this.hHalf = Math.atan(Math.tan(this.vHalf) * this.camera.aspect);
+    }
     const dist = this.base * key.d;
     const elev = key.e * DEG;
-    const az = this.azimuth;
+    const az = this.azimuth + (key.az || 0) * DEG;
     const dir = _dir.set(Math.sin(az) * Math.cos(elev), Math.sin(elev), Math.cos(az) * Math.cos(elev));
     // Anjak subjek ke sisi (desktop) atau ke atas (potret) supaya kad teks tidak bertindih.
     const side = this.portrait ? 0 : (key.sx || 0) * (isRTL() ? -1 : 1);

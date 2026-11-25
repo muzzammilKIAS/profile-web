@@ -281,3 +281,309 @@ Perkara berikut akan segera menjadikan laman kelihatan generik, seperti templat 
 - **Jangan buat *scroll hijacking* atau *auto-rotate* liar:** Apabila pengguna berhenti scroll di bab Jamiah, model mesti berhenti kemas (*settle*). Jangan tangkap roda tetikus/sentuhan atas kanvas 3D melainkan pengguna mengklik butang **Teroka 360°** secara sedar (dengan butang Keluar + `Esc`).
 - **Jangan reka fakta, label bangunan, kulit buku, atau antaramuka palsu:** Jangan labelkan bahagian model 3D Jamiah sebagai bangunan fakulti tertentu tanpa bukti; jangan jana kulit buku atau tangkapan skrin aplikasi dengan AI; jangan ubah atau sunting wajah asal dalam `gambar/muzzammil.jpg`.
 - **Jangan biarkan intro atau efek menyekat LCP & aksesibiliti:** Pastikan kandungan HTML semantik boleh dibaca serta-merta, hormati `prefers-reduced-motion` dan butang jeda, serta uji setiap komponen baharu dalam **mod Arab RTL** (`reading-progress`, arah anak panah, penjajaran tajuk LTR dalam RTL, dan pencerminan ofset kamera 3D).
+
+
+---
+
+<!-- Pusingan 2: output Gemini (Antigravity CLI), disimpan tanpa suntingan oleh Claude. -->
+
+# Semakan Kreatif & Visual — Pusingan 2
+
+**Status keseluruhan:** Versi semasa masih jauh daripada taraf *Awwwards / Apple product showcase*. Naik taraf PBR pada Jamiah membawa peningkatan kecil pada batu, tetapi keseluruhan persembahan masih terbaca sebagai **maket CAD di atas meja kelabu + templat laman web janaan AI**. Paling kritikal: empat daripada lima pentas 3D (`#bidang`, `#pencapaian`, `#penerbitan`, `#aplikasi`) kelihatan **kosong** dalam tangkapan skrin, dan pembahagi gerbang bergigi serta latar potret robot AI merosakkan wibawa akademik laman ini.
+
+---
+
+## 1. Jamiah Imam: Kritikan Tegas, Parameter Tepat & Shot List Sinematik
+
+### A. Apa yang Masih Nampak Mainan, Kartun atau Generik
+
+1. **Tumbuhan ialah pembunuh realisme #1 (`r2-jamiah-000.png`, `r2-jamiah-020.png`, `r2-jamiah-080.png`)**
+   - Barisan pokok renek di hadapan (`shrub`) ialah sfera licin (`SMOOTH = new Set(['slate', 'shrub'])`) beratur seragam seperti biji kacang pis plastik. Dalam `qa/reference/jamiah-art-direction.jpg`, tumbuhan ialah rimbunan berbilang tona dalam kotak batu berbingkai dengan lampu tiang rendah.
+   - Pokok kurma di halaman (`r2-jamiah-080.png`, dan masih kelihatan bayangnya di balik kekisi pada `-000` dan `-020`) kelihatan seperti labah-labah plastik rata.
+   - **Tindakan wajib:** Ganti sfera `shrub` dengan gumpalan *icosahedron* terdisplas (*vertex noise*) atau *instanced foliage cluster* 3 tona hijau zaitun-kering + kotak pasu batu berbingkai (`height: 0.45`, `bevel`), atau jika kekangan poligon ketat, **ubah kepada landskap seni bina minimalis Riyadh** (pagar batu rendah berlekuk + lampu *bollard* gangsa hangat + 2–4 pokok kurma berpelepah berlengkung 3D sebenar) — jauh lebih mewah daripada sfera mainan.
+
+2. **Garisan ufuk patah & lantai kelabu getah (`r2-jamiah-000.png`, `r2-jamiah-020.png`)**
+   - Di belakang bangunan jelas kelihatan garisan mendatar tajam memisahkan lantai kelabu-hijau (`~#28312d`) dengan langit hitam pekat (`#040b08`). Puncanya: `scene.fog = new THREE.FogExp2(0x0e1d17, 0.0052)` terlalu cair untuk menelan pinggir `CircleGeometry(radius * 12)` dan warna kabus tidak padan dengan warna lantai di ufuk.
+   - Hasilnya nampak seperti model diletak di atas meja getah di depan langsir hitam, bukan ruang studio tak bersempadan (*infinity cyclorama*).
+
+3. **Tompokan cahaya kuning pelik di bawah plinth (`r2-jamiah-000.png`, `r2-jamiah-020.png`, `r2-mobile-ms-02-akademik.png`)**
+   - Cahaya `SpotLight` (`pool`, intensiti `900`) memantul pada lantai `roughness: 0.42` tepat di bucu hadapan plinth, mencipta tompokan kuning kabur seolah-olah ada lampu LED murah di bawah meja. Tiada *contact shadow* gelap di pangkal plinth, jadi plinth kelihatan melayang.
+
+4. **Batu pasir terlalu terang & rata; kaligrafi seperti pelekat pudar (`r2-jamiah-000.png`, `r2-jamiah-020.png`)**
+   - Gabungan `stone` (`0xe4cfaa`), `key` (`3.4`) dan `pool` (`900`) membakar dinding hadapan hingga hilang kontras bayang mikro. Grid `masonry()` terlalu seragam dan kaku seperti jubin bilik air.
+   - Papan tanda kaligrafi (`sign`) nampak seperti tekstur rata kelabu yang terpotong di kiri dan kanan (`الامام محمد بن سعود ا`), bukannya huruf gangsa timbul 3D yang membuang bayang nipis ke atas dinding seperti dalam rujukan `jamiah-art-direction.jpg`.
+
+5. **Kekisi mashrabiyya & kubah kehilangan mutu logam (`r2-jamiah-000.png`, `r2-jamiah-020.png`)**
+   - Kekisi `bronze` terbaca sebagai garisan hitam 2D tanpa ketebalan atau pantulan tepi (*rim specular*). Cahaya `lantern` (`90`) tenggelam kerana seluruh fasad luar sudah terlalu terang.
+   - Kubah `slate` (`roughness: 0.38, metalness: 0.55`) berkilat lebar seperti plastik krom murah. Tingkap `glass` pula seperti pelekat coklat rata; `emissiveIntensity: 0.07` langsung tidak kelihatan.
+
+6. **Komposisi, FOV statik & kad teks bertindih (`r2-jamiah-000.png`, `r2-jamiah-020.png`, `r2-mobile-ms-02-akademik.png`)**
+   - `PerspectiveCamera(28, ...)` yang kaku sepanjang putaran membunuh drama ruang — bangunan terasa seperti paparan objek CAD.
+   - `.story-card` menutup hujung kiri bangunan pada `-000` dan menutup sayap kanan pada `-020`. Hotspot `"Pintu gerbang berkekisi"` terapung di tengah kekisi tanpa garisan penunjuk (*leader line*) dan berlaga dengan kad teks.
+   - Di mobile (`r2-mobile-ms-02-akademik.png`), kad teks hilang daripada bingkai awal, manakala model terpotong di kiri-kanan dan terlalu rendah.
+
+---
+
+### B. Nilai Parameter Tepat (PBR, Cahaya, Latar, Kabus, Kamera)
+
+Tetapkan `renderer.toneMapping = THREE.ACESFilmicToneMapping` dan `renderer.toneMappingExposure = 0.96` (elak *blown highlights* pada batu).
+
+| Kategori | Elemen | Nilai Semasa | Nilai Sasaran Tepat |
+|---|---|---|---|
+| **Latar & Kabus** | `backdrop()` atas → ufuk → bawah | `#040b08` → `#13271f` → `#0a1611` | `#050a08` (0%) → `#091310` (54%) → `#0e1b16` (68%) → `#07100d` (100%) |
+| | `scene.fog` | `FogExp2(0x0e1d17, 0.0052)` | `FogExp2(0x091310, 0.0115)` (padankan tepat dengan warna ufuk + *alpha radial fade* pada lantai) |
+| | `scene.environmentIntensity` | `0.32` | `0.48` (guna PMREM studio hangat-gelap dengan *softbox* sisi supaya gangsa & kubah tangkap *rim light*) |
+| **Lantai & Plinth** | `floorMaterial` | `#101b17`, rough `0.42`, metal `0.15` | `#091310`, `roughness: 0.78`, `metalness: 0.05`, `envMapIntensity: 0.25` + *radial alphaMap* pudar ke `0` pada `radius * 4.5` (hapus terus garisan ufuk!) + *baked soft contact shadow plane* (`#000000`, `opacity: 0.65`) tepat di bawah plinth |
+| | `plinthMaterial` | `#1d1b18`, rough `0.55`, metal `0.1` | `#121110` (basalt hitam bertekstur halus), `roughness: 0.68`, `metalness: 0.08`, tambah *chamfer/bevel* tepi `0.08` |
+| | `brassMaterial` | `#b08d4a`, rough `0.3`, metal `1.0` | `#c7a45e`, `roughness: 0.26`, `metalness: 0.95`, `envMapIntensity: 1.4` |
+| **Bahan Seni Bina** | `stone` (batu pasir Riyadh) | `#e4cfaa`, rough `0.84`, metal `0` | `#d8bf96`, `roughness: 0.91`, `metalness: 0.0`; tambah `bumpMap`/pertubasi normal dalam shader `masonry` + kurangkan kontras garisan mortar daripada `0.2` kepada `0.11` + variasi *macro-weathering* rendah frekuensi (`0.90–1.04`) supaya tidak nampak jubin |
+| | `bronze` (kekisi mashrabiyya) | `#4a3826`, rough `0.36`, metal `0.82` | `#5a4328`, `roughness: 0.30`, `metalness: 0.92`, `envMapIntensity: 1.8` (mesti tangkap kilau tepi keemasan) |
+| | `slate` (kubah zink berusuk) | `#6a7379`, rough `0.38`, metal `0.55` | `#4f595e`, `roughness: 0.56`, `metalness: 0.42`, `envMapIntensity: 0.85`; tajamkan rusuk (`rib` 36 jalur, `mix(0.68, 1.04, ...)`) + ubah `roughness` sedikit di lurah rusuk |
+| | `glass` (tingkap dalaman) | `#14262b`, rough `0.1`, emissive `0.07` | `#0f1f24`, `roughness: 0.14`, `metalness: 0.85`, `emissive: #e89b48`, `emissiveIntensity: 0.32` (cahaya bilik kuliah hangat yang hidup apabila kamera rapat) |
+| | `foliage` / `shrub` / `lawn` | `#5f6b49` / `#4d5a3f` / `#5c6848` | `#4a5938` (`roughness: 0.86`) / `#3c4b2f` (`roughness: 0.94`, *flatShading/displaced*, **bukan** sfera licin) / `#445235` (`roughness: 0.98`) |
+| | `sign` (kaligrafi) | `#fff3dc`, rough `0.8` | Tukar latar papan tanda menyamai `#d8bf96` tanpa sempadan segi empat; huruf kaligrafi `#2c2217` (gangsa gelap) dengan `roughness: 0.35`, `metalness: 0.75` atau *extrude* mesh 3D sebenar + betulkan UV yang terpotong |
+| **Pencahayaan** | `key` (matahari senja Riyadh) | `#ffe4bf`, `3.4`, pos `(-1.25, 1.35, 1.5)` | `#ffd7a3`, intensiti `2.45`, sudut lebih rendah `(-1.6, 0.95, 1.15)` supaya bayang bangunan & kekisi memanjang dramatik ke halaman |
+| | `fill` (langit senja sejuk) | `#a9c0cc` / `#2b2118`, `0.55` | `#7e9fb3` / `#1c1510`, intensiti `0.38` (biarkan sisi bayang kekal dalam & berdimensi!) |
+| | `rim` (pemisah siluet belakang) | `#bfe0d2`, `1.1` | `#d9c192` (emas hangat pudar), intensiti `1.45`, pos `(1.4, 0.85, -1.6)` untuk menggariskan menara & bucu dinding daripada latar gelap |
+| | `pool` (`SpotLight` atas) | `#fff0d8`, `900`, angle `0.42` | **Kurangkan drastik atau buang** — jika kekalkan sebagai *top accent*, turun ke `#ffe8c4`, intensiti `140`, `angle: 0.34`, `penumbra: 1.0`, `decay: 2`, sasaran tepat pada pusat bumbung `[0, 3, 0]` (elak limpahan ke lantai hadapan!) |
+| | `lantern` (cahaya dari dalam gerbang) | `#f4b86a`, `90`, `dist: 1.1r` | `#ffaa4c`, intensiti `160`, `distance: radius * 1.45`, `decay: 1.8`, tambah `PointLight` kedua di halaman (`#ffba6b`, intensiti `75`, `[0, 3.0, -0.5]`) supaya ruang dalaman bercahaya emas dan kekisi membentuk siluet dramatik |
+| **Kamera & AO** | `FOV` | Statik `28°` | Dinamik `22°–38°` mengikut syot (interpolasi dalam `Rig.update()`, kira `this.base` menggunakan rujukan tetap `32°` supaya kesan *dolly-zoom* terasa) |
+| | `GTAOPass` | `radius: 1.5`, `scale: 1.25` | `radius: 1.1`, `scale: 1.45`, `thickness: 1.2`, tambah `UnrealBloomPass` sangat halus (`threshold: 0.92`, `strength: 0.18`, `radius: 0.35`) hanya untuk menangkap kilau `lantern`, tingkap hangat dan puncak menara |
+
+---
+
+### C. Shot List Sinematik 7 Syot (Satu Putaran 360° Penuh)
+
+**Perubahan mekanikal wajib dalam `js/scenes/jamiah.js` & `js/rig.js`:**
+Jangan ikat `yaw = YAW0 + p * TAU` secara linear! Masukkan `yaw` dan `fov` ke dalam `KEYS` supaya kamera boleh **memperlahankan putaran semasa extreme close-up** dan **memecut elegan semasa sapuan sudut lebar**, sambil tetap melengkapkan tepat **360°** (`-24°` → `+336°`).
+
+**Ubah suai gaya teks (`.story-card`):** Buang kotak kaca berat di tengah skrin yang menutup model. Tukar kepada **tipografi editorial terapung tanpa kotak** (*borderless editorial overlay*) dengan *scrim* gradien halus di pinggir skrin (`linear-gradient(90deg, #050a08d8 0%, transparent 44%)`) atau jalur minimal di tepi *safe-zone* (`max-width: 340px`, sudut kiri/kanan bawah atau sisi berlawanan dengan `sx`).
+
+| Syot | Nama & Niat Sinematik | Julat `p` | `yaw` (°) | Jarak Relatif (`d`) | Elevation (`e`) | `FOV` (°) | Sasaran (`target` ruang model) & `sx` | Koreografi Teks (6 Kad Cerita + Transisi) |
+|---|---|---|---|---|---|---|---|---|
+| **1** | **Pendekatan Monumental** (*Approaching the Gate*) — Kamera meluncur rendah menghampiri pintu gerbang utama; batu pasir muncul dari gelap, cahaya emas mula mengintai dari balik kekisi. | `0.00 – 0.14` | `-24° → -4°` | `1.22 → 0.74` | `9° → 5°` | `36° → 31°` | `[0, 2.8, 7.2]` (tarik ke gerbang), `sx: +0.26` | **Kad 1 (Riyadh · 2015–2024):** Muncul di kiri dengan *clip-path* menegak (bukan kotak kaca) pada `p=0.00–0.12`; pudar keluar sebelum gerbang membesar ke tengah bingkai. |
+| **2** | **Extreme Close-Up Kekisi Mashrabiyya & Kaligrafi** — Kamera menembusi ruang hadapan; kekisi gangsa membingkai halaman bercahaya emas, kaligrafi Arab tersergam di bahagian atas. | `0.14 – 0.28` | `-4° → +22°` | `0.74 → 0.36` | `5° → 11°` | `31° → 23°` | `[0, 3.6, 8.9]` (pusat kekisi & papan tanda), `sx: -0.28` | **Kad 2 (Diploma 2015–2017):** Masuk di kanan sejurus `p=0.16`. Hotspot `gate` muncul dengan *hairline leader line* emas (`1px`) tanpa pil hitam besar, hilang sebelum `p=0.27`. |
+| **3** | **Sapuan Sayap Barat & Garis Fasad** (*Architectural Orbit*) — Kamera berundur sedikit sambil menyapu sisi kompleks, mempamerkan irama tingkap berlekuk dan kepadatan blok seni bina. | `0.28 – 0.46` | `+22° → +116°` | `0.36 → 0.88` | `11° → 18°` | `23° → 34°` | `[-2.0, 3.2, 0.5]` (sayap barat), `sx: +0.28` | **Kad 3 (Mumtaz ×3):** Angka besar `Mumtaz ×3` di kiri sebagai teks monumental *parallax* perlahan (`p=0.31–0.44`), seiring ritma tingkap yang melintas di kanan. |
+| **4** | **Mendongak ke Menara Kembar** (*Low-Angle Minaret Rise*) — Kamera turun rendah di belakang kompleks, mendongak ke arah menara supaya puncak gangsa membelah langit malam. | `0.46 – 0.60` | `+116° → +190°` | `0.88 → 0.64` | `18° → 8°` | `34° → 38°` | `[3.8, 7.2, -5.1]` (paksi menara kanan), `sx: -0.26` | **Kad 4 (Sarjana Muda Syariah 2017–2020):** Masuk di kanan (`p=0.48–0.59`); garisan menegak tipis di sisi teks menyahut paksi menegak menara. |
+| **5** | **Extreme Close-Up Kubah Berusuk** (*Dome & Finial Study*) — Lensa memampat ke telefoto ketat `22°`, menonjolkan alur rusuk kubah zink, siluet menara kedua di belakang dan kilau hangat di puncak. | `0.60 – 0.74` | `+190° → +248°` | `0.64 → 0.42` | `8° → 25°` | `38° → 22°` | `[0, 6.9, -5.95]` (kubah masjid), `sx: +0.30` | **Kad 5 (Sarjana Fiqh Perbandingan 2022–2024):** Masuk di kiri (`p=0.62–0.73`). Hotspot `dome` menyala halus pada puncak kubah tanpa menutupi kelengkungan kubah. |
+| **6** | **Menyusuri Sayap Timur & Intipan Halaman** (*Courtyard Sweep*) — Kamera memanjat tinggi di sisi timur, membuka pemandangan ke dalam halaman dalaman, koloni tiang dan pokok kurma yang diterangi lampu hangat. | `0.74 – 0.88` | `+248° → +308°` | `0.42 → 0.94` | `25° → 34°` | `22° → 34°` | `[0, 2.4, 1.0]` (halaman tengah), `sx: -0.22` | **Beat Bernafas (Tiada kad penuh):** Hanya kapsyen mikro 1 baris di bawah (`Halaman dalam · Masjid & Fakulti`) atau peralihan keluar Kad 5 — beri mata pengguna 100% menikmati seni bina sebelum klimaks. |
+| **7** | **Aerial Reveal 360° Lengkap** (*Monumental Finale*) — Kamera berundur lebar dan naik tinggi ala dron seni bina sambil melengkapkan pusingan 360° penuh ke sudut `-24°`, mendedahkan keseluruhan pelan simetri kampus di atas plinth basalt. | `0.88 – 1.00` | `+308° → +336°` | `0.94 → 1.30` | `34° → 44°` | `34° → 30°` | `[0, 2.0, 0]` (pusat kompleks), `sx: +0.24` | **Kad 6 (Satu pusingan lengkap / Garis masa penuh):** Masuk di kiri bawah (`p=0.90–1.00`) bersama CTA emas `Lihat garis masa ↓` dan cincin dail `360°` mengunci dengan denyutan emas halus. |
+
+> **Nota responsif potret (`aspect < 0.9`):** Pastikan `syPortrait` meletakkan sasaran model di 45% bahagian atas skrin (`syPortrait: 0.24`), kecilkan kad cerita kepada jalur padat di 30% bawah dengan *backdrop scrim* (`max-height: 28svh`), dan pindahkan nota disclaimer keluar dari pentas supaya model tidak pernah terpotong.
+
+---
+
+## 2. Identiti Gerakan Berbeza Bagi Setiap Bahagian
+
+**Bahasa Visual Induk (Unified Motion Grammar):**
+Semua bahagian berkongsi satu fizik dan watak — **"Keberatan Seni Bina & Kinetik Kaligrafi"**: lengkung pecutan bermaruah (`cubic-bezier(0.22, 1, 0.36, 1)` untuk masuk, `power2.inOut` untuk *scroll-scrub*), tiada *bounce* kartun, tiada ulangan *translateY + fade* yang sama di setiap blok, dan cahaya emas champagne (`#dfc487`) sentiasa bertindak sebagai penunjuk fokus.
+
+### 1. Hero (`#utama`)
+- **Konsep:** *Tirai gerbang dibuka oleh cahaya fajar — tipografi terukir keluar dari garis dasar, bukan jatuh dari langit.*
+- **Beat gerakan:**
+  1. **Garis Paksi Emas (`0–350ms`):** Satu garis nipis menegak `1px` membelah ruang antara teks dan kad potret, mengembang dari pusat ke atas dan bawah (`scaleY: 0 → 1`).
+  2. **Masker Garis Dasar Tipografi (`120–780ms`):** Baris nama `Ahmad` / `Muzzammil` / `Mohammad Najib` tidak naik dengan `opacity` biasa, tetapi terdedah dari dalam pembalut `overflow: hidden` (`translateY(105%) → 0`, *stagger* `90ms`), tanpa gradien `.sheen` yang pelik.
+  3. **Pendedahan Gerbang Potret (`250–1100ms`):** Gerbang potret terbuka dari celah menegak tengah ke luar (*curtain aperture* menggunakan `clip-path: inset(0 48% 0 48% round 220px 220px 8px 8px)` → `inset(0 0 0 0 round ...)`), diikuti *slow dolly-out* imej potret (`scale: 1.12 → 1.0`).
+  4. **Parallax Kedalaman Skrol (`scroll 0 → 100vh`):** Teks kiri bergerak lebih laju (`y: -48px`) daripada gerbang potret (`y: -18px`) sambil kaleidoskop di belakang mekar secara geometrik (*morph*), mencipta rasa lapisan kaca.
+
+### 2. Jamiah (`#akademik` / `#jamiah`)
+- **Konsep:** *Koreografi kamera filem seni bina — satu pusingan 360° yang berirama antara monumental, intim dan perspektif burung.*
+- **Beat gerakan:**
+  1. **Penyelaman Gerbang (`p: 0.00 → 0.28`):** *Push-in* rendah ke dalam kekisi sambil FOV memampat `36° → 23°` dan `lantern` dalaman memuncak intensiti `100 → 180`.
+  2. **Sapuan Sisi & Dongakan Menara (`p: 0.28 → 0.60`):** Kamera merendah ke `8°` dengan FOV lebar `38°` supaya menara menjulang melepasi garis ufuk.
+  3. **Kajian Makro Kubah (`p: 0.60 → 0.74`):** Putaran diperlahankan (*dwell*), telefoto `22°` mengunci rusuk kubah semasa cahaya *rim* menyapu lengkung logam.
+  4. **Pelepasan Dron 360° (`p: 0.74 → 1.00`):** Kamera mendaki ke `44°` dan berundur penuh, mengakhiri putaran pada pelan simetri keseluruhan kompleks.
+
+### 3. Manuskrip di Atas Rehal (`#bidang`)
+- **Konsep:** *Helaian kitab turath dibuka oleh tangan yang cermat — gerakan berengsel, terlipat dan berfokus pada dakwat.*
+- **Beat gerakan:**
+  1. **Penguncian Rehal (`p: 0.00 → 0.22`):** Kamera bermula dari sudut sisi rendah (`e: 14°`) melihat siluet rehal bersilang, kemudian mendaki ke sudut bacaan (`e: 48°`) di atas kitab terbuka.
+  2. **Selakan Helaian Fizikal (`p: 0.22 → 0.68`):** Setiap satu daripada 5 item `.field-list` (01–05) disegerakkan dengan selakan satu helaian manuskrip 3D (*vertex bend/curl* lembut merentasi tulang belakang buku) — bukan memutar seluruh rehal seperti meja pusing!
+  3. **Pembesaran Mikro Kaligrafi (`p: 0.68 → 0.90`):** Kamera *pan* perlahan merentasi halaman kanan ke kiri (mengikut arah bacaan Arab!) pada jarak makro (`d: 0.45`), sambil cahaya *raking light* hangat meluncur merentasi tekstur kertas dan sepuhan emas.
+  4. **Penutupan Hormat (`p: 0.90 → 1.00`):** Kamera berundur lembut ke sudut 3/4 klasik apabila senarai 05 selesai.
+
+### 4. Pingat Emas & Perak (`#pencapaian`)
+- **Konsep:** *Kilauan logam di dalam bilik gelap — gerakan ayunan bandul perlahan di mana cahaya yang bergerak, bukan objek berpusing laju.*
+- **Beat gerakan:**
+  1. **Jatuhan Berpemberat (*Weighted Drop*, `p: 0.00 → 0.20`):** Pingat tidak *fade-in*; ia turun sedikit dari atas rebennya dengan inersia bandul teredam (*damped pendulum swing* `±7° → 0°`).
+  2. **Sapuan Cahaya Spekular (`p: 0.20 → 0.55`):** Pingat hanya berpusing halus `±18°`, sebaliknya **sumber cahaya utama bergerak mengelilingi permukaan ukiran** (140° arc) untuk memancarkan kilau tajam emas (`ICTE'26`) diikuti perak (`ITeLIC'26`).
+  3. **Peralihan Berpasangan (*Dual Reveal*, `p: 0.55 → 0.85`):** Pingat Emas mengundur sedikit ke kedalaman fokus (*depth-of-field* / jarak `z - 1.2`) manakala Pingat Perak meluncur masuk ke hadapan tanpa bertukar secara mengejut.
+  4. **Keseimbangan Dua Paksi (`p: 0.85 → 1.00`):** Kedua-dua pingat berhenti sejajar pada sudut 3/4 bertentangan, membalas condongan mikro penuding (`±4°`).
+
+### 5. Pustaka Buku (`#penerbitan`)
+- **Konsep:** *Menarik jilid pilihan dari rak perpustakaan — pergerakan linear, gelongsor tulang belakang dan bukaan kulit buku.*
+- **Beat gerakan:**
+  1. **Barisan Tulang Belakang (*Spine Shelf*, `p: 0.00 → 0.25`):** Buku-buku tersusun rapat secara mendatar/serong dalam perspektif seni bina; kamera menyusur selari (*tracking shot* lateral, tiada orbit).
+  2. **Tarikan Jilid Aktif (`p: 0.25 → 0.75`):** Apabila skrol menjejak penerbitan tumpuan, satu buku **menggelongsor keluar ke hadapan (`+z: 1.4`)**, berpaling `35°` menghadap kamera dan kulit hadapannya terangkat sedikit (`12°`) sambil buku lain meredup sedikit (*emissive/light falloff*).
+  3. **Segerak Senarai Editorial (`p: 0.75 → 1.00`):** Pentas 3D melaras halus ke atas sambil senarai `.publication-list` di bawah memasuki bingkai dengan garis pembahagi `scaleX: 0 → 1` dari kiri ke kanan (atau kanan ke kiri dalam RTL).
+
+### 6. Makmal Peranti (`#aplikasi`)
+- **Konsep:** *Pendedahan produk Apple yang jitu — peranti terapung dalam susunan berlayer (exploded UI), tepat dan klinikal tetapi hangat.*
+- **Beat gerakan:**
+  1. **Pemasangan Profil Tepi (`p: 0.00 → 0.25`):** Telefon/tablet bermula dari pandangan tepi nipis (`yaw: 82°`, menonjolkan ketebalan bingkai logam & kilau *rim*), kemudian berpaling tajam dan licin ke hadapan (`yaw: 12°`).
+  2. **Pecahan Lapisan UI (*Layered Depth*, `p: 0.25 → 0.65`):** Skrin aplikasi memisahkan 2–3 lapisan antara muka (contoh: kad e-Hadis40 / modul bahasa Arab) sejauh `z: +0.18` dan `+0.36` di hadapan kaca peranti semasa kamera bergerak serong `25°` untuk menunjukkan kedalaman.
+  3. **Pertukaran Paparan Skrin (*Screen Morph*, `p: 0.65 → 0.88`):** Pertukaran antara aplikasi berlaku melalui *wipe* menegak pada tekstur skrin peranti yang disegerakkan dengan kad teks aktif — bukan memutar peranti 360°.
+  4. **Pendaratan Grid (`p: 0.88 → 1.00`):** Lapisan UI kembali rapat ke skrin kaca dan peranti condong `10°` sebagai jemputan membuka grid 9 aplikasi di bawah.
+
+### 7. Hubungi (`#hubungi`)
+- **Konsep:** *Ruang pertemuan yang tenang — tirai bingkai mengecil masuk ke fokus, menamatkan perjalanan dengan keheningan berwibawa.*
+- **Beat gerakan:**
+  1. **Bingkai Masuk (*Architectural Inset*, `scroll enter`):** Kotak Hubungi mengembang dari `inset(0 32px 0 32px round 24px)` ke saiz penuh kontena (`inset(0 0 0 0 round 12px)`), memberikan rasa memasuki ruang tertutup yang intim.
+  2. **Nafas Geometri Perlahan:** Kaleidoskop di sudut kanan hanya bergerak apabila penuding memasuki kawasan kad (reaksi halus, bukan berpusing tanpa henti).
+  3. **Sinar Pautan (`hover`):** Pautan e-mel & GitHub menarik penuding secara magnetik (lihat Bahagian 5) sambil anak panah `↗` meluncur keluar dan muncul semula dari sudut bertentangan (*double-arrow chase*).
+
+---
+
+## 3. Kaleidoskop: Transformasi Geometri Dinamik (Bukan Stiker Berpusing)
+
+### Diagnosis Semasa (`script.js` baris 256–360)
+Buat masa ini, `script.js` melukis satu bingkai statik (`const kaleidoTime = 2.5`) daripada bentuk rawak (`star`, `circle`, `diamond`, `petal`, `ring`) lalu memusingkannya dengan animasi CSS `kaleidoSpin 240s`. Hasilnya kelihatan seperti corak bunga api rawak yang kabur, bukan geometri Islam (*girih / star-and-polygon*) yang hidup.
+
+### Arah Baharu: Enjin Geometri Poligon-Bintang (*Dynamic Islamic Rosette Morph*)
+Bina kaleidoskop berdasarkan **konstruksi Hankin (*polygons-in-contact*)** atau **WebGL Fragment Shader (GLSL) ringan** (1 quad penuh, kos GPU hampir sifar, 60fps lancar tanpa *jank* Canvas 2D) yang melakukan *morphing* berterusan antara tiga keluarga simetri tradisional Islam:
+- **Fasa 0.0 (Octagonal / Rub el Hizb):** Simetri 8-lipat (tenang, klasik — sesuai untuk Hero & Hubungi).
+- **Fasa 0.5 (Decagonal / Girih 10-lipat):** Sudut `36°/72°`, kompleks dan ilmiah — sesuai untuk Bab Akademik & Bidang.
+- **Fasa 1.0 (Dodecagonal / Bintang 12-lipat):** Ketepatan kubah dan astrolab — sesuai untuk Pencapaian & Aplikasi.
+
+### Parameter Konkrit (Selamat Bacaan & Tanpa *Flashing*)
+
+| Parameter | Nilai Spesifik | Rasional |
+|---|---|---|
+| **Bilangan baji (*wedges*)** | **12** (simetri 6-cermin) untuk kad kecil (`.arch-kaleido`, `.contact-kaleido`); **16** (simetri 8-cermin) untuk kanvas besar (`.hero-kaleido`, `.stage-kaleido`). | Gandaan 4 dan 6 menghasilkan bintang 8 & 12 bucu yang tulen; elak angka ganjil atau >20 yang mencipta *moiré* halus. |
+| **Gaya lukisan** | **Garisan nipis sahaja (`strokeWidth: 0.75px–1.1px`) + nod simpang mikro**, buang bentuk *filled blob* `55` opacity. Warna tunggal emas lembut `#c7a45e` (di atas gelap) / `#98712b` (di atas ivory) dengan maksimum 15% aksen `#1f5a45`. | Garisan halus berdisiplin jauh lebih mewah daripada bentuk berwarna-warni bertindih yang mencipta kesan kartun. |
+| **Kelajuan sudut & morphing** | Putaran asas: **`0.012 rad/s`** (~8.7 minit sepusingan); kelajuan morph sudut Hankin (`theta: 22.5° ↔ 67.5°`): **`0.08 rad/s`** (kitaran penuh ~78 saat). | Perubahan berlaku pada kadar meditatif — pengguna merasai corak "bernafas dan berubah" tanpa sesekali mencetuskan *flashing* atau pening. |
+| **Opacity selamat bacaan** | Latar terang (Hero ivory): **`0.07` (tepi) → `0.00` (di belakang teks)** melalui `mask-image: radial-gradient(circle at 78% 48%, #000 0%, #000 28%, transparent 64%)`.<br>Pentas gelap (`.stage-kaleido`, `.contact-kaleido`): **`0.14` maksimum**, dikurangkan kepada **`0.05`** di zon teks melalui *scrim*. | Kontras teks kekal melepasi WCAG AAA; kaleidoskop menjadi tekstur atmosfera, bukan gangguan bacaan. |
+| **Pemetaan skrol (*Scroll Morph*)** | Peta kemajuan skrol bahagian `p ∈ [0, 1]` kepada:<br>- Sudut bukaan bintang `contactAngle = mix(30°, 60°, smoothstep(0, 1, p))`<br>- Putaran tambahan `deltaRot = p * 22.5°` (separuh baji sahaja, jangan 180°)<br>- Skala nafas `scale = 1.0 + sin(p * π) * 0.08`<br>Terapkan *damping* (`lerp` faktor `0.06` per bingkai) supaya skrol laju tidak menyentak corak. | Apabila pengguna menatal, bintang 8 bucu beransur-ansur mekar dan mengunci menjadi roset 12 bucu secara organik. |
+| **Pemetaan penuding (*Pointer Response*)** | Hanya pada `@media (hover: hover) and (pointer: fine)`:<br>- Normalisasi penuding `nx, ny ∈ [-1, 1]` ditapis dengan *lerp* `0.04`.<br>- Peta `nx` → anjakan fasa sudut garisan dalaman `±6°`; `ny` → anjakan jejari gelang dalaman `±4%`.<br>- Jangan tukar warna atau kecerahan mengikut kursor (elak kilat). | Memberi rasa "instrumen astronomi hidup" apabila kursor melintas tanpa mengalih perhatian dari teks. |
+| **Prestasi & Aksesibiliti** | Hadkan kemas kini kepada **30fps** untuk kanvas latar (`dt >= 33ms`), jeda sepenuhnya apabila `IntersectionObserver` melaporkan di luar viewport atau `motionPaused() === true`, dan kunci ke satu bingkai bersih untuk `prefers-reduced-motion`. | Sifar pembaziran bateri dan tidak berlumba dengan GPU WebGL Three.js. |
+
+---
+
+## 4. Seni Bina Islam Sebagai Transisi Antara Bahagian
+
+Gantikan pembahagi gerbang bergigi (`.chapter::before`) dan garisan bintang Canva (`main > .section::before`) dengan **3 teknik seni bina sebenar** yang mengawal ruang, cahaya dan kedalaman.
+
+### Teknik 1: Portal Gerbang Runcing Mengembang (*Pointed-Arch Portal Wipe*) — CSS `clip-path` + GSAP ScrollTrigger
+**Tempat guna:** Peralihan dari zon terang (*Ivory*, contohnya `#tentang` → `#akademik` / `#jamiah`, dan `#pencapaian` → `#penerbitan`).
+
+Daripada sempadan hitam bergigi yang melintang rata, pintu masuk ke bab gelap dibuka seperti **melangkah melalui satu gerbang seni bina besar** yang membesar memenuhi seluruh skrin apabila ditatal.
+
+```css
+/* Pembungkus masuk bab gelap */
+.chapter-portal {
+  clip-path: path('...'); /* atau polygon/inset dengan lengkung SVG clipPath */
+  clip-path: url(#islamic-arch-clip); /* unit objectBoundingBox (0..1) */
+  will-change: transform, clip-path;
+}
+```
+```html
+<!-- SVG clipPath responsif (objectBoundingBox) dikawal GSAP ScrollTrigger -->
+<svg width="0" height="0" aria-hidden="true">
+  <defs>
+    <clipPath id="archPortalClip" clipPathUnits="objectBoundingBox">
+      <!-- Morph atribut d: dari gerbang runcing sempit (0.18..0.82) ke segi empat penuh (0..1) -->
+      <path id="archPortalPath" d="M 0.16,1 L 0.16,0.42 Q 0.16,0.14 0.5,0.04 Q 0.84,0.14 0.84,0.42 L 0.84,1 Z" />
+    </clipPath>
+  </defs>
+</svg>
+```
+- **Koreografi skrol:** Semasa `.chapter` menghampiri bahagian tengah viewport (`start: 'top 92%'`, `end: 'top 15%'`, `scrub: 0.6`), titik kawalan gerbang melebar dari `0.16..0.84` ke `0..1` dan puncak runcing `0.04` merata ke `0`, sambil garis tepi emas `1px` menjejaki lengkung gerbang dan menghilang sebaik skrin terbuka penuh.
+- **Keselamatan:** Untuk `prefers-reduced-motion` atau tanpa JS, `clip-path: none` (terus terbuka penuh tanpa sekatan).
+
+### Teknik 2: Unjuran Bayang Mashrabiyya Bergerak (*Raking Mashrabiyya Light-Cast*) — SVG Mask + CSS Scroll-Linked Parallax
+**Tempat guna:** Peralihan antara bahagian editorial terang (`#utama` → `#tentang`, `#bidang` → `#pengalaman`).
+
+Dalam seni bina Islam, ruang tidak dipisahkan oleh garisan kartun, tetapi oleh **perubahan cahaya yang ditapis melalui kekisi mashrabiyya**.
+
+```css
+.section-light-veil {
+  position: relative;
+  height: clamp(96px, 14vh, 160px);
+  overflow: hidden;
+  pointer-events: none;
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-soft) 100%);
+}
+.section-light-veil::before {
+  content: '';
+  position: absolute;
+  inset: -40% -10%;
+  background: radial-gradient(ellipse 60% 80% at 50% 50%, color-mix(in srgb, var(--forest) 9%, transparent), transparent 72%);
+  /* SVG corak girih/mashrabiyya sebenar berulang dengan sudut serong seperti bayang matahari */
+  -webkit-mask: url('assets/svg/mashrabiyya-lattice.svg') center / 180px 180px repeat;
+  mask: url('assets/svg/mashrabiyya-lattice.svg') center / 180px 180px repeat;
+  transform: perspective(700px) rotateX(48deg) translate3d(var(--sun-x, 0px), var(--sun-y, 0px), 0);
+  filter: blur(1.2px); /* penumbra lembut bayang matahari sebenar */
+  opacity: 0.75;
+}
+```
+- **Koreografi skrol:** ScrollTrigger menggerakkan `--sun-x` (`-24px → +24px`, terbalik pada `html[dir="rtl"]`) dan `--sun-y` (`-18px → +18px`) secara perlahan, mencipta ilusi bayang matahari petang menyapu lantai batu marmar di antara dua bahagian.
+
+### Teknik 3: Pintu Kedalaman WebGL + Kabus Warna Berterusan (*Seamless Atmospheric Tunnel*) — WebGL Shader / CSS Gradient Bridge
+**Tempat guna:** Keluar dari bab 3D gelap (`#jamiah`, `#penerbitan`, `#aplikasi`) kembali ke kandungan teks terang.
+
+Daripada garis emas keras `2px` (`.chapter::after`) yang memotong gelap ke putih secara mengejut:
+1. Pada `p ∈ [0.92, 1.00]` dalam babak WebGL, tambah *post-uniform* atau animasi `scene.fog.density` (`0.0115 → 0.022`) dan *vignette* tepi supaya objek 3D berundur secara halus ke dalam atmosfera gelap.
+2. Di bawah `.chapter`, letakkan lapisan peralihan setinggi `120px` dengan **2 lapisan *parallax* berbentuk siluet serambi/kolonad** (SVG lutsinar 12% & 6% dalam warna `--night-1` dan `--gold-soft` dengan `translateY` berbeza `0.15x` dan `0.35x` kadar skrol) yang melarutkan warna `#07100d` ke `--bg` (`#f8f5ec`). Tiada garisan tajam melintang yang memecahkan ilusi kedalaman.
+
+---
+
+## 5. Butang & Mikro-Interaksi Premium
+
+Semua butang utama (`.button-primary`, `.button-gold`, `.contact-link`, `.tool-explore`, `.to-top`) perlu dinaik taraf daripada kotak rata + `translateY(-3px)` biasa kepada sistem interaksi taktil bertaraf Awwwards.
+
+### Spesifikasi Tepat
+
+1. **Magnetic Hover Dwi-Lapisan (*Dual-Layer Magnetic Pull*)**
+   - **Medan aktif:** Hanya apabila `@media (hover: hover) and (pointer: fine)` dan `!motionPaused()`.
+   - **Radius zon tarikan:** `24px` di luar sempadan butang (atau `pointermove` di atas butang + *padding* pembalut tidak kelihatan `16px`).
+   - **Jarak tarikan maksimum:**
+     - Lapisan luar (`.button`): **`±9px` pada paksi X, `±6px` pada paksi Y** (`dx * 0.22`, dikepung oleh `clamp`).
+     - Lapisan dalam (`.button-label` + `.icon-arrow`): **`±4.5px` pada paksi X, `±3px` pada paksi Y** (*inner parallax* 50% daripada luar, mencipta rasa kedalaman fizikal).
+   - **Tempoh & Easing:**
+     - Semasa menjejak penuding: `duration: 0.28s`, `ease: 'power3.out'` (atau `cubic-bezier(0.22, 1, 0.36, 1)`).
+     - Semasa penuding keluar (`pointerleave` — *magnetic snap-back*): `duration: 0.62s`, `ease: 'elastic.out(1, 0.45)'` (anjal sangat halus tanpa bergegar berlebihan).
+
+2. **Sempadan Beranimasi Cahaya Emas (*Conic Perimeter Trace*)**
+   - Guna CSS `@property --border-angle` supaya GPU melicinkan putaran tanpa kos JS:
+     ```css
+     @property --border-angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+     ```
+   - **Keadaan rehat:** Sempadan statik nipis `1px solid rgba(223, 196, 135, 0.34)` (di gelap) atau `rgba(152, 113, 43, 0.32)` (di terang).
+   - **Keadaan hover:** `background-image` pada pseudo-elemen `::before` dengan `padding: 1px` dan `mask-composite: exclude` menyalakan arka cahaya emas `conic-gradient(from var(--border-angle), transparent 0deg, transparent 295deg, #dfc487 338deg, #fff4d6 355deg, transparent 360deg)`.
+   - **Tempoh putaran:** **`2.6s linear infinite`** (mulakan pada sudut kursor masuk `--entry-angle` supaya cahaya menyala tepat di tempat penuding menyentuh butang!), `opacity: 0 → 1` dalam **`240ms cubic-bezier(0.22, 1, 0.36, 1)`**.
+
+3. **Kilauan Spekular & Pengisian Ink (*Directional Fill / Specular Sweep*)**
+   - Untuk `.button-secondary` & `.contact-link`: apabila *hover*, lapisan isi zamrud (`#0d3a2d` di latar terang; `#dfc4871f` di latar gelap) mengembang dari bawah menggunakan `clip-path: inset(100% 0 0 0) → inset(0 0 0 0)` dalam **`380ms cubic-bezier(0.19, 1, 0.22, 1)`**.
+   - Untuk `.icon-arrow`: tukar kepada *double-arrow chase* — anak panah pertama keluar `+10px` (`opacity: 0`) dan anak panah klon masuk dari `-10px → 0` dalam **`320ms cubic-bezier(0.22, 1, 0.36, 1)`** (terbalikkan paksi X untuk `html[dir="rtl"]`).
+
+4. **Detent Tekan & Fokus (*Tactile Press & Keyboard*)**
+   - `:active`: `scale(0.965)` dalam **`90ms cubic-bezier(0.4, 0, 1, 1)`**, lepas kembali dalam **`280ms cubic-bezier(0.22, 1, 0.36, 1)`**.
+   - **Sentuhan (`pointer: coarse`) & `prefers-reduced-motion`:** Matikan tarikan magnetik dan putaran sempadan; kekalkan perubahan warna latar `180ms ease` dan gelang fokus tegas `2px solid #dfc487`, `outline-offset: 4px`.
+
+---
+
+## 6. Senarai "AI Slop" yang Masih Kelihatan & Mesti Dibuang
+
+| # | Elemen "AI Slop" | Fail Screenshot | Sebab Ia Rosakkan Kualiti & Gantian Wajib |
+|---|---|---|---|
+| **1** | **Pembahagi gerbang bergigi hitam-putih berulang** (`.chapter::before`) | `r2-desktop-ms-05-penerbitan.png`, `r2-desktop-ms-06-aplikasi.png`, `r2-mobile-ms-02-akademik.png` | Kelihatan seperti hiasan renda kek atau banner bufet Ramadan murah; terpotong separuh di tepi kanan mobile. **Buang 100%** dan ganti dengan Teknik 1 (Portal Gerbang Mengembang) atau Teknik 3. |
+| **2** | **Latar lengan robot sci-fi biru di belakang potret** + bingkai sesak berlapis-lapis (`rosette` + `arch-kaleido` + bintang) | `r2-desktop-ms-00-top.png`, `r2-mobile-ms-00-top.png` | Lengan robot kelabu-biru bertembung keras dengan gerbang emas turath — menjerit imej komposit AI. **Ganti foto potret** dengan latar neutral/studio zamrud-hangat atau *cutout* kemas di atas latar gradien zamrud lembut (`#123529 → #081812`), dan kurangkan hiasan bingkai kepada 1 garis gerbang emas nipis sahaja. |
+| **3** | **Pil kicker bertitik hijau (`PORTFOLIO AKADEMIK DIGITAL`)** | `r2-desktop-ms-00-top.png`, `r2-mobile-ms-00-top.png` | Klise #1 laman SaaS/portfolio janaan AI (gaya v0/Tailwind). **Buang bingkai pil bulat & titik hijau**; tukar kepada *editorial eyebrow* dengan garisan halus `28px` emas seperti tajuk bahagian lain. |
+| **4** | **Gradien animasi `.sheen` pada nama "Muzzammil"** | `r2-desktop-ms-00-top.png`, `r2-mobile-ms-00-top.png` | Huruf "M" bertukar hijau-zaitun kusam separuh jalan — nampak seperti pepijat pewarnaan. **Buang `.sheen`**; guna warna dakwat penuh `#11342b` (atau italik *Cormorant Garamond* untuk *patronym* `Mohammad Najib`). |
+| **5** | **Kad kaca gelap + garisan emas 2px di atas + satu bucu tajam (`.story-card`)** bertindih atas model 3D | `r2-jamiah-000.png`, `r2-jamiah-020.png`, `r2-jamiah-080.png` | Templat glassmorphism gelap tipikal AI; menutup binaan Jamiah. **Tukar kepada teks editorial bebas-kotak** di tepi *safe-zone* dengan *scrim* latar lembut dan garis paksi menegak emas `1px`. |
+| **6** | **Kad `about-note` bucu asimetri `80px` + aksara Unicode `✧` gergasi** | `r2-desktop-ms-01-tentang.png` | Gaya kad kutipan Elementor/WordPress lama; aksara `✧` pudar di bawah kanan nampak murah. **Tukar kepada blok editorial berkadar tegak** dengan garis sempadan emas nipis `1px`, sudut `4px` konsisten, atau bingkai gerbang halus tanpa Unicode gergasi. |
+| **7** | **Garisan pembahagi + bintang 4 bucu di tengah (`main > .section::before`)** | `r2-desktop-ms-01-tentang.png`, `r2-desktop-ms-04-pencapaian.png`, `r2-desktop-ms-05-penerbitan.png`, `r2-desktop-ms-06-aplikasi.png`, `r2-mobile-ms-02-akademik.png` | Hiasan Canva berulang secara mekanikal di setiap bahagian. **Buang** dan ganti dengan jarak ruang negatif yang yakin + Teknik 2 (bayang mashrabiyya halus). |
+| **8** | **Teks penafian defensif terpapar terang di pentas** (*"Model 3D tafsiran artistik..."*, *"Model pingat generik..."*) | `r2-jamiah-000.png`, `r2-jamiah-020.png`, `r2-jamiah-080.png`, `r2-desktop-ms-04-pencapaian.png`, `r2-mobile-ms-02-akademik.png` | Membunuh ilusi sinematik serta-merta dan berbunyi seperti nota amaran AI. **Alihkan ke butang info mikro `(i)` / tooltip** di penjuru bawah atau kolofon kaki halaman. |
+| **9** | **Pentas 3D gelap kosong hanya dengan kaleidoskop samar** | `r2-desktop-ms-03-bidang.png`, `r2-desktop-ms-04-pencapaian.png`, `r2-desktop-ms-05-penerbitan.png`, `r2-desktop-ms-06-aplikasi.png` | Pengguna melihat kotak gelap kosong tanpa subjek apabila menatal. **Wajib ada poster render PBR resolusi tinggi (`stage-poster`) yang terus kelihatan** sebelum WebGL aktif, dan aktifkan pramuatan (`rootMargin: '800px'`) supaya model sudah sedia sebelum masuk skrin. |
+| **10** | **Tindihan dua hiasan berbeza dalam kotak Hubungi** (`contact-box::after` berlian 45° + `contact-kaleido`) | `r2-desktop-ms-08-hubungi.png` | Garisan berlian besar melanggar bulatan kaleidoskop secara serabut. **Buang `contact-box::after`** sepenuhnya; biarkan hanya satu sistem geometri (kaleidoskop *girih* nipis Bahagian 3). |
+| **11** | **Kebocoran kabur di belakang navbar atas bab gelap** | `r2-jamiah-000.png` (atas kiri & tengah) | `backdrop-filter: blur(16px)` menangkap jalur bergigi putih/hitam di bawahnya, meninggalkan tompokan asap hodoh di belakang logo. Akan selesai sebaik `.chapter::before` dibuang + pastikan `site-header` di atas bab gelap menggunakan `rgba(5, 10, 8, 0.88)` bersih. |
+| **12** | **Butang bulat terapung `.to-top` di bucu kanan bawah** | `r2-jamiah-000.png`, `-020.png`, `-080.png`, `r2-desktop-ms-03` hingga `-08`, `r2-mobile-ms-02-akademik.png` | Ikon panah hijau terapung yang melanggar komposisi pentas 3D dan bertembung dengan `.chapter-rail` & `.section-rail`. **Buang butang terapung ini** di atas bab 3D (pautan `Kembali ke atas ↑` di kaki halaman dan klik logo di navbar sudah memadai). |
+
+---
+
+## Kejujuran Tentang Had Pengamatan (Apa yang Tidak Dapat Dilihat)
+
+1. **Empat model 3D lain tidak kelihatan langsung dalam tangkapan skrin:** Dalam `r2-desktop-ms-03-bidang.png` (kitab di atas rehal), `r2-desktop-ms-04-pencapaian.png` (pingat), `r2-desktop-ms-05-penerbitan.png` (pustaka buku), dan `r2-desktop-ms-06-aplikasi.png` (makmal peranti), pentas gelap hanya memaparkan kaleidoskop latar tanpa model 3D mahupun imej poster. Oleh itu, saya **tidak dapat menilai** kualiti geometri, bahan PBR, pencahayaan, atau komposisi keempat-empat aset tersebut — ini mesti disemak semula selepas masalah *loading/poster fallback* dibetulkan.
+2. **Keadaan PBR baharu untuk bahagian belakang & halaman Jamiah:** `r2-jamiah-080.png` ialah render lama sebelum naik taraf bahan, manakala `-000` dan `-020` hanya menunjukkan fasad hadapan. Mutu bahan baharu pada kubah belakang, bumbung sayap, halaman dalaman dan menara di sudut belakang tidak dapat disahkan secara visual lagi.
+3. **Kualiti gerakan sebenar & kelancaran FPS:** Semua input ialah imej pegun. Saya tidak dapat menilai rasa *scroll-scrub*, kelewatan *damping* `Rig`, transisi *intro curtain*, tirai pertukaran bahasa (`lang-veil`), kelancaran mod `Teroka 360°`, atau prestasi GPU pada peranti pertengahan.
+4. **Mod gelap, versi EN/AR (RTL) dan bahagian lain:** Tiada tangkapan skrin bagi `data-theme="dark"`, antaramuka Bahasa Arab (`dir="rtl"`), jalur `#stats`, senarai penuh `#timeline`, `#penerbitan` (baris teks), grid `#aplikasi`, serta `#pengalaman`. Penilaian visual hanya merangkumi apa yang kelihatan dalam 12 imej Pusingan 2 dan 1 imej rujukan.

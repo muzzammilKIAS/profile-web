@@ -316,36 +316,77 @@
         ctx.fill(); ctx.stroke();
       });
     }
+    // Roset geometri Islam: cincin bintang {n/k} bersarang yang disambung oleh jalinan garis (girih),
+    // dilukis dengan garis emas halus sahaja. "time" mengubah sudut sentuhan bintang (gaya Hankin),
+    // jadi corak berubah bentuk secara perlahan apabila dilukis semula mengikut skrol.
+    const folds = config.wedges >= 16 ? 8 : 12;
+    const onLight = canvas.classList.contains('hero-kaleido');
+    const ink = onLight ? '#98712b' : '#d6b66f';
+    const accent = onLight ? '#1f5a45' : '#5f9c82';
+    function ring(r, n, inner, rot, width, colour, alpha) {
+      ctx.globalAlpha = config.alpha * alpha;
+      ctx.strokeStyle = colour;
+      ctx.lineWidth = width;
+      starPath(ctx, 0, 0, r, rot, n, inner);
+      ctx.stroke();
+    }
     function draw(time) {
       if (!width) resize();
       ctx.clearRect(0, 0, width, height);
       ctx.save();
-      ctx.globalAlpha = config.alpha;
       ctx.translate(width / 2, height / 2);
-      ctx.rotate(time * config.spin);
-      const segment = Math.PI * 2 / config.wedges;
-      for (let i = 0; i < config.wedges; i++) {
-        ctx.save();
-        ctx.rotate(i * segment);
-        if (i % 2) { ctx.rotate(segment); ctx.scale(1, -1); } // pantulan cermin
-        ctx.beginPath();
-        ctx.moveTo(0, 0);
-        ctx.arc(0, 0, radius, -.004, segment + .004);
-        ctx.closePath();
-        ctx.clip();
-        drawWedge(time, segment);
-        ctx.restore();
-      }
-      // Gelang emas statik memberi struktur rozet.
-      ctx.strokeStyle = '#dcc48b';
-      ctx.globalAlpha = config.alpha * .35;
-      ctx.lineWidth = 1;
-      [.18, .34, .52].forEach(r => { ctx.beginPath(); ctx.arc(0, 0, radius * r, 0, Math.PI * 2); ctx.stroke(); });
+      ctx.lineJoin = 'round';
+      const R = radius * 0.98;
+      const hair = Math.max(.7, R * .0016);
+      const theta = .5 + .5 * Math.sin(time * .55); // 0..1: sudut bintang terbuka ↔ tertutup
+      const radii = [.1, .17, .26, .37, .5, .65, .82, 1];
+      radii.forEach((k, i) => {
+        const r = R * k;
+        const rot = (i % 2 ? Math.PI / folds : 0) + time * .02 * (i % 2 ? -1 : 1);
+        const inner = .5 + .22 * Math.sin(theta * Math.PI + i * .7); // bucu bintang tajam ↔ lembut
+        ring(r, folds, inner, rot, hair * (i === 3 || i === 6 ? 1.6 : 1), i === 4 ? accent : ink, i === 4 ? .55 : .75);
+        // Jalinan: setiap bucu bintang disambung ke lekuk dalam cincin seterusnya.
+        if (i < radii.length - 1) {
+          const r2 = R * radii[i + 1];
+          const rot2 = ((i + 1) % 2 ? Math.PI / folds : 0) + time * .02 * ((i + 1) % 2 ? -1 : 1);
+          const inner2 = .5 + .22 * Math.sin(theta * Math.PI + (i + 1) * .7);
+          ctx.globalAlpha = config.alpha * .38;
+          ctx.strokeStyle = ink;
+          ctx.lineWidth = hair;
+          ctx.beginPath();
+          for (let j = 0; j < folds; j++) {
+            const a = rot + j * Math.PI * 2 / folds;
+            const b = rot2 + (j + .5) * Math.PI * 2 / folds;
+            ctx.moveTo(Math.cos(a) * r, Math.sin(a) * r);
+            ctx.lineTo(Math.cos(b - Math.PI / folds) * r2 * inner2, Math.sin(b - Math.PI / folds) * r2 * inner2);
+            ctx.moveTo(Math.cos(a) * r, Math.sin(a) * r);
+            ctx.lineTo(Math.cos(b) * r2 * inner2, Math.sin(b) * r2 * inner2);
+          }
+          ctx.stroke();
+        }
+        // Nod simpang mikro pada bucu cincin utama.
+        if (i % 2 === 0) {
+          ctx.globalAlpha = config.alpha * .6;
+          ctx.fillStyle = ink;
+          for (let j = 0; j < folds; j++) {
+            const a = rot + j * Math.PI * 2 / folds;
+            ctx.beginPath();
+            ctx.arc(Math.cos(a) * r, Math.sin(a) * r, hair * 1.6, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+      });
+      // Gelang emas statik memberi struktur rozet (DNA asal).
+      ctx.strokeStyle = ink;
+      ctx.lineWidth = hair;
+      [.18, .34, .52].forEach(k => { ctx.globalAlpha = config.alpha * .25; ctx.beginPath(); ctx.arc(0, 0, R * k, 0, Math.PI * 2); ctx.stroke(); });
       ctx.restore();
     }
     return { canvas, draw, resize, visible: true };
   }
   const kaleidos = $$('canvas[data-kaleido]').map(createKaleido);
+  // Lapisan imersif boleh melukis semula satu kanvas pada "masa" tertentu (corak berubah bentuk mengikut skrol).
+  window.__kaleidoDraw = (canvas, time) => { const k = kaleidos.find(item => item.canvas === canvas); if (k) k.draw(time); };
   // Kaleidoskop dilukis sekali (dan semula bila saiz berubah). Gerakan datang daripada animasi CSS
   // (putaran perlahan), jadi tiada gelung JavaScript dan gerakan sentiasa lancar.
   const kaleidoTime = 2.5;

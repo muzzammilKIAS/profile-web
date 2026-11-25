@@ -138,3 +138,64 @@ Percubaan awal `rg` gagal kerana tidak tersedia; `find`/`grep` digunakan. Percub
 2. Jalankan `tools/glb-check.html` melalui server tempatan pada browser yang tersedia. Harness membandingkan empat sudut dan jumlah panggilan render; `tools/verify_browser.py` menyediakan automasi/screenshot apabila Chrome boleh dilancarkan. Semak rupa, terutama papan bertekstur dan tepi/kubah, sebelum integrasi akhir.
 3. Muat metadata kulit daripada manifest array; gunakan sRGB, nisbah halaman asal untuk bentuk buku, dan bahan neutral bagi belakang/spine. Pilih 1024 atau 2048 berdasarkan tahap kualiti yang diperlukan.
 4. Jalankan X-03 selepas C-02 hingga C-04 siap: integrasi scroll/manual, mobile, RTL dan prestasi sebenar. Pengurangan draw call ini tidak membuktikan sasaran FPS laman sudah dicapai.
+
+## Pusingan 2
+
+25 November 2026 — implementasi empat babak pada branch `immersive-3d`. Fail yang dicipta: `js/scenes/library.js`, `js/scenes/devices.js`, `js/scenes/medals.js`, `js/scenes/manuscript.js`, `js/scenes/common.js`. Laporan ini hanya ditambah di hujung. Tiada commit, push, reset atau clean. Fail integrasi/CSS/markup/rig/jamiah milik agent lain tidak diubah oleh Codex.
+
+### Kontrak dan bahan
+
+Semua modul mengeksport `default async create(ctx)` dan memulangkan `scene`, `camera`, `update(delta)`, `resize`, `onActivate`, `onDeactivate`, `dispose`. `update` memulangkan false selepas pose/kamera stabil; tiada animasi idle berterusan, RAF tambahan, pasca-proses, dependency atau CDN baharu. Semua gerakan model/lampu ditentukan oleh p. Teroka menggunakan OrbitControls melalui `Rig`, dengan HUD sedia ada.
+
+`common.js` mengurus sumber GPU, lantai PBR zamrud, cahaya hangat/rim, bayang sentuh lembut, geometri bevel, penggabungan geometri statik, tekstur prosedur neutral dan pengawal babak. `SceneRig extends Rig` mengekalkan API Teroka/zoom/reset tetapi mengatasi `scripted()` dengan interpolasi ke objek/vectors sedia ada; ini mengelakkan peruntukan objek `sampleKeys()` setiap pose. Tiada pembinaan geometry/material/texture/vector dalam gelung update babak. Rig asal tidak diubah. Kamera menggunakan dolly, elevation dan ayunan azimut; bukan FOV animasi. Pemerhati `dir` menandakan kamera dirty apabila RTL berubah ketika skrol berhenti.
+
+Buku membaca `aspect_ratio`, `page_count` dan `dominant_color_hex` daripada manifest sebenar. Kulit depan menggunakan WebP 2048/1024 mengikut tier, UV penuh tanpa crop/cermin, sRGB, anisotropy maksimum. Kulit belakang/tulang neutral; ketebalan ialah anggaran daripada jumlah helaian. Peranti menggunakan tepat tiga tangkapan aplikasi yang dibekalkan dengan nisbah asal; skrin emissive, `toneMapped:false`. Bingkai kaca berasingan daripada imej supaya pantulan tidak menutup UI. Tier low mengecilkan imej peranti ke sisi panjang maksimum 1024 pada canvas sebelum upload GPU (fail sumber asal masih dimuat melalui rangkaian). Semua tekstur prosedur maksimum 512, shadow map low 1024/high 2048. `ctx.env` dikongsi dan tidak dilupuskan oleh babak.
+
+Halaman buku/manuskrip hanya mempunyai tekstur kertas dan bingkai geometri; tiada teks/ayat/kaligrafi. Pingat generik mempunyai cakera, rim, relief bintang lapan pada kedua-dua muka, gelung, reben dan gerigi sisi; tiada nama/logo pertandingan.
+
+### Koreografi mengikut p
+
+| Babak | Julat p dan tindakan |
+|---|---|
+| Pustaka | 0–0.16: dua buku terapung, dolly ke buku pertama. 0.16–0.28: muka pertama ditahan ke kamera, subjek ke sisi bertentangan kad start; checkpoint 0.22. 0.315: makro kulit. 0.30–0.60: kulit berengsel terbuka dan 3/5 helaian berlengkung diselak; kamera naik kemudian berundur. 0.50: kedua-dua buku dalam komposisi luas. Buku pertama berputar penuh sepanjang 0.28–0.68; buku kedua sepanjang 0.06–0.70. 0.72–0.84: muka kedua ditahan, checkpoint 0.78 dan anjakan bertentangan kad end. 0.865: makro kulit kedua. 0.85–1: buku kedua dibuka/diselak dan kamera keluar. |
+| Makmal | 0.015–0.12: penutup laptop dibuka dari posisi tertutup. 0.12–0.20: paparan laptop menghadap kamera, checkpoint 0.16; makro pada 0.225. 0.20–0.44: komposisi berorbit ke 180°, berundur/elevation pada 0.32, tablet dibawa ke hadapan. 0.44–0.56: tablet menghadap kamera, checkpoint 0.50; makro pada 0.585. 0.56–0.78: komposisi melengkapkan 360°, berundur pada 0.68. 0.78–0.90: telefon menghadap kamera, checkpoint 0.84; makro pada 0.925. 1: komposisi luas. Peranti utama mengimbangi orientasinya agar skrin dapat dibaca, sementara susunan keseluruhan berputar. |
+| Pingat | `pass` pada `.feature#pingat`. 0.04–0.44: separuh putaran syiling, emas/perak berlawanan arah. 0.40: makro relief emas. 0.44–0.56: kedua-dua muka hadapan, termasuk pusat viewport p≈0.50. 0.60: makro perak. 0.56–0.96: lengkapkan 360° setiap pingat. Lampu sorot menyapu relief sepanjang 0.28–0.70; kamera berundur dan naik pada 0.78–1. |
+| Manuskrip | `pass` pada `.feature#manuskrip`. 0–1: kitab dan dua papan rehal bersilang berputar penuh 360°. 0–0.24: kamera naik untuk melihat struktur buku. 0.24–0.42: dolly makro halaman dengan elevation hingga 62°. 0.27–0.72: satu helaian bergerak dari kanan, melengkung/terangkat, lalu mendarat di kiri; posisi dan normal dikira secara analitik dalam buffer sedia ada. 0.42–0.56: makro dekat lipatan. 0.56–1: kamera turun dan keluar untuk menunjukkan rehal. |
+
+Makro selepas tempoh bacaan sengaja boleh memotong sebahagian permukaan objek; checkpoint kad mengekalkan seluruh kulit/skrin dalam bingkai. Semua laluan boleh berbalik. Apabila `motionPaused()`, pustaka/manuskrip menggunakan pose luas p=0; makmal/pingat menggunakan p=0.5. Klik `[data-book-view]` menatal terus ke 0.22/0.78, menyelesaikan scrub semasa, menggunakan pose checkpoint lalu memasuki Teroka. Dalam mod jeda, buku yang diklik menjadi pose stabil terpilih. HUD menyediakan rotate/zoom/reset/keluar.
+
+Cangkuk ujian: `window.__profile3d.pustaka`, `.makmal`, `.pingat`, `.manuskrip`, masing-masing mengandungi `progress`, `yawDeg`, `distanceRatio`, `mode`, `tier`; tambahan: `secondYawDeg/firstOpen/secondOpen`, `lidOpenDeg/focus`, `silverYawDeg/lightX`, `pageTurn/pageTurnDeg`. `yawDeg` melaporkan putaran koreografi; ayunan azimut kamera kecil tidak ditambah pada bacaan itu.
+
+### Bajet dan semakan yang dijalankan
+
+Kiraan daripada scene graph Three.js sebenar, bukan renderer WebGL. Color pass dianggarkan satu draw call per mesh dengan satu material; frustum culling boleh mengurangkannya. Shadow pass/VSM blur boleh menambah draw call.
+
+| Babak | Color draw call high / low | Segi tiga high / low | Mesh `castShadow` high / low |
+|---|---:|---:|---:|
+| Pustaka | 23 / 19 | 4,522 / 3,050 | 20 / 16 |
+| Makmal | 30 / 30 | 24,154 / 24,154 | 23 / 23 |
+| Pingat | 9 / 9 | 13,686 / 9,078 | 6 / 6 |
+| Manuskrip | 14 / 14 | 2,952 / 2,568 | 12 / 12 |
+
+Kekunci laptop digabungkan menjadi satu mesh, begitu juga butang sisi peranti, perincian rim/bintang/gerigi setiap pingat, reben setiap pingat, papan rehal, jalur logam dan hiasan sudut kitab. Tiada render target atau composer milik babak. `dispose()` membersihkan geometry, material, texture, light shadow maps, controls, HUD dan event/pemerhati yang dimiliki modul; environment/renderer manager dikekalkan.
+
+Semakan lulus:
+
+- `node --check` untuk kelima-lima fail JS baharu.
+- Semua import baharu diselesaikan ke fail tempatan; `three` ke `vendor/three/three.module.min.js`, addon tambahan hanya `utils/BufferGeometryUtils.js`; OrbitControls diwarisi melalui rig.
+- ID/selector `pustaka`, `makmal`, `pingat`, `manuskrip`, kedua-dua slug butang dan checkpoint 0.22/0.78 serta 0.16/0.50/0.84 dibandingkan dengan `index.html`; semuanya sepadan. Peta LOADERS sedia ada sudah memadankan nama fail.
+- Harness sementara `/tmp/profile3d-round2-check.mjs` menggunakan Three.js r187 tempatan, metadata WebP sebenar melalui sharp yang sudah tersedia, dengan DOM/canvas/TextureLoader tiruan. Lapan kombinasi babak/tier berjaya dicipta.
+- 101 sampel p maju dan undur bagi setiap kombinasi menghasilkan matriks objek/kamera yang sama; semua koordinat geometri finite. Panggilan kedua pada p sama memulangkan false. Pose jeda kekal apabila p skrol berubah.
+- Resize 1440×900 dan 390×844, LTR/RTL, mod Teroka, zoom, reset dan kembali ke skrol lulus pada tahap logik/matriks. Di checkpoint buku/peranti, normal muka utama mempunyai dot product >0.9 dengan arah kamera dan seluruh permukaan terletak dalam NDC viewport desktop.
+- Semua tekstur milik babak dalam tier low mempunyai dimensi ≤1024; shadow-map setting ikut bajet. Setiap geometry/material/texture yang dirujuk scene graph menerima event dispose sekali; dispose kedua tidak mengulang pelepasan. Cangkuk ujian dibuang apabila dispose.
+- Semakan whitespace fail baharu lulus.
+
+### Belum diuji dan permintaan kepada Claude
+
+**Belum diuji:** browser/Chromium, kompilasi shader dan upload GPU, render sebenar, warna/pantulan/bayang, keterbacaan tajuk/UI, pertindihan kad dan bingkai gerbang, gesture sentuh, klik butang buku dengan GSAP sebenar, fullscreen, pertukaran renderer antara babak, pemulihan WebGL context, FPS, penggunaan VRAM serta `renderer.info.render.calls`. Semakan matriks tidak menggantikan QC visual Gemini. Tiada screenshot atau sasaran FPS didakwa.
+
+1. Jalankan QC Chromium pada checkpoint dan titik makro di atas, mobile/RTL, scroll terbalik, jeda, Teroka/zoom/reset serta pertukaran babak. Perhatikan khususnya halaman yang diselak, kedalaman peranti di 180°, dan potongan subjek pada bingkai gerbang. Semak `renderer.info` bagi draw call sebenar termasuk shadow pass.
+2. `chapterUI()` dalam `js/hud.js` belum memulangkan `dispose()` bagi MutationObserver bahasa; `scrollProgress()` dalam `js/scene-manager.js` belum memberi fungsi cleanup untuk listener fallback tanpa GSAP. Mohon tambah API pelupusan pada kedua-dua helper untuk menutup potensi listener/observer tertinggal selepas context restore. Modul kini membersihkan pasangan ScrollTrigger/tween miliknya dan elemen rel, tetapi tidak boleh memutuskan observer/listener dalaman yang tidak didedahkan. Tiada perubahan fail luar skop dibuat.
+3. `Rig` mengikat OrbitControls kepada canvas yang dikongsi. Sila semak interaksi selepas load/restore beberapa babak: dispose/connect controls boleh menukar `touchAction` canvas bersama. Ini memerlukan QC integrator; modul menggunakan API sedia ada.
+
+Tiada perubahan markup, CSS, LOADERS atau dependency diperlukan untuk memuatkan keempat-empat babak ini.

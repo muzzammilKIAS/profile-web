@@ -47,7 +47,7 @@ if (!forceFallback && webglSupported() && stages.length) {
       $$('.chapter').forEach((chapter) => chapter.classList.remove('is-enhanced'));
     }
   };
-  const starter = new IntersectionObserver((records) => { if (records.some((record) => record.isIntersecting)) boot(); }, { rootMargin: '120% 0px' });
+  const starter = new IntersectionObserver((records) => { if (records.some((record) => record.isIntersecting)) boot(); }, { rootMargin: '220% 0px' });
   stages.forEach((stage) => starter.observe(stage));
 } else {
   root.classList.add('no-webgl');
@@ -67,6 +67,60 @@ if (window.gsap && window.ScrollTrigger) {
   }).observe(document.body);
   document.fonts?.ready.then(() => window.ScrollTrigger.refresh());
 }
+
+// Suis Pagi / Malam: ikon bertukar (matahari ↔ bulan) dan label pendek kelihatan di sebelahnya.
+const themeToggle = document.getElementById('themeToggle');
+if (themeToggle) {
+  const systemDark = matchMedia('(prefers-color-scheme: dark)');
+  const night = () => (root.dataset.theme ? root.dataset.theme === 'dark' : systemDark.matches);
+  const WORDS = { ms: ['Pagi', 'Malam'], en: ['Day', 'Night'], ar: ['نهار', 'ليل'] };
+  const MOON = '<path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5Z"/>';
+  const SUN = '<circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/>';
+  themeToggle.classList.add('mood-toggle');
+  const word = document.createElement('span');
+  word.className = 'mood-word';
+  themeToggle.append(word);
+  const paint = () => {
+    const isNightNow = night();
+    themeToggle.querySelector('svg').innerHTML = isNightNow ? MOON : SUN;
+    const pair = WORDS[root.lang] || WORDS.ms;
+    word.textContent = isNightNow ? pair[1] : pair[0];
+    themeToggle.dataset.mood = isNightNow ? 'night' : 'day';
+    root.dataset.mood = isNightNow ? 'night' : 'day';
+    // Poster pentas (render sebenar) mengikut mood.
+    document.querySelectorAll('.stage-poster[data-poster]').forEach((img) => {
+      const next = `assets/posters/${img.dataset.poster}-${isNightNow ? 'night' : 'day'}.webp`;
+      if (!img.src.endsWith(next)) img.src = next;
+    });
+  };
+  paint();
+  systemDark.addEventListener('change', paint);
+  new MutationObserver(paint).observe(root, { attributes: true, attributeFilter: ['data-theme', 'lang'] });
+}
+
+// Nota sumber model 3D: dipaparkan sebagai butang maklumat kecil, bukan teks terang di atas pentas.
+document.querySelectorAll('.stage-note').forEach((note, index) => {
+  const id = note.id || `stage-note-${index}`;
+  note.id = id;
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'note-toggle';
+  button.setAttribute('aria-describedby', id);
+  button.setAttribute('aria-expanded', 'false');
+  button.innerHTML = '<span aria-hidden="true">i</span>';
+  const label = () => button.setAttribute('aria-label', { ms: 'Nota tentang model 3D', en: 'Note about the 3D model', ar: 'ملاحظة حول النموذج ثلاثي الأبعاد' }[root.lang] || 'Nota');
+  label();
+  new MutationObserver(label).observe(root, { attributes: true, attributeFilter: ['lang'] });
+  const wrap = document.createElement('div');
+  wrap.className = 'note-wrap';
+  note.replaceWith(wrap);
+  wrap.append(button, note);
+  button.addEventListener('click', () => {
+    const open = wrap.classList.toggle('is-open');
+    button.setAttribute('aria-expanded', String(open));
+  });
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && wrap.classList.contains('is-open')) { wrap.classList.remove('is-open'); button.setAttribute('aria-expanded', 'false'); } });
+});
 
 // Butang kembali ke atas.
 const toTop = document.getElementById('toTop');
@@ -144,13 +198,15 @@ if (header && darkZones.length) {
   const check = () => {
     pending = false;
     const line = header.offsetHeight / 2;
-    const dark = root.classList.contains('has-3d') && !motionPaused() && darkZones.some((zone) => {
+    const dark = root.classList.contains('has-3d') && !motionPaused() && root.dataset.mood !== 'day' && darkZones.some((zone) => {
       const rect = zone.getBoundingClientRect();
       return rect.top <= line && rect.bottom >= line;
     });
     root.classList.toggle('over-dark', dark);
+    const inside = root.classList.contains('has-3d') && darkZones.some((zone) => { const r = zone.getBoundingClientRect(); return r.top < innerHeight * 0.5 && r.bottom > innerHeight * 0.5; });
+    root.classList.toggle('in-chapter', inside);
   };
   addEventListener('scroll', () => { if (!pending) { pending = true; requestAnimationFrame(check); } }, { passive: true });
-  new MutationObserver(check).observe(root, { attributes: true, attributeFilter: ['data-motion'] });
+  new MutationObserver(check).observe(root, { attributes: true, attributeFilter: ['data-motion', 'data-mood'] });
   check();
 }
