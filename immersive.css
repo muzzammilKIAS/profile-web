@@ -466,3 +466,10 @@ html:not([data-motion='paused']) .chapter.is-enhanced .stage { isolation: auto; 
 html:not([data-motion='paused']) .chapter.is-enhanced .chapter-sticky::before { z-index: 3; }
 html:not([data-motion='paused']) .chapter.is-enhanced .stage-hotspots { z-index: 4; }
 html.in-chapter .section-rail { opacity: 0; visibility: hidden; }
+
+/* Bayang mashrabiyya yang dicondongkan tidak boleh melimpah ke sisi halaman. */
+main > .section:not(.hero) { overflow-x: clip; }
+@media (max-width: 900px) {
+  html:not([data-motion='paused']) .chapter.is-enhanced > .chapter-sticky > .note-wrap { inset-block-end: auto; inset-block-start: calc(var(--nav-height) + env(safe-area-inset-top) + 14px); inset-inline-start: 8px; }
+  html:not([data-motion='paused']) .chapter.is-enhanced > .chapter-sticky > .note-wrap .stage-note { inset-block-end: auto; inset-block-start: calc(100% + 4px); }
+}

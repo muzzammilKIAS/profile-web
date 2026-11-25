@@ -286,6 +286,10 @@ export default async function create(ctx) {
     night: { sky: skies.night, fog: 0x091310, fogD: 0.0115, env: 0.48, exposure: 0.96, key: [0xffd7a3, 2.45], keyPos: [-1.6, 0.95, 1.15], fill: [0x7e9fb3, 0x1c1510, 0.38], rim: [0xd9c192, 1.45], rimPos: [1.4, 0.85, -1.6], pool: 140, lantern: 34, floor: 0x091310, floorRough: 0.78, plinth: plinthNight, glass: 0.32, medallion: 0.075, contact: 0.65 },
     day: { sky: skies.day, fog: 0xebe2d0, fogD: 0.0072, env: 0.75, exposure: 1.0, key: [0xfff1dc, 4.6], keyPos: [1.1, 1.05, 1.35], fill: [0xdfe9f0, 0xb79f7a, 1.25], rim: [0xfff4e0, 0.5], rimPos: [1.2, 0.7, -1.5], pool: 0, lantern: 0, floor: 0xd9ccb3, floorRough: 0.7, plinth: plinthDay, glass: 0, medallion: 0.16, contact: 0.4 },
   };
+  // Kabus diskalakan dengan jarak asas kamera: skrin potret meletakkan kamera lebih jauh,
+  // jadi ketumpatan tetap akan menenggelamkan model pada telefon.
+  let fogBase = 0.0115;
+  const scaleFog = () => { scene.fog.density = fogBase * Math.min(1, 68 / Math.max(1, rig.base || 68)); };
   let mood = null;
   function applyMood() {
     const next = isNight() ? 'night' : 'day';
@@ -293,7 +297,7 @@ export default async function create(ctx) {
     mood = next;
     const m = MOODS[next];
     scene.background = m.sky;
-    scene.fog.color.setHex(m.fog); scene.fog.density = m.fogD;
+    scene.fog.color.setHex(m.fog); fogBase = m.fogD; scaleFog();
     scene.environmentIntensity = m.env;
     renderer.toneMappingExposure = m.exposure;
     key.color.setHex(m.key[0]); key.intensity = m.key[1];
@@ -398,6 +402,7 @@ export default async function create(ctx) {
     resize(w, h) {
       width = w; heightPx = h;
       rig.fit(w, h);
+      scaleFog();
       if (composer) { composer.setPixelRatio(renderer.getPixelRatio()); composer.setSize(w, h); }
     },
     update(delta) {
