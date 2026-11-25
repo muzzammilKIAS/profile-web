@@ -8,6 +8,36 @@
     content="Ahmad Muzzammil Mohammad Najib, pensyarah FPIB di KIAS. Fiqh perbandingan, usul fiqh, maqasid syariah, bahasa Arab dan aplikasi pendidikan Islam."
   />
   <title>Ahmad Muzzammil Mohammad Najib | Profil Akademik</title>
+  <link rel="canonical" href="https://muzzammilkias.github.io/profile-web/">
+  <meta name="author" content="Ahmad Muzzammil Mohammad Najib">
+  <meta name="theme-color" content="#0d3a2d">
+  <meta property="og:type" content="profile">
+  <meta property="og:site_name" content="Ahmad Muzzammil Mohammad Najib">
+  <meta property="og:title" content="Ahmad Muzzammil Mohammad Najib | Profil Akademik">
+  <meta property="og:description" content="Pensyarah FPIB di KIAS. Fiqh perbandingan, usul fiqh, maqasid syariah, bahasa Arab dan aplikasi pendidikan Islam.">
+  <meta property="og:url" content="https://muzzammilkias.github.io/profile-web/">
+  <meta property="og:image" content="https://muzzammilkias.github.io/profile-web/gambar/muzzammil.jpg">
+  <meta property="og:locale" content="ms_MY">
+  <meta property="og:locale:alternate" content="en_GB">
+  <meta property="og:locale:alternate" content="ar_SA">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Ahmad Muzzammil Mohammad Najib",
+    "alternateName": "أحمد مزمّل محمد نجيب",
+    "url": "https://muzzammilkias.github.io/profile-web/",
+    "image": "https://muzzammilkias.github.io/profile-web/gambar/muzzammil.jpg",
+    "email": "mailto:muzzammil@kias.edu.my",
+    "jobTitle": "Pensyarah",
+    "worksFor": { "@type": "CollegeOrUniversity", "name": "Kolej Universiti Islam Antarabangsa Sultan Ismail Petra (KIAS)", "address": { "@type": "PostalAddress", "addressLocality": "Nilam Puri", "addressRegion": "Kelantan", "addressCountry": "MY" } },
+    "alumniOf": { "@type": "CollegeOrUniversity", "name": "Universiti Islam Imam Muhammad bin Saud, Riyadh" },
+    "knowsAbout": ["Fiqh perbandingan", "Usul fiqh", "Maqasid syariah", "Bahasa Arab", "Turath dan manuskrip", "Pendidikan digital"],
+    "knowsLanguage": ["ms", "ar", "en"],
+    "sameAs": ["https://github.com/muzzammilKIAS"]
+  }
+  </script>
 
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath fill='%23103f31' d='M20 0 26 6H34V14L40 20 34 26V34H26L20 40 14 34H6V26L0 20 6 14V6H14Z'/%3E%3Cpath fill='%23d4bb7e' d='M20 10 30 20 20 30 10 20Z'/%3E%3C/svg%3E">
 
@@ -20,6 +50,10 @@
   />
 
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="immersive.css">
+  <script type="importmap">
+  { "imports": { "three": "./vendor/three/three.module.min.js", "three/addons/": "./vendor/three/addons/" } }
+  </script>
   <script>
     // Tetapkan tema, bahasa dan pembukaan sebelum paint supaya tiada kelipan.
     (function () {
@@ -65,7 +99,7 @@
     <div class="container nav-wrap">
       <a class="brand" href="#utama" aria-label="Ke bahagian utama" data-i18n-aria="brandAria">
         <span class="brand-mark"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 2 26 8H32V14L38 20 32 26V32H26L20 38 14 32H8V26L2 20 8 14V8H14Z" stroke="currentColor"/><path d="M20 9 31 20 20 31 9 20Z M14 14H26V26H14Z" stroke="currentColor"/></svg></span>
-        <span class="brand-text">Ahmad Muzzammil</span>
+        <span class="brand-text" data-i18n="brandName">Ahmad Muzzammil</span>
       </a>
 
       <div class="nav-actions">
@@ -141,6 +175,7 @@
 
           <div class="hero-actions">
             <a class="button button-primary" href="#pencapaian"><span data-i18n="heroCta1">Lihat pencapaian</span> <svg class="icon icon-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+            <a class="button button-secondary" href="#penerbitan" data-i18n="navPubs">Penerbitan</a>
             <a class="button button-secondary" href="#aplikasi" data-i18n="heroCta2">Cuba aplikasi saya</a>
           </div>
         </div>
@@ -247,7 +282,69 @@
             <h2 id="akademikTitle" data-i18n="acadTitle">Perjalanan menuntut ilmu</h2>
           </div>
         </div>
+      </div>
 
+      <div class="chapter" id="jamiah" data-chapter="jamiah" style="--len: 5.6" role="group" aria-labelledby="jamiahTitle">
+        <div class="chapter-sticky">
+          <div class="stage" data-scene="jamiah">
+            <canvas class="stage-kaleido" data-kaleido="hero" aria-hidden="true"></canvas>
+            <img class="stage-poster" src="assets/posters/jamiah.webp" alt="Model 3D pintu gerbang Universiti Islam Imam Muhammad bin Saud" data-i18n-alt="jmAlt" loading="lazy" decoding="async" onerror="this.remove()">
+            <img class="stage-snapshot" alt="" aria-hidden="true">
+            <div class="stage-mount"></div>
+            <div class="stage-hotspots">
+              <button class="hotspot" type="button" data-spot="gate" tabindex="-1"><span data-i18n="hsGate">Pintu gerbang berkekisi</span></button>
+              <button class="hotspot" type="button" data-spot="dome" tabindex="-1"><span data-i18n="hsDome">Kubah masjid</span></button>
+              <button class="hotspot" type="button" data-spot="minaret" tabindex="-1"><span data-i18n="hsMinaret">Menara</span></button>
+            </div>
+            <p class="stage-loading" data-i18n="stLoading">Memuat model 3D…</p>
+          </div>
+          <div class="chapter-hud">
+            <ol class="story">
+              <li class="story-card" data-side="start">
+                <p class="eyebrow" data-i18n="jmEyebrow">Riyadh · 2015–2024</p>
+                <h3 id="jamiahTitle" data-i18n="jmTitle">Universiti Islam Imam Muhammad bin Saud</h3>
+                <p data-i18n="jmLead">Tiga kelayakan saya diperoleh di sini. Tatal untuk mengelilingi pintu gerbangnya satu pusingan penuh.</p>
+              </li>
+              <li class="story-card" data-side="end">
+                <p class="eyebrow">2015–2017</p>
+                <h3 data-i18n="ed3t">Diploma Bahasa Arab dan Pengajian Islam</h3>
+                <p data-i18n="ed3m">Fakulti Bahasa Arab, Universiti Islam Imam Muhammad bin Saud, Riyadh</p>
+                <span class="grade">Mumtaz · 3.94/4</span>
+              </li>
+              <li class="story-card" data-side="start">
+                <p class="eyebrow" data-i18n="acadEyebrow">Pendidikan akademik</p>
+                <h3 class="story-big">Mumtaz ×3</h3>
+                <p data-i18n="h1">Sarjana, sarjana muda dan diploma di Universiti Islam Imam Muhammad bin Saud, Riyadh.</p>
+              </li>
+              <li class="story-card" data-side="end">
+                <p class="eyebrow">2017–2020</p>
+                <h3 data-i18n="ed2t">Sarjana Muda Syariah (Kepujian)</h3>
+                <p data-i18n="ed2m">Fakulti Syariah, Universiti Islam Imam Muhammad bin Saud, Riyadh</p>
+                <span class="grade">Mumtaz · 3.98/4</span>
+              </li>
+              <li class="story-card" data-side="start">
+                <p class="eyebrow">2022–2024</p>
+                <h3 data-i18n="ed1t">Sarjana Fiqh Perbandingan</h3>
+                <p data-i18n="ed1m">Institut Kehakiman Tinggi, Universiti Islam Imam Muhammad bin Saud, Riyadh</p>
+                <span class="grade">Mumtaz · 3.74/4</span>
+              </li>
+              <li class="story-card" data-side="start">
+                <p class="eyebrow" data-i18n="jmEndEyebrow">Satu pusingan lengkap</p>
+                <h3 data-i18n="jmEndTitle">Garis masa penuh</h3>
+                <p data-i18n="jmEndLead">Tahfiz al-Quran, Tripoli, Ujian Hamza dan pengajian semasa ada dalam garis masa di bawah.</p>
+                <a class="button button-gold" href="#timeline"><span data-i18n="jmEndCta">Lihat garis masa</span> <svg class="icon icon-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14m-6-6 6 6 6-6"/></svg></a>
+              </li>
+            </ol>
+          </div>
+          <div class="chapter-rail" aria-hidden="false">
+            <div class="dial"><svg viewBox="0 0 36 36" aria-hidden="true"><circle class="dial-ring" cx="18" cy="18" r="15.9155" pathLength="100"/><circle class="dial-ring-value" cx="18" cy="18" r="15.9155" pathLength="100"/></svg><span class="dial-degree" aria-hidden="true">0°</span></div>
+          </div>
+          <p class="stage-note" data-i18n="jmNote">Model 3D tafsiran artistik berdasarkan foto hadapan, bukan ukuran binaan sebenar.</p>
+          <a class="chapter-skip" href="#timeline" data-i18n="jmSkip">Langkau ke garis masa</a>
+        </div>
+      </div>
+
+      <div class="container">
         <div class="timeline" id="timeline">
           <div class="timeline-line" aria-hidden="true"></div>
 
@@ -321,6 +418,29 @@
           <p class="lead" data-i18n="fieldLead">Tumpuan kerja saya ialah fiqh dan usulnya, bahasa Arab dan teks turath, serta teknologi dalam pembelajaran Islam.</p>
         </div>
 
+        <div class="feature" id="manuskrip">
+          <div class="stage" data-scene="manuskrip">
+            <canvas class="stage-kaleido" data-kaleido="arch" aria-hidden="true"></canvas>
+            <img class="stage-poster" src="assets/posters/manuskrip.webp" alt="Model 3D kitab terbuka di atas rehal" data-i18n-alt="msAlt" loading="lazy" decoding="async" onerror="this.remove()">
+            <img class="stage-snapshot" alt="" aria-hidden="true">
+            <div class="stage-mount"></div>
+            <p class="stage-loading" data-i18n="stLoading">Memuat model 3D…</p>
+          </div>
+          <div class="feature-copy">
+            <p class="eyebrow" data-i18n="msEyebrow">Turath dan manuskrip</p>
+            <h3 data-i18n="msTitle">Kitab di atas rehal</h3>
+            <p data-i18n="msBody">Tatal untuk memutar kitab ini satu pusingan penuh, mendekati halamannya dan melihat helaian diselak.</p>
+            <ul class="field-list" aria-label="Bidang kajian" data-i18n-aria="tagsAria">
+              <li data-i18n="tag1">Fiqh perbandingan</li>
+              <li data-i18n="tag2">Usul fiqh</li>
+              <li data-i18n="tag3">Maqasid syariah</li>
+              <li data-i18n="tag4">Bahasa Arab</li>
+              <li data-i18n="tag5">Turath dan manuskrip</li>
+            </ul>
+            <p class="stage-note" data-i18n="msNote">Model 3D generik. Halaman bertekstur neutral tanpa sebarang teks.</p>
+          </div>
+        </div>
+
         <div class="research-grid">
           <article class="research-card lively featured">
             <span class="number">01</span>
@@ -348,6 +468,22 @@
           <div>
             <p class="eyebrow" data-i18n="achEyebrow">Pencapaian</p>
             <h2 id="pencapaianTitle" data-i18n="achTitle">Anugerah dan kecemerlangan</h2>
+          </div>
+        </div>
+
+        <div class="feature feature-reverse" id="pingat">
+          <div class="stage" data-scene="pingat">
+            <canvas class="stage-kaleido" data-kaleido="contact" aria-hidden="true"></canvas>
+            <img class="stage-poster" src="assets/posters/pingat.webp" alt="Model 3D pingat emas dan perak" data-i18n-alt="mdAlt" loading="lazy" decoding="async" onerror="this.remove()">
+            <img class="stage-snapshot" alt="" aria-hidden="true">
+            <div class="stage-mount"></div>
+            <p class="stage-loading" data-i18n="stLoading">Memuat model 3D…</p>
+          </div>
+          <div class="feature-copy">
+            <p class="eyebrow">e-Hadis40 · 2026</p>
+            <h3 data-i18n="mdTitle">Emas dan perak</h3>
+            <p data-i18n="mdBody">Pingat Emas di ICTE'26 dan Anugerah Perak di ITeLIC'26, kedua-duanya bagi e-Hadis40.</p>
+            <p class="stage-note" data-i18n="mdNote">Model pingat generik, bukan replika pingat rasmi.</p>
           </div>
         </div>
 
@@ -488,7 +624,50 @@
             <h2 id="penerbitanTitle" data-i18n="pubTitle">Penulisan ilmiah</h2>
           </div>
         </div>
+      </div>
 
+      <div class="chapter" id="pustaka" data-chapter="pustaka" style="--len: 4.4" role="group" aria-label="Pustaka digital 3D" data-i18n-aria="bkAria">
+        <div class="chapter-sticky">
+          <div class="stage" data-scene="pustaka">
+            <canvas class="stage-kaleido" data-kaleido="contact" aria-hidden="true"></canvas>
+            <img class="stage-poster" src="assets/posters/pustaka.webp" alt="Model 3D dua buku dengan kulit sebenar" data-i18n-alt="bkAlt" loading="lazy" decoding="async" onerror="this.remove()">
+            <img class="stage-snapshot" alt="" aria-hidden="true">
+            <div class="stage-mount"></div>
+            <p class="stage-loading" data-i18n="stLoading">Memuat model 3D…</p>
+          </div>
+          <div class="chapter-hud">
+            <ol class="story">
+              <li class="story-card book-card" data-at="0.22" data-side="start" data-book="fiqh-halal-haram">
+                <p class="eyebrow"><span data-i18n="tBook">Buku</span> · 2026</p>
+                <h3 lang="ms" dir="ltr">Fiqh Halal dan Haram: Prinsip, Kaedah dan Isu Semasa</h3>
+                <p class="story-meta"><span dir="ltr">eISBN 978-629-93371-1-9</span> · <span data-i18n="bkEd">Cetakan pertama</span></p>
+                <div class="story-actions">
+                  <button class="button button-gold" type="button" data-book-view="fiqh-halal-haram" data-i18n="bkView">Lihat buku 3D</button>
+                  <a class="button button-ghost" href="kitab/Fiqh-Halal-dan-Haram_Ahmad-Muzzammil_2026.pdf" target="_blank" rel="noopener" data-i18n="bkPreview">Pratonton PDF</a>
+                  <a class="button button-ghost" href="kitab/Fiqh-Halal-dan-Haram_Ahmad-Muzzammil_2026.pdf" download data-i18n="pdfDl">Muat turun PDF</a>
+                </div>
+              </li>
+              <li class="story-card book-card" data-at="0.78" data-side="end" data-book="fiqh-quran-sunnah">
+                <p class="eyebrow"><span data-i18n="tBook">Buku</span> · 2026</p>
+                <h3 lang="ms" dir="ltr">Fiqh Al-Quran dan Sunnah: Ayat-ayat Hukum Pilihan daripada Surah al-Baqarah dan Hadis-hadis Hukum Ibadat</h3>
+                <p class="story-meta"><span dir="ltr">eISBN 978-629-93371-0-2</span> · <span data-i18n="bkEd">Cetakan pertama</span></p>
+                <div class="story-actions">
+                  <button class="button button-gold" type="button" data-book-view="fiqh-quran-sunnah" data-i18n="bkView">Lihat buku 3D</button>
+                  <a class="button button-ghost" href="kitab/Fiqh-Al-Quran-dan-Sunnah_Ahmad-Muzzammil_2026.pdf" target="_blank" rel="noopener" data-i18n="bkPreview">Pratonton PDF</a>
+                  <a class="button button-ghost" href="kitab/Fiqh-Al-Quran-dan-Sunnah_Ahmad-Muzzammil_2026.pdf" download data-i18n="pdfDl">Muat turun PDF</a>
+                </div>
+              </li>
+            </ol>
+          </div>
+          <div class="chapter-rail" aria-hidden="false">
+            <div class="dial"><svg viewBox="0 0 36 36" aria-hidden="true"><circle class="dial-ring" cx="18" cy="18" r="15.9155" pathLength="100"/><circle class="dial-ring-value" cx="18" cy="18" r="15.9155" pathLength="100"/></svg><span class="dial-degree" aria-hidden="true">0°</span></div>
+          </div>
+          <p class="stage-note" data-i18n="bkNote">Kulit hadapan diambil terus daripada PDF buku. Ketebalan dan kulit belakang ialah anggaran.</p>
+          <a class="chapter-skip" href="#senaraiPenerbitan" data-i18n="bkSkip">Langkau ke senarai penerbitan</a>
+        </div>
+      </div>
+
+      <div class="container" id="senaraiPenerbitan">
         <div class="publication-tools">
           <label class="search-field" for="publicationSearch">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 21l-5-5M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0"/></svg>
@@ -582,7 +761,48 @@
             <h2 id="aplikasiTitle" data-i18n="appTitle">Ilmu dalam bentuk interaktif</h2>
           </div>
         </div>
+      </div>
 
+      <div class="chapter" id="makmal" data-chapter="makmal" style="--len: 4.6" role="group" aria-label="Makmal inovasi digital 3D" data-i18n-aria="labAria">
+        <div class="chapter-sticky">
+          <div class="stage" data-scene="makmal">
+            <canvas class="stage-kaleido" data-kaleido="hero" aria-hidden="true"></canvas>
+            <img class="stage-poster" src="assets/posters/makmal.webp" alt="Model 3D komputer riba, tablet dan telefon memaparkan aplikasi sebenar" data-i18n-alt="labAlt" loading="lazy" decoding="async" onerror="this.remove()">
+            <img class="stage-snapshot" alt="" aria-hidden="true">
+            <div class="stage-mount"></div>
+            <p class="stage-loading" data-i18n="stLoading">Memuat model 3D…</p>
+          </div>
+          <div class="chapter-hud">
+            <ol class="story">
+              <li class="story-card app-story" data-at="0.16" data-side="start" data-device="laptop">
+                <p class="eyebrow">Web · <span data-i18n="appAward">Pingat Emas</span></p>
+                <h3>e-Hadis40</h3>
+                <p data-i18n="a1">Platform pengajaran dan pembelajaran interaktif bagi Modul Penghayatan Hadis 40 Imam al-Nawawi.</p>
+                <div class="story-actions"><a class="button button-gold" href="https://www.ehadis40.my/" target="_blank" rel="noopener"><span data-i18n="open">Buka aplikasi</span> <span aria-hidden="true">↗</span></a></div>
+              </li>
+              <li class="story-card app-story" data-at="0.5" data-side="end" data-device="tablet">
+                <p class="eyebrow">Web</p>
+                <h3>Fiqh Manhaji</h3>
+                <p data-i18n="a5">Ensiklopedia al-Fiqh al-Manhaji bahagian ibadah mazhab Syafie, dengan susunan tajuk, ringkasan, peta konsep dan studio slaid pengajaran.</p>
+                <div class="story-actions"><a class="button button-gold" href="https://muzzammilkias.github.io/fiqh-manhaji/" target="_blank" rel="noopener"><span data-i18n="open">Buka aplikasi</span> <span aria-hidden="true">↗</span></a></div>
+              </li>
+              <li class="story-card app-story" data-at="0.84" data-side="start" data-device="phone">
+                <p class="eyebrow">Flutter</p>
+                <h3>Haji Pintar</h3>
+                <p data-i18n="a2">Aplikasi pembelajaran manasik haji dalam bentuk digital.</p>
+                <div class="story-actions"><a class="button button-gold" href="https://www.hajipintar.my/" target="_blank" rel="noopener"><span data-i18n="open">Buka aplikasi</span> <span aria-hidden="true">↗</span></a></div>
+              </li>
+            </ol>
+          </div>
+          <div class="chapter-rail" aria-hidden="false">
+            <div class="dial"><svg viewBox="0 0 36 36" aria-hidden="true"><circle class="dial-ring" cx="18" cy="18" r="15.9155" pathLength="100"/><circle class="dial-ring-value" cx="18" cy="18" r="15.9155" pathLength="100"/></svg><span class="dial-degree" aria-hidden="true">0°</span></div>
+          </div>
+          <p class="stage-note" data-i18n="labNote">Skrin memaparkan tangkapan sebenar aplikasi. Model peranti adalah generik.</p>
+          <a class="chapter-skip" href="#senaraiAplikasi" data-i18n="labSkip">Langkau ke semua aplikasi</a>
+        </div>
+      </div>
+
+      <div class="container" id="senaraiAplikasi">
         <div class="app-grid">
           <article class="app-card lively is-featured">
             <div class="app-head"><span class="app-mono">e40</span><div><h3>e-Hadis40</h3><span class="app-tech">Web</span></div><span class="app-award is-gold" data-i18n="appAward">Pingat Emas</span></div>
@@ -689,10 +909,17 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <span>© <span id="year"></span> Ahmad Muzzammil Mohammad Najib. <span data-i18n="rights">Hak cipta terpelihara.</span></span>
+      <a class="footer-top" href="#utama"><span data-i18n="toTop">Kembali ke atas</span> <span aria-hidden="true">↑</span></a>
     </div>
   </footer>
 
+  <a class="to-top" id="toTop" href="#utama" aria-label="Kembali ke atas" data-i18n-aria="toTop" hidden><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V4m-6 6 6-6 6 6"/></svg></a>
+
+  <script src="vendor/gsap/gsap.min.js" defer></script>
+  <script src="vendor/gsap/ScrollTrigger.min.js" defer></script>
   <script src="i18n.js" defer></script>
+  <script src="i18n-immersive.js" defer></script>
   <script src="script.js" defer></script>
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>

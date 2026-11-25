@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Jamiah GLB equivalence check</title>
+<link rel="icon" href="data:,">
+<style>body{margin:0;background:#eee;font:14px sans-serif}h1,p{margin:12px}#views{display:grid;grid-template-columns:640px 640px}figure{margin:0}img{display:block;width:640px;height:480px}figcaption{padding:8px}</style>
+<script type="importmap">{"imports":{"three":"../vendor/three/three.module.min.js"}}</script>
+<h1>Jamiah: original (left), optimized (right)</h1>
+<p id="status">Loading through the vendored GLTFLoader, without decoders.</p>
+<div id="views"></div>
+<script type="module">
+import * as THREE from 'three';
+import {GLTFLoader} from '../vendor/three/addons/loaders/GLTFLoader.js';
+const views = document.querySelector('#views');
+window.checkDone = false;
+try {
+  const loader = new GLTFLoader();
+  const paths = ['../assets/models/jamiah-imam.glb','../assets/models/jamiah-imam.opt.glb'];
+  const models = await Promise.all(paths.map(p=>loader.loadAsync(p)));
+  const renderer = new THREE.WebGLRenderer({antialias:false,preserveDrawingBuffer:true});
+  renderer.setSize(640,480); renderer.setPixelRatio(1);
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  const camera = new THREE.PerspectiveCamera(40,640/480,.1,200);
+  const scenes = models.map(({scene: model})=>{
+    const scene = new THREE.Scene(); scene.background = new THREE.Color('#e7e0d2');
+    scene.add(new THREE.HemisphereLight(0xffffff,0x554433,2));
+    const light = new THREE.DirectionalLight(0xffffff,3); light.position.set(15,25,20); scene.add(light);
+    scene.add(model); return scene;
+  });
+  const canvas = document.createElement('canvas');canvas.width=640;canvas.height=480;
+  const ctx=canvas.getContext('2d',{willReadFrequently:true});
+  const measurements=[];
+  for (const [angle, pos] of [[0,[28,20,28]],[90,[28,20,-28]],[180,[-28,20,-28]],[270,[-28,20,28]]]) {
+    camera.position.set(...pos);camera.lookAt(0,4.655,0);
+    const pixels=[], info=[];
+    for (const [index,scene] of scenes.entries()) {
+      renderer.render(scene,camera);
+      info.push({...renderer.info.render});
+      ctx.drawImage(renderer.domElement,0,0);
+      pixels.push(ctx.getImageData(0,0,640,480).data);
+      const figure=document.createElement('figure');const img=document.createElement('img');
+      img.src=renderer.domElement.toDataURL('image/png');
+      const label=document.createElement('figcaption');label.textContent=`${index?'Optimized':'Original'} · angle ${angle}° · ${info[index].calls} calls / ${info[index].triangles} triangles`;
+      figure.append(label,img);views.append(figure);
+    }
+    let maxChannelDelta=0,absoluteError=0,changedPixels=0;
+    for(let i=0;i<pixels[0].length;i+=4){let changed=false;for(let c=0;c<3;c++){
+      const d=Math.abs(pixels[0][i+c]-pixels[1][i+c]);
+      maxChannelDelta=Math.max(maxChannelDelta,d);absoluteError+=d;if(d)changed=true;
+    }if(changed)changedPixels++;}
+    measurements.push({angle,original:info[0],optimized:info[1],changedPixels,maxChannelDelta,
+      meanAbsoluteChannelError:absoluteError/(640*480*3)});
+  }
+  const modelDetails=models.map(({scene})=>{
+    const meshes=[];scene.traverse(o=>{if(o.isMesh)meshes.push({name:o.name,
+      flatShading:o.material.flatShading,vertexColors:o.material.vertexColors,
+      textureLoaded:!!o.material.map?.image,textureDimensions:o.material.map?[o.material.map.image.width,o.material.map.image.height]:null});});
+    return {meshCount:meshes.length,flatShadedMeshes:meshes.filter(m=>m.flatShading).length,
+      vertexColoredMeshes:meshes.filter(m=>m.vertexColors).length,texturedMeshes:meshes.filter(m=>m.textureLoaded)};
+  });
+  window.checkResult={threeRevision:THREE.REVISION,decoderConfigured:false,width:640,height:480,
+    antialias:false,shadows:false,measurements,modelDetails};
+  document.querySelector('#status').textContent='Complete: both files loaded and rendered at four angles.';
+  renderer.dispose();
+}catch(error){window.checkError=String(error.stack||error);document.querySelector('#status').textContent=window.checkError;}
+window.checkDone=true;
+</script>
+</html>

@@ -1,0 +1,127 @@
+prune: Removed types... Node (1)
+prune: Removed types... Mesh (1518), Node (1518), Primitive (1519), Accessor (4557)
+{
+  "before": {
+    "bytes": 1273252,
+    "sha256": "3a6f27f9b129c5a46b4d66b22f24df150120032a62ef6e5da3d922cb9b0e0a84",
+    "meshes": 1520,
+    "primitives": 1520,
+    "nodes": 1521,
+    "estimatedDrawCalls": 1520,
+    "verticesPerPrimitiveSum": 24117,
+    "verticesUniquePositionAccessors": 24117,
+    "sceneVertices": 24117,
+    "sceneTriangles": 42154,
+    "materials": 1,
+    "usesImplicitDefaultMaterial": true,
+    "textures": [
+      {
+        "mimeType": "image/png",
+        "dimensions": [
+          355,
+          49
+        ],
+        "bytes": 33520,
+        "sha256": "ba981fa1d53a90071932f5fb52f684d99278357f7d33c807b5d9ce492ce587db"
+      }
+    ],
+    "attributes": [
+      "COLOR_0, POSITION",
+      "POSITION, TEXCOORD_0"
+    ],
+    "bounds": {
+      "min": [
+        -12,
+        -0.3799999952316311,
+        -12
+      ],
+      "max": [
+        12,
+        9.689999580383303,
+        12
+      ],
+      "size": [
+        24,
+        10.069999575614933,
+        24
+      ],
+      "center": [
+        0,
+        4.654999792575835,
+        0
+      ]
+    },
+    "units": "meters by glTF convention; real-world architectural scale not independently verified",
+    "upAxis": "+Y (world space)",
+    "sceneOrigin": [
+      0,
+      0,
+      0
+    ],
+    "rescaleFactor": 1,
+    "extensionsUsed": [],
+    "extensionsRequired": []
+  },
+  "after": {
+    "bytes": 659540,
+    "sha256": "1557b69247a0ae2dbca9cf470345ae0d7cdf757fecc05e3f12cc54d1b064778e",
+    "meshes": 2,
+    "primitives": 2,
+    "nodes": 3,
+    "estimatedDrawCalls": 2,
+    "verticesPerPrimitiveSum": 23200,
+    "verticesUniquePositionAccessors": 23200,
+    "sceneVertices": 23200,
+    "sceneTriangles": 42154,
+    "materials": 1,
+    "usesImplicitDefaultMaterial": true,
+    "textures": [
+      {
+        "mimeType": "image/png",
+        "dimensions": [
+          355,
+          49
+        ],
+        "bytes": 33520,
+        "sha256": "ba981fa1d53a90071932f5fb52f684d99278357f7d33c807b5d9ce492ce587db"
+      }
+    ],
+    "attributes": [
+      "COLOR_0, POSITION",
+      "POSITION, TEXCOORD_0"
+    ],
+    "bounds": {
+      "min": [
+        -12,
+        -0.3799999952316311,
+        -12
+      ],
+      "max": [
+        12,
+        9.689999580383303,
+        12
+      ],
+      "size": [
+        24,
+        10.069999575614933,
+        24
+      ],
+      "center": [
+        0,
+        4.654999792575835,
+        0
+      ]
+    },
+    "units": "meters by glTF convention; real-world architectural scale not independently verified",
+    "upAxis": "+Y (world space)",
+    "sceneOrigin": [
+      0,
+      0,
+      0
+    ],
+    "rescaleFactor": 1,
+    "extensionsUsed": [],
+    "extensionsRequired": []
+  },
+  "verified": true
+}

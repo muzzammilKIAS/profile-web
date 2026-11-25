@@ -1,0 +1,173 @@
+{
+  "pipeline": [
+    "dedup",
+    "flatten",
+    "join",
+    "weld (bitwise identical attributes)",
+    "dedup",
+    "prune"
+  ],
+  "before": {
+    "bytes": 1273252,
+    "sha256": "3a6f27f9b129c5a46b4d66b22f24df150120032a62ef6e5da3d922cb9b0e0a84",
+    "meshes": 1520,
+    "primitives": 1520,
+    "nodes": 1521,
+    "estimatedDrawCalls": 1520,
+    "verticesPerPrimitiveSum": 24117,
+    "verticesUniquePositionAccessors": 24117,
+    "sceneVertices": 24117,
+    "sceneTriangles": 42154,
+    "materials": 1,
+    "usesImplicitDefaultMaterial": true,
+    "textures": [
+      {
+        "mimeType": "image/png",
+        "dimensions": [
+          355,
+          49
+        ],
+        "bytes": 33520,
+        "sha256": "ba981fa1d53a90071932f5fb52f684d99278357f7d33c807b5d9ce492ce587db"
+      }
+    ],
+    "attributes": [
+      "COLOR_0, POSITION",
+      "POSITION, TEXCOORD_0"
+    ],
+    "bounds": {
+      "min": [
+        -12,
+        -0.3799999952316311,
+        -12
+      ],
+      "max": [
+        12,
+        9.689999580383303,
+        12
+      ],
+      "size": [
+        24,
+        10.069999575614933,
+        24
+      ],
+      "center": [
+        0,
+        4.654999792575835,
+        0
+      ]
+    },
+    "units": "meters by glTF convention; real-world architectural scale not independently verified",
+    "upAxis": "+Y (world space)",
+    "sceneOrigin": [
+      0,
+      0,
+      0
+    ],
+    "rescaleFactor": 1,
+    "extensionsUsed": [],
+    "extensionsRequired": []
+  },
+  "after": {
+    "bytes": 659540,
+    "sha256": "1557b69247a0ae2dbca9cf470345ae0d7cdf757fecc05e3f12cc54d1b064778e",
+    "meshes": 2,
+    "primitives": 2,
+    "nodes": 3,
+    "estimatedDrawCalls": 2,
+    "verticesPerPrimitiveSum": 23200,
+    "verticesUniquePositionAccessors": 23200,
+    "sceneVertices": 23200,
+    "sceneTriangles": 42154,
+    "materials": 1,
+    "usesImplicitDefaultMaterial": true,
+    "textures": [
+      {
+        "mimeType": "image/png",
+        "dimensions": [
+          355,
+          49
+        ],
+        "bytes": 33520,
+        "sha256": "ba981fa1d53a90071932f5fb52f684d99278357f7d33c807b5d9ce492ce587db"
+      }
+    ],
+    "attributes": [
+      "COLOR_0, POSITION",
+      "POSITION, TEXCOORD_0"
+    ],
+    "bounds": {
+      "min": [
+        -12,
+        -0.3799999952316311,
+        -12
+      ],
+      "max": [
+        12,
+        9.689999580383303,
+        12
+      ],
+      "size": [
+        24,
+        10.069999575614933,
+        24
+      ],
+      "center": [
+        0,
+        4.654999792575835,
+        0
+      ]
+    },
+    "units": "meters by glTF convention; real-world architectural scale not independently verified",
+    "upAxis": "+Y (world space)",
+    "sceneOrigin": [
+      0,
+      0,
+      0
+    ],
+    "rescaleFactor": 1,
+    "extensionsUsed": [],
+    "extensionsRequired": []
+  },
+  "checks": {
+    "reread": true,
+    "sourceUnchanged": true,
+    "textureBytesIdentical": true,
+    "materialIdentical": true,
+    "triangleFingerprint": {
+      "sha256": "257c086ce09025cda3c07704f30d2e8b6bd2277593b9bc587592f64236fba3ea",
+      "triangles": 42154,
+      "decimalPlaces": 5
+    },
+    "boundsTolerance": 0.00001,
+    "noDecoderExtensions": true,
+    "normals": "Absent in source and output; flat shading retained. No normals generated.",
+    "sourceValidation": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 2,
+      "numHints": 1548,
+      "truncated": false,
+      "codes": {
+        "BUFFER_VIEW_TARGET_MISSING": 1548,
+        "IMAGE_NPOT_DIMENSIONS": 1,
+        "ACCESSOR_INDEX_TRIANGLE_DEGENERATE": 1
+      }
+    },
+    "outputValidation": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 2,
+      "numHints": 0,
+      "truncated": false,
+      "codes": {
+        "IMAGE_NPOT_DIMENSIONS": 1,
+        "ACCESSOR_INDEX_TRIANGLE_DEGENERATE": 1
+      }
+    }
+  },
+  "caveats": [
+    "Per-part mesh names/extras are replaced by aggregate names; no per-part animation/hotspots.",
+    "Draw calls estimated for a single color pass with every primitive visible; shadow passes are additional."
+  ]
+}

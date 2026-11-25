@@ -1,0 +1,87 @@
+{
+  "threeRevision": "187",
+  "node": "v24.22.1",
+  "decoderConfigured": false,
+  "method": "Vendored GLTFLoader.parseAsync in Node; sharp-backed ImageBitmap shim; no WebGL renderer",
+  "webglRenderTested": false,
+  "results": [
+    {
+      "filename": "jamiah-imam.glb",
+      "meshes": 1520,
+      "vertices": 24117,
+      "triangles": 42154,
+      "flatShadedMeshes": 1520,
+      "vertexColoredMeshes": 1519,
+      "textures": [
+        {
+          "width": 355,
+          "height": 49,
+          "rgbaBytes": 69580,
+          "sha256": "669b9d491af7a0112bf23ad13c1beacd573ced90bcaa1c90f69379f365cb12ad",
+          "colorSpace": "srgb"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -12,
+          -0.3799999952316311,
+          -12
+        ],
+        "max": [
+          12,
+          9.689999580383303,
+          12
+        ],
+        "size": [
+          24,
+          10.069999575614933,
+          24
+        ],
+        "center": [
+          0,
+          4.654999792575836,
+          0
+        ]
+      }
+    },
+    {
+      "filename": "jamiah-imam.opt.glb",
+      "meshes": 2,
+      "vertices": 23200,
+      "triangles": 42154,
+      "flatShadedMeshes": 2,
+      "vertexColoredMeshes": 1,
+      "textures": [
+        {
+          "width": 355,
+          "height": 49,
+          "rgbaBytes": 69580,
+          "sha256": "669b9d491af7a0112bf23ad13c1beacd573ced90bcaa1c90f69379f365cb12ad",
+          "colorSpace": "srgb"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -12,
+          -0.3799999952316311,
+          -12
+        ],
+        "max": [
+          12,
+          9.689999580383303,
+          12
+        ],
+        "size": [
+          24,
+          10.069999575614933,
+          24
+        ],
+        "center": [
+          0,
+          4.654999792575836,
+          0
+        ]
+      }
+    }
+  ]
+}

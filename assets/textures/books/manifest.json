@@ -1,0 +1,124 @@
+[
+  {
+    "slug": "fiqh-halal-haram",
+    "title": "Fiqh Halal dan Haram",
+    "pdf": "kitab/Fiqh-Halal-dan-Haram_Ahmad-Muzzammil_2026.pdf",
+    "front_page_index": 0,
+    "back_page_index": null,
+    "back_cover_status": "Tiada; halaman akhir ialah Bacaan Tambahan, didahului bibliografi.",
+    "pdf_sha256": "9d4de6f2bc5dd3a37cab1a1544e6750eac0c6649e127806a7bd840a33fd317ec",
+    "page_count": 138,
+    "pdf_magic": "%PDF",
+    "page_index_base": 0,
+    "inspected_page_indices": [
+      0,
+      1,
+      2,
+      3,
+      135,
+      136,
+      137
+    ],
+    "render_dpi": 300,
+    "textures": [
+      {
+        "side": "front",
+        "page_index": 0,
+        "path": "assets/textures/books/fiqh-halal-haram-front-2048.webp",
+        "long_edge": 2048,
+        "width": 1447,
+        "height": 2048,
+        "bytes": 200616,
+        "aspect_ratio": 0.70654296875,
+        "sha256": "b1098700b85ac84713dcd2d15295960c3cf613ead643e5aad66a032f19aee84b",
+        "format": "image/webp",
+        "quality": 95
+      },
+      {
+        "side": "front",
+        "page_index": 0,
+        "path": "assets/textures/books/fiqh-halal-haram-front-1024.webp",
+        "long_edge": 1024,
+        "width": 724,
+        "height": 1024,
+        "bytes": 81422,
+        "aspect_ratio": 0.70703125,
+        "sha256": "020d68d00538cd38d4711418fec38d0c0c74094c97cf681c75aa0b14ff2296ff",
+        "format": "image/webp",
+        "quality": 95
+      }
+    ],
+    "front_page_size_points": [
+      594.9599609375,
+      841.9199829101562
+    ],
+    "front_render_pixels": [
+      2479,
+      3508
+    ],
+    "aspect_ratio": 0.706670435450384,
+    "dominant_color_hex": "#661514",
+    "dominant_color_method": "Most populous of 8 median-cut colors from full cover resized within 128px; suggested neutral spine color, not an extracted spine."
+  },
+  {
+    "slug": "fiqh-quran-sunnah",
+    "title": "Fiqh Al-Quran dan Sunnah",
+    "pdf": "kitab/Fiqh-Al-Quran-dan-Sunnah_Ahmad-Muzzammil_2026.pdf",
+    "front_page_index": 0,
+    "back_page_index": null,
+    "back_cover_status": "Tiada; halaman akhir ialah bibliografi dan bacaan tambahan.",
+    "pdf_sha256": "b8952c1d264f5105a11ed80dc234b2f8165ba2ed378223285798adbc25bf88e4",
+    "page_count": 170,
+    "pdf_magic": "%PDF",
+    "page_index_base": 0,
+    "inspected_page_indices": [
+      0,
+      1,
+      2,
+      3,
+      167,
+      168,
+      169
+    ],
+    "render_dpi": 300,
+    "textures": [
+      {
+        "side": "front",
+        "page_index": 0,
+        "path": "assets/textures/books/fiqh-quran-sunnah-front-2048.webp",
+        "long_edge": 2048,
+        "width": 1447,
+        "height": 2048,
+        "bytes": 390254,
+        "aspect_ratio": 0.70654296875,
+        "sha256": "1eca0bacc88a9a224881cf29789eafaccd78579c5bdef9110f1677f94f845919",
+        "format": "image/webp",
+        "quality": 95
+      },
+      {
+        "side": "front",
+        "page_index": 0,
+        "path": "assets/textures/books/fiqh-quran-sunnah-front-1024.webp",
+        "long_edge": 1024,
+        "width": 724,
+        "height": 1024,
+        "bytes": 141254,
+        "aspect_ratio": 0.70703125,
+        "sha256": "27c1016e4faab42917d4a5381685534c2a9505d7460817ef70d54e2e429802ba",
+        "format": "image/webp",
+        "quality": 95
+      }
+    ],
+    "front_page_size_points": [
+      594.9599609375,
+      841.9199829101562
+    ],
+    "front_render_pixels": [
+      2479,
+      3508
+    ],
+    "aspect_ratio": 0.706670435450384,
+    "dominant_color_hex": "#022B59",
+    "dominant_color_method": "Most populous of 8 median-cut colors from full cover resized within 128px; suggested neutral spine color, not an extracted spine."
+  }
+]
