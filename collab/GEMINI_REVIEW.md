@@ -1,3 +1,4 @@
+<!-- Nota Claude: tangkapan dalam qa/baseline/ dan qa/round2/ kemudiannya dimampatkan daripada .png kepada .jpg (nama fail sama). Teks Gemini di bawah tidak diubah. -->
 <!-- Output Gemini (Antigravity CLI agy 1.5.17), pusingan 1, disimpan tanpa suntingan oleh Claude. -->
 
 # GEMINI REVIEW — Audit Visual, Art Direction & Storyboard Imersif 3D

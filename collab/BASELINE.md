@@ -9,4 +9,4 @@
 - Seni bina Islam: kad hero berbentuk gerbang (arch), rozet SVG bintang 8, bintang 8 pada jenama, tirai bahasa.
 - Palet: ivory `#f8f5ec`, emerald `#0d3a2d`/`#1f5a45`, emas `#98712b`/`#dcc48b`, lapis `#23466e`. Fon: Cormorant Garamond, Plus Jakarta Sans, Noto Kufi Arabic, Amiri.
 - Inventori kandungan: 7 item pendidikan, 3 bidang, 2 anugerah, 4 kepujian, 10 sijil, 12 penerbitan, 9 aplikasi, 6 pengalaman, 7 kursus.
-- Screenshot: `qa/baseline/base-{desktop,mobile}-{ms,ar}-NN-<id>.png` (1440×900 dan 390×844, Chromium Playwright). Tinggi halaman desktop 11,291px, mobile 19,139px. Tiada ralat konsol.
+- Screenshot: `qa/baseline/base-{desktop,mobile}-{ms,ar}-NN-<id>.jpg` (1440×900 dan 390×844, Chromium Playwright). Tinggi halaman desktop 11,291px, mobile 19,139px. Tiada ralat konsol.
