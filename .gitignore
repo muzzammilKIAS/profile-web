@@ -1,2 +1,5 @@
 .DS_Store
 .backups/
+node_modules/
+tools/node_modules/
+__pycache__/
