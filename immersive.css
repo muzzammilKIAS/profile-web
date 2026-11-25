@@ -473,3 +473,19 @@ main > .section:not(.hero) { overflow-x: clip; }
   html:not([data-motion='paused']) .chapter.is-enhanced > .chapter-sticky > .note-wrap { inset-block-end: auto; inset-block-start: calc(var(--nav-height) + env(safe-area-inset-top) + 14px); inset-inline-start: 8px; }
   html:not([data-motion='paused']) .chapter.is-enhanced > .chapter-sticky > .note-wrap .stage-note { inset-block-end: auto; inset-block-start: calc(100% + 4px); }
 }
+
+/* ═════════ Portal gerbang runcing: peralihan masuk ke bab 3D ═════════ */
+/* Saiz/kedudukan topeng dikira dalam js/main.js (--mw, --mh, --my) supaya gerbang berdiri di dasar kawasan kelihatan. */
+html.has-3d:not([data-motion='paused']) .chapter.is-enhanced { background: transparent; border-block: 0; }
+html.has-3d:not([data-motion='paused']) .chapter.is-enhanced:not(.portal-open) > .chapter-sticky {
+  --arch: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 120' preserveAspectRatio='none'%3E%3Cpath d='M0 120V52C0 30 22 12 50 0 78 12 100 30 100 52V120Z'/%3E%3C/svg%3E");
+  -webkit-mask: var(--arch) 50% var(--my, 0) / var(--mw, 30%) var(--mh, 0) no-repeat;
+  mask: var(--arch) 50% var(--my, 0) / var(--mw, 30%) var(--mh, 0) no-repeat;
+}
+/* Bingkai emas nipis mengikut bentuk gerbang, pudar apabila gerbang menutup skrin. */
+html.has-3d:not([data-motion='paused']) .chapter.is-enhanced:not(.portal-open) > .chapter-sticky .stage::after {
+  content: ''; position: absolute; z-index: 7; left: 50%; top: var(--my, 0); pointer-events: none;
+  width: var(--mw, 30%); height: var(--mh, 0); translate: -50% 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 120' preserveAspectRatio='none'%3E%3Cpath d='M.6 120V52C.6 30.5 22.4 12.6 50 .7 77.6 12.6 99.4 30.5 99.4 52V120' fill='none' stroke='%23dcc48b' stroke-width='1.2' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  opacity: calc(1 - var(--portal, 0) * var(--portal, 0));
+}

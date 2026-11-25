@@ -10,7 +10,7 @@
 | C-03 | Claude | Babak Jamiah Imam scroll 360° + mod Teroka | `js/**` | X-01 | Yaw 0/90/180/270/360° pada 0/25/50/75/100% | selesai (disahkan QA) |
 | C-04 | Claude | Pustaka 3D, pingat, manuskrip, makmal digital | `js/**` | X-02 | Setiap babak dimuat lazy dan berfungsi | selesai: babak dibina Codex (pusingan 2), disepadukan dan dibaiki Claude |
 | G-02 | Gemini | Semakan visual versi bersepadu | `collab/GEMINI_REVIEW.md` (bahagian 2) | C-02..C-04 | Isu P0/P1 disenaraikan | pusingan 2 selesai; pusingan 3 berjalan |
-| X-03 | Codex | Semakan kod + regresi/prestasi | `collab/CODEX_REPORT.md` (bahagian 2) | C-02..C-04 | Isu P0/P1 disenaraikan | berjalan |
+| X-03 | Codex | Semakan kod + regresi/prestasi | `collab/CODEX_REPORT.md` (bahagian 2) | C-02..C-04 | Isu P0/P1 disenaraikan | **pending**: Codex mencapai had penggunaan; lihat `collab/HANDOFF_CODEX_X03.md`. Semakan ganti oleh sub-agent Claude. |
 | C-05 | Claude | Baiki P0/P1, QA akhir, dokumen serahan | semua fail Claude | G-02, X-03 | `QA_REPORT.md` dengan hasil sebenar | belum |
 | X-02b | Codex | Babak Pustaka, Makmal, Manuskrip, Pingat (arahan kreatif pengguna) | `js/scenes/{library,devices,manuscript,medals,common}.js` | C-03 | Berjalan dalam WebGL tanpa ralat; QA browser oleh Claude | selesai; 4 pepijat visual dibaiki Claude |
 | C-06 | Claude | Versi Pagi/Malam, khat Thuluth penuh, buang AI slop, kaleidoskop geometri, poster | `js/**`, `immersive.css`, `script.js`, `assets/**` | G-02 | QA browser | selesai |

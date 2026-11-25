@@ -122,6 +122,32 @@ document.querySelectorAll('.stage-note').forEach((note, index) => {
   document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && wrap.classList.contains('is-open')) { wrap.classList.remove('is-open'); button.setAttribute('aria-expanded', 'false'); } });
 });
 
+// Portal gerbang: bab 3D terbuka melalui tingkap gerbang runcing yang membesar ketika bab masuk dari bawah.
+const portals = [...document.querySelectorAll('.chapter')];
+if (portals.length) {
+  let queued = false;
+  const update = () => {
+    queued = false;
+    portals.forEach((chapter) => {
+      const top = chapter.getBoundingClientRect().top;
+      const k = Math.min(1, Math.max(0, 1 - top / innerHeight)); // 0 apabila bab di bawah skrin, 1 apabila dipin
+      // Gerbang sentiasa berdiri di dasar kawasan yang kelihatan dan membesar hingga menutup skrin pada k = 1.
+      const narrow = innerWidth < 680;
+      const w = (narrow ? 62 : 28) + (narrow ? 140 : 170) * k ** 3;   // % lebar
+      const h = k * 100 * 0.96 + 90 * k ** 4;                         // vh
+      const y = k * 100 - h;                                          // vh, dari atas elemen melekit
+      chapter.style.setProperty('--portal', k.toFixed(4));
+      chapter.style.setProperty('--mw', `${w.toFixed(2)}%`);
+      chapter.style.setProperty('--mh', `${h.toFixed(2)}vh`);
+      chapter.style.setProperty('--my', `${y.toFixed(2)}vh`);
+      chapter.classList.toggle('portal-open', k >= 0.999);
+    });
+  };
+  addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(update); } }, { passive: true });
+  addEventListener('resize', update, { passive: true });
+  update();
+}
+
 // Butang kembali ke atas.
 const toTop = document.getElementById('toTop');
 if (toTop) {
