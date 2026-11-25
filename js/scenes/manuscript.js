@@ -3,8 +3,8 @@ import { THREE, TAU, studio, controller, rounded, batch, surfaceTexture, leafGeo
 const KEYS = [
   { p: 0, d: 1.05, e: 28, sx: 0, syPortrait: 0.05, ty: 1.25 },
   { p: 0.24, d: 0.9, e: 45, sx: 0, syPortrait: 0.04, ty: 1.45 },
-  { p: 0.42, d: 0.5, e: 58, sx: 0, syPortrait: 0.02, ty: 1.75 },
-  { p: 0.56, d: 0.52, e: 50, sx: 0, syPortrait: 0.02, ty: 1.72 },
+  { p: 0.42, d: 0.7, e: 36, sx: 0, syPortrait: 0.02, ty: 1.44 },
+  { p: 0.56, d: 0.7, e: 36, sx: 0, syPortrait: 0.02, ty: 1.44 },
   { p: 0.7, d: 0.8, e: 32, sx: 0, syPortrait: 0.04, ty: 1.6 },
   { p: 1, d: 1.05, e: 28, sx: 0, syPortrait: 0.05, ty: 1.25 },
 ];

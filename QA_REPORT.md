@@ -64,5 +64,30 @@ Tangkapan: `qa/round3/` (versi akhir), `qa/round2/`, `qa/baseline/`.
 | Butang (i) bertindih dail pada mobile | Kedudukan sama | Dialihkan ke atas kiri |
 | Babak Codex tidak ikut Pagi/Malam | Latar tetap | Fungsi `mood()` dalam `common.js` |
 
+## Pusingan 3: semakan kod bebas + semakan visual akhir Gemini
+Codex tidak dapat menjalankan X-03 (had penggunaan akaun; lihat `collab/HANDOFF_CODEX_X03.md`). Sebagai ganti, sub-agent Claude bebas membaca kod dan melaporkan 6 isu P1 dan 9 isu P2. Gemini (pusingan 3) memberi markah ~7.2/10 dengan 3 isu P0 dan 5 isu P1. Yang dibaiki:
+
+| Sumber | Isu | Pembaikan |
+|---|---|---|
+| Kod P1 | Keadaan Teroka tertinggal selepas pemulihan konteks | `restore()` memanggil `onDeactivate`, membuang `is-exploring`/`is-loading` |
+| Kod P1 | `dispose` Jamiah membocorkan ScrollTrigger, pendengar hotspot, titik rel, peta bayang | Dispose penuh seperti `common.js` |
+| Kod P1 | Kamera Jamiah tidak dibingkai semula apabila LTR↔RTL | Pemerhati `dir` |
+| Kod P1 | Pendedahan renderer dikongsi antara babak secara salah | Setiap babak membawa `exposure`; dipakai setiap render |
+| Kod P1 | Bayang dimatikan semasa jalan tanpa kompil semula | Tidak lagi dimatikan; ambang bingkai lambat 40 ms |
+| Kod P1 | Tiada poster ketika konteks hilang | CSS `html.webgl-lost` memaparkan poster |
+| Kod P2 | Perlumbaan muat/pulih; pemerhati `chapterUI` tidak dibuang; hotspot boleh difokus di pentas tidak aktif; fokus hilang; gelung rAF tidak berhenti; sasaran sentuh 28 px | Token generasi; `dispose()`; hotspot disembunyikan; fokus dipindah; gelung berhenti selepas ~2 s senyap (disahkan: `raf=0`); 44 px |
+| Gemini P0 | Scrim hitam di dasar bab pada versi Pagi | Kekhususan CSS dibetulkan |
+| Gemini P0 | Peranti latar Makmal bertembung dengan teks | Berundur jauh ke belakang; skrin malap 18% apabila bukan fokus |
+| Gemini P0 | Buku terpotong di bawah pengepala pada mobile | Pembingkaian potret dilaras |
+| Gemini P1 | Jalur pantulan lantai kelabu (studio) | `FogExp2` + lantai bulat pudar, kasar |
+| Gemini P1 | Pingat: jalur kasar, reben pudar, terlalu dekat | Tekstur 512, emas `#d4a448`, reben satin `sheen`, kamera 0.64 |
+| Gemini P1 | Manuskrip terlalu putih, rehal tersembunyi | Kertas perkamen, bingkai lebih gelap, kamera 36° |
+| Gemini P1 | Teks Jamiah merentas model; kaca rata; semak seragam | Lajur 360 px (desktop), `sx` lebih besar, kaca bercahaya 0.48, anjakan semak lebih halus |
+| Gemini P1 | Butang ke atas menduplikasi pautan kaki | Disembunyikan berhampiran hujung halaman |
+
+Regresi yang diperkenalkan oleh pembaikan dan dibaiki serta-merta: lajur teks sempit pada mobile, buku terlalu rendah pada mobile. Selepas semua pembaikan: **30/30 lulus** (larian keempat).
+
+Tidak dibuat (dengan sebab): menukar foto potret (dilarang master prompt); membuang rozet/bintang potret sepenuhnya (DNA asal, sebaliknya dihaluskan); suis bahasa dalam pengepala mobile (tiada ruang pada 360–390 px; kekal dalam menu).
+
 ## Belum diuji / had
 Telefon dan tablet fizikal; Safari iOS sebenar (WebKit desktop Playwright sahaja); Firefox; pembaca skrin sebenar (VoiceOver/NVDA); Lighthouse; laman yang diterbitkan di GitHub Pages (belum ditolak).

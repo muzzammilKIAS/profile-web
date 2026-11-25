@@ -3,9 +3,9 @@ import { THREE, TAU, studio, controller, batch, canvasTexture, ramp } from './co
 const KEYS = [
   { p: 0, d: 1.12, e: 22, sx: 0, syPortrait: 0.05, tx: 0, ty: 2 },
   { p: 0.28, d: 0.87, e: 18, sx: 0, syPortrait: 0.05, tx: -0.2, ty: 1.9 },
-  { p: 0.4, d: 0.37, e: 8, sx: 0, syPortrait: 0.02, tx: -0.44, ty: 1.8 },
+  { p: 0.4, d: 0.64, e: 10, sx: 0, syPortrait: 0.02, tx: -0.32, ty: 1.65 },
   { p: 0.5, d: 0.86, e: 5, sx: 0, syPortrait: 0.02, tx: 0, ty: 2 },
-  { p: 0.6, d: 0.4, e: 9, sx: 0, syPortrait: 0.02, tx: 0.48, ty: 1.63 },
+  { p: 0.6, d: 0.66, e: 9, sx: 0, syPortrait: 0.02, tx: 0.48, ty: 1.55 },
   { p: 0.78, d: 0.96, e: 26, sx: 0, syPortrait: 0.05, tx: 0, ty: 2 },
   { p: 1, d: 1.12, e: 22, sx: 0, syPortrait: 0.05, tx: 0, ty: 2 },
 ];
@@ -63,19 +63,19 @@ function medal(s, metal, ribbonMaterial, x, y, z) {
 export default async function create(ctx) {
   const s = studio(ctx, 3);
   try {
-    const brush = s.own(canvasTexture(256, 256, (g, w, h) => {
+    const brush = s.own(canvasTexture(512, 512, (g, w, h) => {
       g.fillStyle = '#dedede'; g.fillRect(0, 0, w, h);
       for (let y = 0; y < h; y += 2) { g.fillStyle = y % 6 ? '#c8c8c8' : '#eeeeee'; g.fillRect(0, y, w, 1); }
     }));
-    const gold = s.own(new THREE.MeshPhysicalMaterial({ color: 0xe7b85f, metalness: 1, roughness: 0.32, roughnessMap: brush, anisotropy: ctx.tier === 'high' ? 0.2 : 0 }));
+    const gold = s.own(new THREE.MeshPhysicalMaterial({ color: 0xd4a448, metalness: 0.96, roughness: 0.24, roughnessMap: brush, anisotropy: ctx.tier === 'high' ? 0.2 : 0 }));
     const silver = s.own(new THREE.MeshPhysicalMaterial({ color: 0xc7d0d4, metalness: 1, roughness: 0.35, roughnessMap: brush, anisotropy: ctx.tier === 'high' ? 0.17 : 0 }));
     // Reben satin: zamrud untuk emas, lapis untuk perak (tiada logo atau teks pertandingan).
-    const ribbon = s.material({ color: 0x184a39, roughness: 0.42, metalness: 0.05, side: THREE.DoubleSide });
-    const ribbonSilver = s.material({ color: 0x23466e, roughness: 0.42, metalness: 0.05, side: THREE.DoubleSide });
+    const ribbon = s.own(new THREE.MeshPhysicalMaterial({ color: 0x0b2d21, roughness: 0.74, metalness: 0.02, sheen: 0.45, sheenColor: new THREE.Color(0x3d7a62), side: THREE.DoubleSide }));
+    const ribbonSilver = s.own(new THREE.MeshPhysicalMaterial({ color: 0x1a3556, roughness: 0.74, metalness: 0.02, sheen: 0.45, sheenColor: new THREE.Color(0x5b84b8), side: THREE.DoubleSide }));
     const goldMedal = medal(s, gold, ribbon, -0.58, 1.48, 0.3);
     const silverMedal = medal(s, silver, ribbonSilver, 0.65, 1.21, -0.12);
     // Physical light sweeps over the raised relief; no emissive/neon effect.
-    const sweep = new THREE.SpotLight(0xffefd5, 35, 15, 0.5, 0.85, 2);
+    const sweep = new THREE.SpotLight(0xffefd5, 14, 15, 0.5, 0.85, 2);
     sweep.position.set(-3, 3, 4); sweep.target.position.set(0, 1.5, 0);
     s.scene.add(sweep, sweep.target);
     return controller(s, {

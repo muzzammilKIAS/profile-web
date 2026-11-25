@@ -84,6 +84,7 @@ export function mountHud(stage, rig, { onExplore } = {}) {
       button.hidden = !exploring;
     });
     buttons.explore.hidden = exploring;
+    buttons.motion.hidden = matchMedia('(prefers-reduced-motion: reduce)').matches;
     buttons.explore.setAttribute('aria-pressed', String(exploring));
   }
   function setExplore(on) {
@@ -151,10 +152,12 @@ export function chapterUI(chapter) {
     dot.setAttribute('aria-label', `${tr('step', index + 1, cards.length)}${heading ? ': ' + heading.textContent.trim() : ''}`);
   });
   relabel();
-  new MutationObserver(relabel).observe(root, { attributes: true, attributeFilter: ['lang'] });
+  const labelObserver = new MutationObserver(relabel);
+  labelObserver.observe(root, { attributes: true, attributeFilter: ['lang'] });
   let current = -1, lastDegree = -1;
   return {
     positions,
+    dispose() { labelObserver.disconnect(); rail?.querySelector('.rail-dots')?.remove(); },
     update(p, turns = 1) {
       let best = 0;
       positions.forEach((at, index) => { if (Math.abs(p - at) < Math.abs(p - positions[best])) best = index; });

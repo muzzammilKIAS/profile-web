@@ -52,7 +52,7 @@ export function studio(ctx, radius = 3) {
   scene.background = new THREE.Color(0x091a14);
   scene.environment = ctx.env;
   scene.environmentIntensity = 0.65;
-  scene.fog = new THREE.Fog(0x091a14, 22, 65);
+  scene.fog = new THREE.FogExp2(0x091a14, 0.05);
   const camera = new THREE.PerspectiveCamera(32, 1, 0.025, 100);
   const material = options => own(new THREE.MeshStandardMaterial(options));
   const mesh = (parent, geometry, mat, x = 0, y = 0, z = 0) => {
@@ -62,8 +62,13 @@ export function studio(ctx, radius = 3) {
     parent.add(object);
     return object;
   };
-  const floorMaterial = material({ color: 0x0b1d16, roughness: 0.54, metalness: 0.18 });
-  const floor = mesh(scene, new THREE.PlaneGeometry(180, 180), floorMaterial);
+  const floorFade = own(canvasTexture(128, 128, (g, w, h) => {
+    const gradient = g.createRadialGradient(w / 2, h / 2, 0, w / 2, h / 2, w / 2);
+    gradient.addColorStop(0, '#fff'); gradient.addColorStop(0.5, '#fff'); gradient.addColorStop(1, '#000');
+    g.fillStyle = gradient; g.fillRect(0, 0, w, h);
+  }));
+  const floorMaterial = material({ color: 0x0b1d16, roughness: 0.9, metalness: 0.02, envMapIntensity: 0.2, alphaMap: floorFade, transparent: true, depthWrite: false });
+  const floor = mesh(scene, new THREE.CircleGeometry(14, 64), floorMaterial);
   floor.rotation.x = -Math.PI / 2;
   floor.castShadow = false;
   const key = new THREE.DirectionalLight(0xffe6cb, 3.3);
@@ -80,10 +85,10 @@ export function studio(ctx, radius = 3) {
   scene.add(key, rim, sky);
   // Versi Pagi / Malam (Claude): mengikut suis tema laman, sama seperti babak Jamiah.
   const MOODS = {
-    night: { bg: 0x091a14, floor: 0x0b1d16, floorRough: 0.54, env: 0.65, exposure: 1.12, key: [0xffe6cb, 3.3], rim: [0xc4e1da, 2.2], sky: [0xc8ded8, 0x332919, 0.65] },
+    night: { bg: 0x091a14, floor: 0x0b1d16, floorRough: 0.9, env: 0.65, exposure: 1.12, key: [0xffe6cb, 3.3], rim: [0xc4e1da, 2.2], sky: [0xc8ded8, 0x332919, 0.65] },
     day: { bg: 0xeee6d6, floor: 0xe3d8c3, floorRough: 0.8, env: 0.95, exposure: 1.0, key: [0xfff3e0, 3.6], rim: [0xffffff, 1.1], sky: [0xf3efe6, 0xb59f7c, 1.15] },
   };
-  let moodName = null;
+  let moodName = null, exposureNow = 1.12;
   function mood() {
     const next = isNight() ? 'night' : 'day';
     if (next === moodName) return false;
@@ -93,7 +98,7 @@ export function studio(ctx, radius = 3) {
     scene.fog.color.setHex(m.bg);
     floorMaterial.color.setHex(m.floor); floorMaterial.roughness = m.floorRough;
     scene.environmentIntensity = m.env;
-    ctx.renderer.toneMappingExposure = m.exposure;
+    exposureNow = m.exposure;
     key.color.setHex(m.key[0]); key.intensity = m.key[1];
     rim.color.setHex(m.rim[0]); rim.intensity = m.rim[1];
     sky.color.setHex(m.sky[0]); sky.groundColor.setHex(m.sky[1]); sky.intensity = m.sky[2];
@@ -135,7 +140,7 @@ export function studio(ctx, radius = 3) {
     resources.clear(); scene.clear();
   }
   mood();
-  return { ctx, scene, camera, own, material, mesh, contact, texture, key, rim, cleanup, dispose, mood };
+  return { ctx, scene, camera, own, material, mesh, contact, texture, key, rim, cleanup, dispose, mood, exposure: () => exposureNow };
 }
 
 export function canvasTexture(w, h, paint) {
@@ -149,7 +154,7 @@ export function canvasTexture(w, h, paint) {
 // Seeded texture variation; never changes when reversing scroll.
 export function surfaceTexture(kind) {
   return canvasTexture(512, 512, (g, w, h) => {
-    g.fillStyle = kind === 'wood' ? '#725033' : kind === 'leather' ? '#655b50' : '#eee5cf';
+    g.fillStyle = kind === 'wood' ? '#725033' : kind === 'leather' ? '#655b50' : '#dfd0b0';
     g.fillRect(0, 0, w, h);
     let seed = 719;
     const random = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
@@ -159,7 +164,7 @@ export function surfaceTexture(kind) {
       g.fillRect(x, y, kind === 'wood' ? 30 + random() * 160 : 1.3, kind === 'wood' ? 0.7 : 1.3);
     }
     if (kind === 'page') {
-      g.strokeStyle = '#b19c70'; g.lineWidth = 1.5;
+      g.strokeStyle = '#8a6b34'; g.lineWidth = 2.2;
       g.strokeRect(38, 32, w - 76, h - 64); g.strokeRect(45, 39, w - 90, h - 78);
       // Geometric border only: no letters, pseudo-text or calligraphy.
       for (let i = 65; i < 460; i += 24) {
@@ -223,6 +228,7 @@ export function controller(s, { name, radius, keys, targetAt, pose, stable = 0.5
   let lastP = -1, disposed = false;
   const api = {
     scene, camera, rig, hud, progress, state,
+    get exposure() { s.mood(); return s.exposure(); },
     resize(w, h) { rig.fit(w, h); },
     update(delta) {
       if (disposed) return false;
@@ -244,6 +250,7 @@ export function controller(s, { name, radius, keys, targetAt, pose, stable = 0.5
       disposed = true;
       for (const t of triggers) { t.animation?.kill(); t.kill(); }
       window.gsap?.killTweensOf(progress);
+      ui?.dispose?.();
       trigger.querySelector('.rail-dots')?.remove();
       directionObserver.disconnect();
       hud.dispose(); rig.dispose(); s.dispose();

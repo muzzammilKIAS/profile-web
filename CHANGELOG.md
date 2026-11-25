@@ -21,5 +21,10 @@
 - Pengepala kabur tidak lagi dibocori kandungan; label minimum 12 px; potret tidak diulang dalam avatar; senarai penerbitan kembali kepada baris editorial; 6 pembetulan RTL (bar kemajuan, tajuk LTR dalam Arab, anak panah, hiasan dicerminkan, sheen Arab).
 - Dibuang sebagai "AI slop": pil kicker, gradien kilau pada nama, aksara ✧ gergasi, pembahagi gerbang bergigi, friz bintang berulang, kad kaca gelap di atas model (kini teks editorial dengan garis paksi emas), nota penafian terang (kini butang (i)), berlian bertindih dalam kotak Hubungi, dan butang terapung di atas pentas 3D.
 
+### Pusingan 3 (semakan kod bebas + Gemini)
+- Kebocoran sumber dan keadaan basi selepas pemulihan konteks WebGL dibaiki; gelung render berhenti apabila senyap; pendedahan per babak; kamera ikut arah bahasa.
+- Peralihan **portal gerbang runcing** berbingkai emas ke dalam setiap bab 3D.
+- Scrim versi Pagi, susun lapis Makmal, pembingkaian buku mobile, lantai studio, bahan pingat dan manuskrip, lajur teks Jamiah.
+
 ### Tidak diubah
 - Semua fakta akademik, terjemahan, potret, PDF dan pautan. Inventori disahkan sama dengan baseline: 7 pendidikan, 3 bidang, 2 anugerah, 4 kepujian, 10 sijil, 12 penerbitan, 9 aplikasi, 6 pengalaman, 7 kursus.

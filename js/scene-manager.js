@@ -47,6 +47,10 @@ export class SceneManager {
     }, { threshold: [0, 0.1, 0.25, 0.5, 0.75, 1], rootMargin: '90% 0px 90% 0px' });
     this.ro = new ResizeObserver(() => this.resize());
     document.addEventListener('visibilitychange', () => { if (!document.hidden) this.kick(); });
+    const wake = () => this.kick();
+    addEventListener('scroll', wake, { passive: true });
+    addEventListener('resize', wake, { passive: true });
+    ['pointerdown', 'pointermove', 'wheel', 'touchstart', 'keydown'].forEach((type) => document.addEventListener(type, wake, { passive: true }));
     systemDark.addEventListener('change', () => { this.force = true; this.kick(); });
     new MutationObserver(() => { this.force = true; this.kick(); })
       .observe(root, { attributes: true, attributeFilter: ['data-motion', 'data-theme', 'dir', 'lang'] });
@@ -103,10 +107,14 @@ export class SceneManager {
     this.lost = false;
     root.classList.remove('webgl-lost');
     this.entries.forEach((entry) => {
-      if (entry.scene3d) { try { entry.scene3d.dispose(); } catch { /* sumber sudah hilang */ } }
+      entry.gen = (entry.gen || 0) + 1; // muatan yang masih berjalan menjadi basi dan akan dibuang
+      if (entry.scene3d) {
+        try { entry.scene3d.onDeactivate?.(); } catch { /* pilihan */ }
+        try { entry.scene3d.dispose(); } catch { /* sumber sudah hilang */ }
+      }
       entry.scene3d = null;
       entry.state = 'idle';
-      entry.stage.classList.remove('is-live', 'is-ready');
+      entry.stage.classList.remove('is-live', 'is-ready', 'is-exploring', 'is-loading');
     });
     this.active = null;
     const pmrem = new THREE.PMREMGenerator(this.renderer);
@@ -119,15 +127,19 @@ export class SceneManager {
     if (entry.state !== 'idle' || !this.ensureRenderer()) return;
     entry.state = 'loading';
     entry.stage.classList.add('is-loading');
+    const gen = entry.gen = (entry.gen || 0) + 1;
     try {
       const create = await entry.loader();
-      entry.scene3d = await create({
+      const scene3d = await create({
         THREE, stage: entry.stage, manager: this, renderer: this.renderer, canvas: this.canvas,
         env: this.env, tier: this.tier, requestRender: () => { this.force = true; this.kick(); },
       });
+      if (gen !== entry.gen) { try { scene3d.dispose(); } catch { /* basi */ } return; }
+      entry.scene3d = scene3d;
       entry.state = 'ready';
       entry.stage.classList.add('is-ready');
     } catch (error) {
+      if (gen !== entry.gen) return;
       console.warn(`[3d] Babak "${entry.name}" gagal dimuat.`, error);
       entry.state = 'error';
       entry.stage.classList.add('is-fallback');
@@ -156,7 +168,9 @@ export class SceneManager {
         const poster = previous.stage.querySelector('.stage-snapshot');
         if (poster) poster.src = this.canvas.toDataURL('image/webp', 0.82);
       } catch { /* poster pilihan */ }
+      const hadFocus = previous.stage.contains(document.activeElement);
       previous.scene3d.onDeactivate?.();
+      if (hadFocus && document.activeElement === document.body) previous.stage.querySelector('.tool-explore')?.focus({ preventScroll: true });
       previous.stage.classList.remove('is-live');
       this.ro.unobserve(previous.stage);
     }
@@ -183,11 +197,13 @@ export class SceneManager {
 
   // Babak boleh membekalkan render sendiri (contoh: pasca-proses ambient occlusion).
   draw(entry) {
+    this.renderer.toneMappingExposure = entry.scene3d.exposure ?? 1.12;
     if (entry.scene3d.render) entry.scene3d.render(this.renderer);
     else this.renderer.render(entry.scene3d.scene, entry.scene3d.camera);
   }
 
   kick() {
+    this.idle = 0;
     if (!this.raf && this.active && !document.hidden && !this.lost) {
       this.last = 0;
       this.raf = requestAnimationFrame(this.frame);
@@ -204,8 +220,11 @@ export class SceneManager {
     const dirty = entry.scene3d.update(delta, now / 1000) || this.force;
     if (dirty) {
       this.force = false;
+      this.idle = 0;
       this.draw(entry);
       this.sample(interval);
+    } else if (++this.idle > 120) {
+      return; // senyap: tiada bingkai sehingga skrol, input atau perubahan seterusnya
     }
     this.raf = requestAnimationFrame(this.frame);
   }
@@ -215,10 +234,9 @@ export class SceneManager {
     const perf = this.perf;
     perf.frames++;
     perf.avgMs += (interval - perf.avgMs) * 0.08;
-    if (interval > 30) { this.slow++; this.fast = 0; } else if (interval < 19) { this.fast++; this.slow = Math.max(0, this.slow - 1); }
+    if (interval > 40) { this.slow++; this.fast = 0; } else if (interval < 19) { this.fast++; this.slow = Math.max(0, this.slow - 1); }
     if (this.slow > 28 && this.dpr > 0.8) {
       this.dpr = Math.max(0.75, this.dpr - 0.25);
-      if (this.dpr <= 1 && this.renderer.shadowMap.enabled) this.renderer.shadowMap.enabled = false;
       this.slow = 0; perf.downgrades++;
       this.resize();
     } else if (this.fast > 600 && this.dpr < Math.min(devicePixelRatio || 1, this.maxDpr)) {

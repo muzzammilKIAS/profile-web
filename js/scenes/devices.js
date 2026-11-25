@@ -2,16 +2,16 @@ import { THREE, TAU, studio, controller, rounded, batch, sample, ramp, pulse } f
 
 const KEYS = [
   { p: 0, d: 1.08, e: 38, sx: 0, syPortrait: 0.3, focus: 0 },
-  { p: 0.12, d: 0.64, e: 9, sx: 0.46, syPortrait: 0.47, focus: 0 },
-  { p: 0.2, d: 0.64, e: 9, sx: 0.46, syPortrait: 0.47, focus: 0 },
+  { p: 0.12, d: 0.72, e: 9, sx: 0.38, syPortrait: 0.3, focus: 0 },
+  { p: 0.2, d: 0.72, e: 9, sx: 0.38, syPortrait: 0.3, focus: 0 },
   { p: 0.225, d: 0.36, e: 12, sx: 0.3, syPortrait: 0.3, focus: 0 },
   { p: 0.32, d: 1.12, e: 29, sx: 0, syPortrait: 0.3, focus: 0.5 },
-  { p: 0.44, d: 0.54, e: 4, sx: -0.48, syPortrait: 0.48, focus: 1 },
-  { p: 0.56, d: 0.54, e: 4, sx: -0.48, syPortrait: 0.48, focus: 1 },
+  { p: 0.44, d: 0.62, e: 4, sx: -0.4, syPortrait: 0.3, focus: 1 },
+  { p: 0.56, d: 0.62, e: 4, sx: -0.4, syPortrait: 0.3, focus: 1 },
   { p: 0.585, d: 0.3, e: 7, sx: -0.3, syPortrait: 0.3, focus: 1 },
   { p: 0.68, d: 1.12, e: 23, sx: 0, syPortrait: 0.3, focus: 1.5 },
-  { p: 0.78, d: 0.49, e: 4, sx: 0.48, syPortrait: 0.48, focus: 2 },
-  { p: 0.9, d: 0.49, e: 4, sx: 0.48, syPortrait: 0.48, focus: 2 },
+  { p: 0.78, d: 0.58, e: 4, sx: 0.4, syPortrait: 0.3, focus: 2 },
+  { p: 0.9, d: 0.58, e: 4, sx: 0.4, syPortrait: 0.3, focus: 2 },
   { p: 0.925, d: 0.28, e: 7, sx: 0.3, syPortrait: 0.3, focus: 2 },
   { p: 1, d: 1.15, e: 24, sx: 0, syPortrait: 0.3, focus: 1 },
 ];
@@ -103,7 +103,11 @@ export default async function create(ctx) {
           const phase = (i - 1) * 2.7;
           // Bring the hero to world-space foreground even on the back half of the orbit.
           // Otherwise the laptop could hide the tablet at the 180-degree checkpoint.
-          d.root.position.set(phase * (1 - focus) - Math.sin(theta) * 1.6 * focus, 1.85 + i * 0.2 + focus * 0.05, (-0.8 - i * 0.65) * (1 - focus) + Math.cos(theta) * 1.6 * focus);
+          // Peranti bukan fokus berundur jauh ke belakang dan ke sisi, keluar dari zon teks (semakan Gemini P0).
+          const away = 1 - focus;
+          d.root.position.set(phase * away * 1.45 - Math.sin(theta) * 1.6 * focus, 1.85 + i * 0.2 + focus * 0.05, (-2.8 - i * 0.95) * away + Math.cos(theta) * 1.6 * focus);
+          if (!d.screens) { d.screens = []; d.root.traverse((o) => { if (o.material?.emissiveMap) d.screens.push(o.material); }); }
+          for (const m of d.screens) m.emissiveIntensity = 0.18 + 0.82 * focus;
           // The composition revolves; each hero turns its display toward the lens.
           d.root.rotation.set(-k.e * Math.PI / 180 * focus, -theta * focus + az + (i - 1) * 0.2 * (1 - focus), (i - 1) * 0.09 * (1 - focus));
           if (d.hinge) d.hinge.rotation.x = (1 - ramp(p, 0.015, 0.12)) * Math.PI / 2 - 0.02;

@@ -18,14 +18,14 @@ const PLINTH = 1.5;
 // (0.4) orbit tinggi kompleks → (0.6) pandangan belakang luas → (0.8) close-up kubah dan menara →
 // (0.9) kamera naik → (1.0) aerial reveal pada orientasi asal.
 const KEYS = [
-  { p: 0.00, d: 1.02, e: 8, fov: 26, az: 0, ty: 0.34, sx: 0.22, fg: 0, fd: 0 },
-  { p: 0.20, d: 0.40, e: 4, fov: 34, az: 0, ty: 0.30, sx: -0.26, fg: 0.92, fd: 0 },
+  { p: 0.00, d: 1.08, e: 8, fov: 26, az: 0, ty: 0.34, sx: 0.32, fg: 0, fd: 0 },
+  { p: 0.20, d: 0.46, e: 4, fov: 34, az: 0, ty: 0.30, sx: -0.34, fg: 0.92, fd: 0 },
   { p: 0.30, d: 0.56, e: 5, fov: 32, az: 16, ty: 0.26, sx: 0, fg: 0.2, fd: 0 },
   { p: 0.40, d: 0.92, e: 27, fov: 28, az: 0, ty: 0.38, sx: 0.24, fg: 0, fd: 0 },
   { p: 0.60, d: 1.12, e: 15, fov: 26, az: 0, ty: 0.36, sx: -0.24, fg: 0, fd: 0 },
   { p: 0.80, d: 0.40, e: 17, fov: 34, az: 0, ty: 0.6, sx: 0.28, fg: 0, fd: 0.9 },
   { p: 0.90, d: 0.84, e: 44, fov: 30, az: -12, ty: 0.4, sx: 0.1, fg: 0, fd: 0.2 },
-  { p: 1.00, d: 1.16, e: 66, fov: 30, az: 0, ty: 0.16, sx: 0.2, fg: 0, fd: 0 },
+  { p: 1.00, d: 1.16, e: 66, fov: 30, az: 0, ty: 0.16, sx: 0.32, fg: 0, fd: 0 },
 ];
 // Titik fizikal yang dikenal pasti pada model (ruang model asal).
 const SPOTS = {
@@ -107,7 +107,7 @@ function shrubby(material) {
       .replace('#include <common>', '#include <common>\nvarying vec3 vModelPos;' + NOISE)
       .replace('#include <begin_vertex>', `#include <begin_vertex>
         float n = noise3(position * 3.4) * 0.7 + noise3(position * 8.1) * 0.3;
-        transformed += normal * (n - 0.45) * 0.26;
+        transformed += normal * (n - 0.45) * 0.16;
         vModelPos = position;`);
     shader.fragmentShader = shader.fragmentShader
       .replace('#include <common>', '#include <common>\nvarying vec3 vModelPos;' + NOISE)
@@ -187,9 +187,9 @@ export default async function create(ctx) {
     stone: () => masonry(new THREE.MeshStandardMaterial({ color: 0xd8bf96, vertexColors: true, roughness: 0.91, metalness: 0 })),
     bronze: () => new THREE.MeshStandardMaterial({ color: 0x5a4328, roughness: 0.3, metalness: 0.92, envMapIntensity: 1.8 }),
     slate: () => ribbed(new THREE.MeshStandardMaterial({ color: 0x4f595e, roughness: 0.56, metalness: 0.42, envMapIntensity: 0.85 }), SPOTS.dome.at[0], SPOTS.dome.at[2]),
-    glass: () => new THREE.MeshStandardMaterial({ color: 0x0f1f24, roughness: 0.14, metalness: 0.85, envMapIntensity: 1.4, emissive: 0xe89b48, emissiveIntensity: 0.32 }),
+    glass: () => new THREE.MeshStandardMaterial({ color: 0x0d1b20, roughness: 0.08, metalness: 0.9, envMapIntensity: 1.4, emissive: 0xdca055, emissiveIntensity: 0.48 }),
     foliage: () => foliageTone(new THREE.MeshStandardMaterial({ color: 0x4a5938, roughness: 0.86, metalness: 0, flatShading: true })),
-    shrub: () => shrubby(new THREE.MeshStandardMaterial({ color: 0x3c4b2f, roughness: 0.94, metalness: 0, flatShading: true })),
+    shrub: () => shrubby(new THREE.MeshStandardMaterial({ color: 0x37402e, roughness: 0.94, metalness: 0, flatShading: true })),
     lawn: () => new THREE.MeshStandardMaterial({ color: 0x445235, roughness: 0.98, metalness: 0 }),
     sign: (source) => signMap
       ? new THREE.MeshStandardMaterial({ map: signMap, transparent: true, alphaTest: 0.04, depthWrite: false, roughness: 0.62, metalness: 0.1, envMapIntensity: 0.6, polygonOffset: true, polygonOffsetFactor: -4, polygonOffsetUnits: -4 })
@@ -283,7 +283,7 @@ export default async function create(ctx) {
   scene.add(key, fill, rim, pool, pool.target);
 
   const MOODS = {
-    night: { sky: skies.night, fog: 0x091310, fogD: 0.0115, env: 0.48, exposure: 0.96, key: [0xffd7a3, 2.45], keyPos: [-1.6, 0.95, 1.15], fill: [0x7e9fb3, 0x1c1510, 0.38], rim: [0xd9c192, 1.45], rimPos: [1.4, 0.85, -1.6], pool: 140, lantern: 34, floor: 0x091310, floorRough: 0.78, plinth: plinthNight, glass: 0.32, medallion: 0.075, contact: 0.65 },
+    night: { sky: skies.night, fog: 0x091310, fogD: 0.0115, env: 0.48, exposure: 0.96, key: [0xffd7a3, 2.45], keyPos: [-1.6, 0.95, 1.15], fill: [0x7e9fb3, 0x1c1510, 0.38], rim: [0xd9c192, 1.45], rimPos: [1.4, 0.85, -1.6], pool: 140, lantern: 34, floor: 0x091310, floorRough: 0.78, plinth: plinthNight, glass: 0.48, medallion: 0.075, contact: 0.65 },
     day: { sky: skies.day, fog: 0xebe2d0, fogD: 0.0072, env: 0.75, exposure: 1.0, key: [0xfff1dc, 4.6], keyPos: [1.1, 1.05, 1.35], fill: [0xdfe9f0, 0xb79f7a, 1.25], rim: [0xfff4e0, 0.5], rimPos: [1.2, 0.7, -1.5], pool: 0, lantern: 0, floor: 0xd9ccb3, floorRough: 0.7, plinth: plinthDay, glass: 0, medallion: 0.16, contact: 0.4 },
   };
   // Kabus diskalakan dengan jarak asas kamera: skrin potret meletakkan kamera lebih jauh,
@@ -299,7 +299,6 @@ export default async function create(ctx) {
     scene.background = m.sky;
     scene.fog.color.setHex(m.fog); fogBase = m.fogD; scaleFog();
     scene.environmentIntensity = m.env;
-    renderer.toneMappingExposure = m.exposure;
     key.color.setHex(m.key[0]); key.intensity = m.key[1];
     key.position.set(m.keyPos[0] * radius, m.keyPos[1] * radius, m.keyPos[2] * radius);
     fill.color.setHex(m.fill[0]); fill.groundColor.setHex(m.fill[1]); fill.intensity = m.fill[2];
@@ -335,16 +334,22 @@ export default async function create(ctx) {
       if (k.fd > 0.001) out.lerp(world.copy(domeLocal).applyAxisAngle(UP, pivot.rotation.y), k.fd);
     },
   });
+  const triggersBefore = new Set(window.ScrollTrigger?.getAll() || []);
   const progress = scrollProgress(chapter, 'pin', 0.9);
+  const triggers = (window.ScrollTrigger?.getAll() || []).filter((t) => !triggersBefore.has(t));
   const ui = chapterUI(chapter);
   const hud = mountHud(stage, rig);
-  spots.forEach((spot) => spot.el.addEventListener('click', () => {
+  // Tukar bahasa (LTR ↔ RTL) mengubah sisi kad; kamera dibingkai semula serta-merta.
+  const directionObserver = new MutationObserver(() => { rig.dirty = true; ctx.requestRender(); });
+  directionObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['dir'] });
+  const spotHandlers = [];
+  spots.forEach((spot) => { const handler = () => {
     hud.setExplore(true);
     const point = spot.local.clone().applyAxisAngle(UP, pivot.rotation.y);
     const dir = spot.normal.clone().applyAxisAngle(UP, pivot.rotation.y);
     dir.y = Math.max(dir.y, 0.25); dir.normalize();
     rig.tween = { t: 0, pos: camera.position.clone(), target: rig.controls.target.clone(), toPos: point.clone().addScaledVector(dir, rig.base * 0.42), toTarget: point, time: 0.9 };
-  }));
+  }; spot.el.addEventListener('click', handler); spotHandlers.push([spot.el, handler]); });
 
   // Ambient occlusion (GTAO) hanya pada peranti berkemampuan; dimuat secara lazy.
   let composer = null;
@@ -427,11 +432,22 @@ export default async function create(ctx) {
       }
       return dirty;
     },
+    get exposure() { applyMood(); return MOODS[mood || 'night'].exposure; },
     onActivate() { mood = null; applyMood(); },
-    onDeactivate() { if (rig.mode === 'explore') { rig.exitExplore(); hud.label(); } },
+    onDeactivate() {
+      if (rig.mode === 'explore') { rig.exitExplore(); hud.label(); }
+      spots.forEach((spot) => { spot.visible = false; spot.el.classList.remove('is-visible'); spot.el.tabIndex = -1; });
+    },
     dispose() {
+      for (const t of triggers) { t.animation?.kill(); t.kill(); }
+      window.gsap?.killTweensOf(progress);
+      directionObserver.disconnect();
+      spotHandlers.forEach(([el, handler]) => el.removeEventListener('click', handler));
+      ui.dispose?.();
       hud.dispose(); rig.dispose();
+      key.shadow.dispose();
       disposables.forEach((item) => item.dispose?.());
+      if (window.__profile3d?.jamiah === state) delete window.__profile3d.jamiah;
     },
   };
 }

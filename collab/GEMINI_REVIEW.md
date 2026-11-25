@@ -1,4 +1,4 @@
-<!-- Nota Claude: tangkapan dalam qa/baseline/ dan qa/round2/ kemudiannya dimampatkan daripada .png kepada .jpg (nama fail sama). Teks Gemini di bawah tidak diubah. -->
+<!-- Nota Claude: tangkapan dalam qa/baseline/, qa/round2/ dan qa/round3/ kemudiannya dimampatkan daripada .png kepada .jpg (nama fail sama). Teks Gemini di bawah tidak diubah. -->
 <!-- Output Gemini (Antigravity CLI agy 1.5.17), pusingan 1, disimpan tanpa suntingan oleh Claude. -->
 
 # GEMINI REVIEW — Audit Visual, Art Direction & Storyboard Imersif 3D
@@ -588,3 +588,124 @@ Semua butang utama (`.button-primary`, `.button-gold`, `.contact-link`, `.tool-e
 2. **Keadaan PBR baharu untuk bahagian belakang & halaman Jamiah:** `r2-jamiah-080.png` ialah render lama sebelum naik taraf bahan, manakala `-000` dan `-020` hanya menunjukkan fasad hadapan. Mutu bahan baharu pada kubah belakang, bumbung sayap, halaman dalaman dan menara di sudut belakang tidak dapat disahkan secara visual lagi.
 3. **Kualiti gerakan sebenar & kelancaran FPS:** Semua input ialah imej pegun. Saya tidak dapat menilai rasa *scroll-scrub*, kelewatan *damping* `Rig`, transisi *intro curtain*, tirai pertukaran bahasa (`lang-veil`), kelancaran mod `Teroka 360°`, atau prestasi GPU pada peranti pertengahan.
 4. **Mod gelap, versi EN/AR (RTL) dan bahagian lain:** Tiada tangkapan skrin bagi `data-theme="dark"`, antaramuka Bahasa Arab (`dir="rtl"`), jalur `#stats`, senarai penuh `#timeline`, `#penerbitan` (baris teks), grid `#aplikasi`, serta `#pengalaman`. Penilaian visual hanya merangkumi apa yang kelihatan dalam 12 imej Pusingan 2 dan 1 imej rujukan.
+
+
+---
+
+<!-- Pusingan 3 (semakan akhir): output Gemini (Antigravity CLI), disimpan tanpa suntingan oleh Claude. -->
+
+# Semakan Kreatif & Visual — Pusingan 3 (Semakan Akhir)
+
+> **Bahan yang diperiksa secara visual (18 tangkapan skrin dalam `qa/round3/`):** `r3-1440-dark-top-000.png`, `r3-1440-dark-jamiah-000.png`, `r3-1440-dark-jamiah-020.png`, `r3-1440-dark-jamiah-080.png`, `r3-1440-dark-jamiah-100.png`, `r3-1440-dark-manuskrip-050.png`, `r3-1440-dark-pingat-040.png`, `r3-1440-dark-pustaka-022.png`, `r3-1440-dark-makmal-016.png`, `r3-1440-dark-makmal-050.png`, `r3-1440-dark-hubungi-050.png`, `r3-1440-light-top-000.png`, `r3-1440-light-jamiah-020.png`, `r3-1440-light-pustaka-078.png`, `r3-1440-light-makmal-084.png`, `r3-390-dark-top-000.png`, `r3-390-dark-jamiah-040.png`, `r3-390-dark-pustaka-022.png` (serta semakan kod `immersive.css` dan `js/scenes/*.js` untuk ketepatan nilai pembaikan; tiada tangkapan skrin `#tentang` ditemui dalam set ini).
+
+---
+
+## 1. Status 12 Item "AI Slop" Pusingan 2
+
+| # | Item "AI Slop" Pusingan 2 | Status | Bukti Nama Fail Imej & Catatan |
+|---:|---|---|---|
+| **1** | Pembahagi gerbang bergigi hitam-putih berulang (`.chapter::before`) | **selesai** | `r3-1440-dark-jamiah-000.png`, `r3-1440-light-jamiah-020.png`, `r3-1440-dark-pustaka-022.png`, `r3-1440-dark-makmal-016.png`, `r3-390-dark-jamiah-040.png` — jalur bergigi dibuang sepenuhnya. |
+| **2** | Bingkai potret hero sesak berlapis-lapis (`rosette` + `arch-kaleido` + bintang + garis berganda; foto potret sebenar kekal mengikut kehendak pengguna) | **belum** | `r3-1440-dark-top-000.png`, `r3-1440-light-top-000.png`, `r3-390-dark-top-000.png` — walaupun wajah pendua dalam `.avatar` sudah diganti monogram `AM` dan foto sebenar dikekalkan dengan betul, kawasan `.heritage-art` masih menindan 5 lapisan hiasan (`arch-kaleido`, SVG `rosette`, bintang `s1`/`s2`, berlian puncak dan trim berganda) di sekeliling foto yang sudah berlatar kompleks. |
+| **3** | Pil kicker bertitik hijau (`PORTFOLIO AKADEMIK DIGITAL`) | **selesai** | `r3-1440-dark-top-000.png`, `r3-1440-light-top-000.png`, `r3-390-dark-top-000.png` — ditukar kepada *editorial eyebrow* dengan garis halus emas yang sekata. |
+| **4** | Gradien animasi `.sheen` pada nama "Muzzammil" | **selesai** | `r3-1440-dark-top-000.png`, `r3-1440-light-top-000.png`, `r3-390-dark-top-000.png` — warna dakwat penuh bersih tanpa kecacatan warna huruf, dan *patronym* `Mohammad Najib` dalam italik serif yang berwibawa. |
+| **5** | Kad kaca gelap + garisan emas 2px (`.story-card`) bertindih atas model 3D | **sebahagian** | `r3-1440-dark-jamiah-000.png`, `r3-1440-dark-jamiah-020.png`, `r3-1440-light-jamiah-020.png`, `r3-1440-dark-makmal-050.png`, `r3-1440-light-makmal-084.png` — kotak kaca sudah diganti teks editorial bebas-kotak bergaris emas `1px`, tetapi teks masih bertindih dengan binaan Jamiah (`-000`, `-020`), penutup laptop (`makmal-050`) dan skrin cerah laptop (`light-makmal-084`). |
+| **6** | Kad `about-note` bucu asimetri `80px` + aksara Unicode `✧` gergasi | **sebahagian** | Tiada tangkapan skrin `#tentang` dalam `qa/round3/` untuk pengesahan visual langsung; semakan kod (`immersive.css:407–410`) mengesahkan `border-radius: 4px` dan `.about-note::after { display: none; }` telah ditambah. |
+| **7** | Garisan pembahagi + bintang 4 bucu di tengah (`main > .section::before`) | **selesai** | `r3-1440-dark-pingat-040.png`, `r3-1440-dark-hubungi-050.png` — hiasan pembahagi berulang sudah tiada (`immersive.css:399`). |
+| **8** | Teks penafian defensif terpapar terang di pentas | **selesai** | `r3-1440-dark-jamiah-000.png`, `r3-1440-dark-manuskrip-050.png`, `r3-1440-dark-pingat-040.png`, `r3-1440-dark-pustaka-022.png`, `r3-1440-dark-makmal-016.png`, `r3-390-dark-jamiah-040.png` — semua penafian dialihkan kemas ke ikon `(i)` (*tooltip*). |
+| **9** | Pentas 3D gelap kosong hanya dengan kaleidoskop samar | **selesai** | `r3-1440-dark-manuskrip-050.png`, `r3-1440-dark-pingat-040.png`, `r3-1440-dark-pustaka-022.png`, `r3-1440-light-pustaka-078.png`, `r3-1440-dark-makmal-016.png`, `r3-1440-dark-makmal-050.png`, `r3-1440-light-makmal-084.png` — kelima-lima babak 3D kini dirender penuh dan nyata. |
+| **10** | Tindihan dua hiasan berbeza dalam kotak Hubungi (`contact-box::after` + `contact-kaleido`) | **selesai** | `r3-1440-dark-hubungi-050.png` — berlian 45° sudah dibuang, meninggalkan satu sistem geometri kaleidoskop garis halus sahaja. |
+| **11** | Kebocoran kabur di belakang navbar atas bab gelap | **selesai** | `r3-1440-dark-jamiah-000.png`, `r3-1440-dark-jamiah-020.png`, `r3-1440-dark-pustaka-022.png`, `r3-1440-dark-makmal-016.png` — navbar kini latar gelap pejal bersih tanpa tompokan kabur. |
+| **12** | Butang bulat terapung `.to-top` di bucu kanan bawah | **sebahagian** | Sudah disembunyikan dalam bab `.chapter` skrin penuh (`r3-1440-dark-jamiah-000.png`, `r3-1440-dark-pustaka-022.png`), tetapi masih muncul di sisi pentas `.feature` (`r3-1440-dark-manuskrip-050.png`, `r3-1440-dark-pingat-040.png`) dan menduplikasi pautan `Kembali ke atas ↑` tepat di sebelahnya (`r3-1440-dark-hubungi-050.png`). |
+
+---
+
+## 2. Penilaian Babak 3D, Hero & Hubungi
+
+| Bahagian / Babak | Tidak Nampak Mainan / Kartun | Sinematik | Sebab Ringkas (1 Ayat) |
+|---|---:|---:|---|
+| **Jamiah Imam** (`jamiah-000/020/080/100`, `light-020`, `390-040`) | **6 / 10** | **7 / 10** | Khat Diwan Thuluth «جامعة الإمام محمد بن سعود الإسلامية», tekstur batu pasir dan plinth loyang berjaya mengangkat suasana maket muzium yang dramatik (terutama syot aerial `100`), tetapi barisan semak berbentuk ketulan hijau seragam, pokok kurma "labah-labah" di halaman dan *scrim* bawah hitam rosak pada mod Pagi masih menjejaskan realisme. |
+| **Manuskrip di Atas Rehal** (`manuskrip-050`) | **5 / 10** | **5 / 10** | Geometri helaian yang melengkung semasa diselak dibina dengan baik, namun kertas terlalu putih terbakar hingga corak jidar lenyap seperti buku tulis kosong manakala rehal kayu di bawahnya tenggelam di balik butang `Teroka 360°`. |
+| **Pingat Emas & Perak** (`pingat-040`) | **4 / 10** | **4 / 10** | Jalur tekstur logam melintang 256px yang kasar pada jarak makro, reben pudar rata seperti kertas plastik, jalur ufuk lantai kelabu di latar belakang, serta bucu pingat yang terpotong dan ditindih `Teroka 360°` menjadikannya masih terbaca seperti klip seni 3D asas. |
+| **Pustaka Buku** (`pustaka-022`, `light-078`, `390-022`) | **7 / 10** | **6 / 10** | Kulit PDF sebenar kedua-dua kitab sangat tajam dan autentik, tetapi sudut pandang yang terlalu rata menyerupai poster 2D terapung dan dicacatkan oleh jalur pantulan lantai kelabu (Malam), *scrim* hitam rosak (Pagi) serta kulit terpotong di bawah navbar pada mobile 390px. |
+| **Makmal Peranti** (`makmal-016/050`, `light-084`) | **7 / 10** | **5 / 10** | Perkakasan aluminium dan paparan tangkapan skrin aplikasi sebenar kelihatan moden dan jelas, namun koreografi peranti bukan fokus gagal apabila penutup laptop menutup latar teks `Fiqh Manhaji`, skrin cerah `e-Hadis40` bertembung terus di belakang teks `Haji Pintar`, dan `Teroka 360°` menindih skrin telefon. |
+| **Hero** (`dark-top-000`, `light-top-000`, `390-top-000`) | **8 / 10** | **7 / 10** | Versi desktop Pagi dan Malam kini tenang, tajam dan berwibawa dengan keseimbangan *above-the-fold* yang kemas, cuma bingkai gerbang di sekeliling potret masih sarat lapisan hiasan dan paparan mobile 390px memotong wajah tepat pada garis lipatan. |
+| **Hubungi** (`hubungi-050`) | **9 / 10** | **8 / 10** | Penyingkiran garisan berlian menjadikan penutup ini ruang editorial yang sangat tenang, berimbang dan premium, dengan satu sahaja kecacatan kecil iaitu butang terapung `.to-top` yang menduplikasi `Kembali ke atas ↑` di sebelahnya. |
+
+---
+
+## 3. Isu P0 / P1 Baharu & Baki Kritikal (Maksimum 8)
+
+### 1. [P0] *Scrim* bawah mod Pagi (Light) kekal hitam pekat dan menenggelamkan ikon `(i)`
+- **Fail imej:** `r3-1440-light-jamiah-020.png`, `r3-1440-light-pustaka-078.png`, `r3-1440-light-makmal-084.png`
+- **Punca:** Pemilih `html:not([data-motion='paused']) .chapter.is-enhanced > .chapter-sticky::after` (`immersive.css:178`, kekhususan `0,3,2`) mengatasi peraturan mod Pagi `html[data-mood='day'] .chapter > .chapter-sticky::after` (`immersive.css:382`, kekhususan `0,2,2`), meninggalkan jalur hitam `#081410e0` setinggi `150px` di dasar semua bab 3D mod Pagi.
+- **Pembaikan konkrit (`immersive.css:382`):**
+  ```css
+  html[data-mood='day']:not([data-motion='paused']) .chapter.is-enhanced > .chapter-sticky::after {
+    background: linear-gradient(180deg, transparent 0%, rgba(243, 236, 223, 0.92) 100%);
+  }
+  ```
+
+### 2. [P0] Peranti bukan fokus dalam Makmal bertembung di belakang teks cerita aktif dan memotong peranti di tepi skrin
+- **Fail imej:** `r3-1440-light-makmal-084.png`, `r3-1440-dark-makmal-050.png`, `r3-1440-dark-makmal-016.png`
+- **Punca:** Dalam `js/scenes/devices.js:106`, peranti tidak aktif (`focus = 0`) kekal terlalu dekat di zon teks sebelah (`z: -0.8..-2.1`) dengan skrin `emissiveIntensity: 1` menyala penuh (`e-Hadis40` muncul terus di belakang tajuk `Haji Pintar` pada `light-makmal-084`; penutup belakang laptop duduk di belakang teks `Fiqh Manhaji` pada `makmal-050`; telefon kanan terbelah dua pada `makmal-016`).
+- **Pembaikan konkrit (`js/scenes/devices.js`):**
+  - Simpan rujukan bahan skrin bagi setiap peranti dan malapkan skrin bukan fokus: `d.screenMat.emissiveIntensity = 0.16 + 0.84 * focus;`.
+  - Baris 106: tolak peranti tidak aktif jauh ke belakang/sisi keluar zon teks:
+    ```js
+    const away = 1 - focus;
+    d.root.position.set(
+      phase * away * 1.45 - Math.sin(theta) * 1.6 * focus,
+      1.85 + i * 0.2 + focus * 0.05,
+      (-2.8 - i * 0.95) * away + Math.cos(theta) * 1.6 * focus
+    );
+    ```
+  - Baris 5–14 (`KEYS`): laras jarak `p: 0.12–0.20` kepada `d: 0.72, sx: 0.38`, `p: 0.44–0.56` kepada `d: 0.62, sx: -0.40`, dan `p: 0.78–0.90` kepada `d: 0.58, sx: 0.40` supaya tiada peranti terpotong di tepi skrin atau menyentuh navbar/butang `Teroka 360°`.
+
+### 3. [P0] Mobile 390px Pustaka: Bahagian atas kulit buku terpotong oleh navbar dan `Teroka 360°` menutup tajuk Arab buku
+- **Fail imej:** `r3-390-dark-pustaka-022.png` (dan pertindihan `Teroka 360°` atas bucu buku dalam `r3-1440-dark-pustaka-022.png`)
+- **Punca:** `js/scenes/library.js:5–6` menetapkan `syPortrait: 0.48` dan `d: 0.59`, mengangkat buku terlalu tinggi ke zon `.site-header` dan `.stage-tools` sehingga tajuk `فقه الحلال والحرام` ditutup oleh pil `Teroka 360°`.
+- **Pembaikan konkrit (`js/scenes/library.js:5–6, 11–12`):**
+  - Tukar `p: 0.16–0.28` dan `p: 0.72–0.84` kepada `d: 0.68, e: 8, sx: 0.42` (atau `-0.42`), `syPortrait: 0.22`, dan beri sudut serong halus `0.16 rad` (`~9°`) pada paksi Y buku semasa *plateau* bacaan supaya jilid dan susunan helaian tepi kelihatan 3D serta bucu atas buku bersih di bawah bar alat `Teroka 360°`.
+
+### 4. [P1] Jalur pantulan lantai kelabu melintang di latar gelap memecahkan ilusi studio pada Pustaka, Makmal & Pingat
+- **Fail imej:** `r3-1440-dark-pustaka-022.png`, `r3-1440-dark-makmal-016.png`, `r3-1440-dark-pingat-040.png`, `r3-390-dark-pustaka-022.png`
+- **Punca:** `js/scenes/common.js:55, 65–66, 83` membina lantai segi empat `180×180` (`roughness: 0.54, metalness: 0.18`) dengan `Fog(0x091a14, 22, 65)` yang mula berkabus terlalu jauh; pantulan spekular cahaya `key` (`3.3`) dan `rim` (`2.2`) membentuk jalur kelabu melintang yang membelah latar gelap.
+- **Pembaikan konkrit (`js/scenes/common.js:55, 65–68, 83`):**
+  - Tukar kabus kepada `scene.fog = new THREE.FogExp2(0x091a14, 0.058);`.
+  - Ganti `PlaneGeometry(180, 180)` kepada `CircleGeometry(14, 64)` dengan `alphaMap` jejari pudar ke `0` di pinggir (corak sama seperti `jamiah.js:232–243`), serta ubah `night` kepada `floorRough: 0.90`, `metalness: 0.02`, `envMapIntensity: 0.2`.
+
+### 5. [P1] Babak Pingat: Tekstur logam berjalur kasar, reben terlalu pudar dan pingat terpotong di bawah
+- **Fail imej:** `r3-1440-dark-pingat-040.png`
+- **Punca:** `js/scenes/medals.js:6` (`p: 0.4, d: 0.37`) terlalu rapat sehingga tekstur `brush` 256px (garis selang 2px) kelihatan kasar, pingat emas terpotong di bahagian bawah dan ditindih `Teroka 360°`, manakala `sweep` (`35`) + `key` (`3.3`) membakar warna reben zamrud `0x184a39` menjadi kelabu pudar.
+- **Pembaikan konkrit (`js/scenes/medals.js`):**
+  - `KEYS`: tukar `p: 0.4` kepada `{ p: 0.4, d: 0.64, e: 10, sx: 0, syPortrait: 0.02, tx: -0.32, ty: 1.65 }` dan `p: 0.6` kepada `d: 0.66, ty: 1.55`.
+  - Ganti `brush` kepada tekstur `512×512` berpusar halus (*radial micro-grain*, variasi kontras `#d4d4d4`–`#e4e4e4`), tetapkan emas `color: 0xd4a448, roughness: 0.24, metalness: 0.96`, tukar `ribbon` kepada `MeshPhysicalMaterial({ color: 0x0b2d21, roughness: 0.74, metalness: 0.02, sheen: 0.45, side: THREE.DoubleSide })`, dan turunkan `sweep` intensiti daripada `35` kepada `14`.
+
+### 6. [P1] Manuskrip terlalu putih terbakar dan rehal kayu terselindung di balik bar alat `Teroka 360°`
+- **Fail imej:** `r3-1440-dark-manuskrip-050.png`
+- **Punca:** Kertas `#eee5cf` (`common.js:152`) di bawah `key: 3.3` + `exposure: 1.12` memutihkan seluruh muka surat hingga bingkai `#b19c70` hampir ghaib; sudut kamera `e: 58°`, `d: 0.50` (`manuscript.js:6–7`) terlalu menegak dari atas sehingga rehal kayu di bawah terselindung di balik butang `.stage-tools`.
+- **Pembaikan konkrit (`js/scenes/common.js:152, 162` & `js/scenes/manuscript.js:6–7, 26`):**
+  - Dalam `common.js`: tukar warna dasar `page` kepada perkamen hangat `#dfd0b0`, gelapkan bingkai kepada `strokeStyle = '#8a6b34'; lineWidth = 2.2`, dan tambah bayang lipatan tulang belakang (`linearGradient` `rgba(48,34,18,0.24)` → `transparent` pada 14% sisi dalam).
+  - Dalam `manuscript.js`: tukar `KEYS` `p: 0.42–0.56` kepada `d: 0.70, e: 36, ty: 1.44` supaya persilangan kayu rehal kelihatan jelas di atas bar butang, serta laras lampu babak `s.key.intensity = 2.1; s.key.position.set(-5.5, 4.0, 2.8);` untuk *raking light* hangat pada lengkungan kertas.
+
+### 7. [P1] Jamiah Imam: Teks cerita bertindih dengan binaan (`-000`, `-020`), tumbuhan semak & kurma masih nampak mainan, dan hotspot terapung tanpa *leader line*
+- **Fail imej:** `r3-1440-dark-jamiah-000.png`, `r3-1440-dark-jamiah-020.png`, `r3-1440-dark-jamiah-080.png`, `r3-1440-light-jamiah-020.png`, `r3-390-dark-jamiah-040.png`
+- **Punca:** Lebar `.story-card` (`min(430px, 38vw)`) + ofset `sx` terlalu kecil (`0.22`, `-0.26`) menyebabkan teks merentas dinding dan semak; anjakan bising pada sfera `shrub` (`* 0.26`) masih menghasilkan 12 ketulan hijau seragam; `glass` sisi nampak seperti tampalan coklat rata.
+- **Pembaikan konkrit (`js/scenes/jamiah.js` & `immersive.css`):**
+  - `immersive.css:165`: kecilkan lebar teks kepada `width: min(360px, 31vw);`.
+  - `js/scenes/jamiah.js:21–22`: laras `p: 0.00` ke `d: 1.08, sx: 0.32` dan `p: 0.20` ke `d: 0.46, sx: -0.34`.
+  - `js/scenes/jamiah.js:110, 190–192`: tukar `glass` kepada `color: 0x0d1b20, roughness: 0.08, metalness: 0.9, emissive: 0xdca055, emissiveIntensity: 0.48` (Malam); rendahkan kontras `shrub` (`color: 0x37402e`, anjakan `* 0.16`, atau gantikan jejari semak sfera dalam GLB dengan kotak pasu batu rendah + rimbunan berlapis + *bollard* gangsa kecil).
+
+### 8. [P1] Hero Mobile 390px memotong potret pada garis lipatan + suis bahasa hilang dari header + butang `.to-top` bertindih/menduplikasi di luar `.chapter`
+- **Fail imej:** `r3-390-dark-top-000.png`, `r3-1440-dark-manuskrip-050.png`, `r3-1440-dark-pingat-040.png`, `r3-1440-dark-hubungi-050.png`
+- **Punca:** Ketinggian blok teks + 3 butang pada `390×844` menolak `.hero-card` hingga wajah potret terpotong di paras hidung/misai, `.lang-switch.in-header` tersembunyi di mobile, dan `.to-top` hanya disorokkan di dalam `.chapter` (`immersive.css:416`), bukan di `.feature` atau `#hubungi`.
+- **Pembaikan konkrit (`immersive.css`):**
+  - Dalam `@media (max-width: 680px)`: tetapkan `.hero-title { font-size: clamp(2.15rem, 9.6vw, 2.7rem); }`, `.hero-intro { font-size: 14px; margin-block: 10px 14px; }`, `.hero-actions .button { min-height: 44px; }` dan kekalkan pemilih bahasa padat di `.nav-actions` (atau butang kitaran `BM/EN/ع` `min-width: 44px; min-height: 44px`).
+  - Pada `.heritage-art` (desktop & mobile): buang `.rosette` dan `.portrait-star` (`display: none;`) serta turunkan `.arch-kaleido { opacity: 0.12; }` supaya satu garis gerbang emas bersih membingkai foto sebenar pengguna tanpa kesesakan visual.
+  - Buang `.to-top` terapung sepenuhnya (`.to-top { display: none; }`) kerana navbar melekit dan pautan `Kembali ke atas ↑` di kaki halaman sudah mencukupi.
+
+---
+
+## 4. Penilaian Keseluruhan
+
+Secara jujur, **belum lagi setaraf "Awwwards SOTD / Apple product showcase", tetapi lompatan dari Pusingan 2 amat ketara** — laman ini kini sudah melepasi tahap "templat AI" dan berada pada paras **portfolio akademik berwibawa (~7.2/10)** dengan hero desktop Pagi/Malam yang matang, khat Diwan Thuluth yang meyakinkan pada fasad Jamiah, kulit kitab PDF dan skrin aplikasi sebenar, serta seksyen Hubungi yang tenang dan berkelas. Apa yang masih memisahkannya daripada taraf pameran Apple atau Awwwards bukan lagi arah seni, tetapi **disiplin kemasan akhir**: pepijat kekhususan CSS yang meninggalkan jalur hitam di bawah mod Pagi (`r3-1440-light-*`), perlanggaran peranti latar dengan teks cerita dalam Makmal (`light-makmal-084`, `dark-makmal-050`), kulit buku yang terpotong dan ditutup `Teroka 360°` di mobile (`r3-390-dark-pustaka-022`), jalur pantulan lantai kelabu dalam `common.js`, serta kualiti bahan Pingat dan Manuskrip yang masih ketinggalan jauh di belakang standard Jamiah dan Pustaka. Sebaik sahaja 3 isu P0 dan 5 isu P1 di atas diselesaikan secara tepat, laman ini akan benar-benar kukuh dan layak berdiri sebagai pameran portfolio akademik bertaraf antarabangsa.

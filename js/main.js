@@ -153,6 +153,7 @@ const toTop = document.getElementById('toTop');
 if (toTop) {
   let shown = false;
   const check = () => {
+    root.classList.toggle('near-end', scrollY + innerHeight > document.documentElement.scrollHeight - innerHeight * 0.9);
     const next = scrollY > innerHeight * 1.2;
     if (next !== shown) { shown = next; toTop.hidden = false; toTop.classList.toggle('is-visible', next); toTop.tabIndex = next ? 0 : -1; }
   };

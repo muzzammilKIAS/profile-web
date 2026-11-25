@@ -489,3 +489,32 @@ html.has-3d:not([data-motion='paused']) .chapter.is-enhanced:not(.portal-open) >
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 120' preserveAspectRatio='none'%3E%3Cpath d='M.6 120V52C.6 30.5 22.4 12.6 50 .7 77.6 12.6 99.4 30.5 99.4 52V120' fill='none' stroke='%23dcc48b' stroke-width='1.2' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
   opacity: calc(1 - var(--portal, 0) * var(--portal, 0));
 }
+
+/* Konteks WebGL hilang: poster render kembali kelihatan, kanvas dan kawalan disembunyikan. */
+html.webgl-lost .stage .stage-poster { opacity: 1 !important; }
+html.webgl-lost .stage-mount, html.webgl-lost .stage-tools, html.webgl-lost .stage-hotspots, html.webgl-lost .stage-snapshot { visibility: hidden; }
+/* Sasaran sentuh minimum 44 px. */
+.rail-dot { width: 44px; }
+.section-rail a { width: 34px; height: 34px; }
+.hotspot { pointer-events: none; }
+.stage:not(.is-live) .hotspot.is-visible { opacity: 0; visibility: hidden; }
+.stage.is-live .hotspot.is-visible { pointer-events: auto; }
+
+
+/* ═════════ Pusingan 3: pembaikan semakan akhir Gemini ═════════ */
+/* P0-1: scrim bawah versi Pagi (kekhususan mesti mengatasi peraturan bab dipertingkat). */
+html[data-mood='day']:not([data-motion='paused']) .chapter.is-enhanced > .chapter-sticky::after { background: linear-gradient(180deg, transparent 0%, rgba(243, 236, 223, .92) 100%); }
+/* P1-7: lajur teks cerita lebih sempit supaya tidak merentasi model. */
+@media (min-width: 901px) { html:not([data-motion='paused']) .chapter.is-enhanced .story-card { width: min(360px, 31vw); } }
+/* P1-8: hero mobile lebih padat; bingkai potret kurang sesak (rozet asal dikekalkan tetapi lebih halus). */
+.heritage-art .rosette { opacity: .28; }
+.portrait-star { opacity: .7; }
+.arch-kaleido { opacity: .5; }
+@media (max-width: 680px) {
+  .hero h1 { font-size: clamp(2.6rem, 11vw, 3.2rem); }
+  .hero-intro { font-size: 14px; margin-top: 14px; }
+  .hero-actions { margin-top: 20px; }
+  .hero-actions .button { min-height: 46px; }
+}
+/* Butang ke atas tidak menduplikasi pautan kaki halaman. */
+html.near-end .to-top { opacity: 0; visibility: hidden; transform: translateY(12px); }
