@@ -161,7 +161,7 @@ export default async function create(ctx) {
   // Dua mood: Malam (senja zamrud, lampu galeri hangat) dan Pagi (matahari pagi Riyadh, langit gading).
   const skies = {
     night: backdrop([[0, '#050a08'], [0.54, '#091310'], [0.68, '#0e1b16'], [1, '#07100d']]),
-    day: backdrop([[0, '#c9d6d8'], [0.45, '#efe7d6'], [1, '#e9dcc4']]),
+    day: backdrop([[0, '#aecbdc'], [0.5, '#ece6d8'], [1, '#e9dcc4']]),
   };
   scene.fog = new THREE.FogExp2(0x0c1915, 0.0105);
   scene.environment = ctx.env;
@@ -184,13 +184,13 @@ export default async function create(ctx) {
   const box = new THREE.Box3().setFromObject(model);
   const size = box.getSize(new THREE.Vector3()), center = box.getCenter(new THREE.Vector3());
   const MATERIALS = {
-    stone: () => masonry(new THREE.MeshStandardMaterial({ color: 0xd8bf96, vertexColors: true, roughness: 0.91, metalness: 0 })),
+    stone: () => masonry(new THREE.MeshStandardMaterial({ color: 0xd9c3a0, vertexColors: true, roughness: 0.91, metalness: 0 })),
     bronze: () => new THREE.MeshStandardMaterial({ color: 0x5a4328, roughness: 0.3, metalness: 0.92, envMapIntensity: 1.8 }),
-    slate: () => ribbed(new THREE.MeshStandardMaterial({ color: 0x4f595e, roughness: 0.56, metalness: 0.42, envMapIntensity: 0.85 }), SPOTS.dome.at[0], SPOTS.dome.at[2]),
-    glass: () => new THREE.MeshStandardMaterial({ color: 0x0d1b20, roughness: 0.08, metalness: 0.9, envMapIntensity: 1.4, emissive: 0xdca055, emissiveIntensity: 0.48 }),
-    foliage: () => foliageTone(new THREE.MeshStandardMaterial({ color: 0x4a5938, roughness: 0.86, metalness: 0, flatShading: true })),
-    shrub: () => shrubby(new THREE.MeshStandardMaterial({ color: 0x37402e, roughness: 0.94, metalness: 0, flatShading: true })),
-    lawn: () => new THREE.MeshStandardMaterial({ color: 0x445235, roughness: 0.98, metalness: 0 }),
+    slate: () => ribbed(new THREE.MeshStandardMaterial({ color: 0x3d6276, roughness: 0.5, metalness: 0.42, envMapIntensity: 0.85 }), SPOTS.dome.at[0], SPOTS.dome.at[2]),
+    glass: () => new THREE.MeshStandardMaterial({ color: 0x0d1b20, roughness: 0.08, metalness: 0.9, envMapIntensity: 1.4, emissive: 0xffa94a, emissiveIntensity: 0.48 }),
+    foliage: () => foliageTone(new THREE.MeshStandardMaterial({ color: 0x4b6a37, roughness: 0.86, metalness: 0, flatShading: true })),
+    shrub: () => shrubby(new THREE.MeshStandardMaterial({ color: 0x35502b, roughness: 0.94, metalness: 0, flatShading: true })),
+    lawn: () => new THREE.MeshStandardMaterial({ color: 0x48603a, roughness: 0.98, metalness: 0 }),
     sign: (source) => signMap
       ? new THREE.MeshStandardMaterial({ map: signMap, transparent: true, alphaTest: 0.04, depthWrite: false, roughness: 0.62, metalness: 0.1, envMapIntensity: 0.6, polygonOffset: true, polygonOffsetFactor: -4, polygonOffsetUnits: -4 })
       : new THREE.MeshStandardMaterial({ color: 0xfff3dc, map: source.map, roughness: 0.8, metalness: 0 }),
@@ -283,8 +283,8 @@ export default async function create(ctx) {
   scene.add(key, fill, rim, pool, pool.target);
 
   const MOODS = {
-    night: { sky: skies.night, fog: 0x091310, fogD: 0.0115, env: 0.48, exposure: 0.96, key: [0xffd7a3, 2.45], keyPos: [-1.6, 0.95, 1.15], fill: [0x7e9fb3, 0x1c1510, 0.38], rim: [0xd9c192, 1.45], rimPos: [1.4, 0.85, -1.6], pool: 140, lantern: 34, floor: 0x091310, floorRough: 0.78, plinth: plinthNight, glass: 0.48, medallion: 0.075, contact: 0.65 },
-    day: { sky: skies.day, fog: 0xebe2d0, fogD: 0.0072, env: 0.75, exposure: 1.0, key: [0xfff1dc, 4.6], keyPos: [1.1, 1.05, 1.35], fill: [0xdfe9f0, 0xb79f7a, 1.25], rim: [0xfff4e0, 0.5], rimPos: [1.2, 0.7, -1.5], pool: 0, lantern: 0, floor: 0xd9ccb3, floorRough: 0.7, plinth: plinthDay, glass: 0, medallion: 0.16, contact: 0.4 },
+    night: { sky: skies.night, fog: 0x091310, fogD: 0.0115, env: 0.4, exposure: 0.9, key: [0xffe3c0, 2.9], keyPos: [-1.6, 0.95, 1.15], fill: [0x7e9fb3, 0x1c1510, 0.38], rim: [0xd9c192, 1.45], rimPos: [1.4, 0.85, -1.6], pool: 140, lantern: 34, floor: 0x091310, floorRough: 0.78, plinth: plinthNight, glass: 1.1, medallion: 0.075, contact: 0.65 },
+    day: { sky: skies.day, fog: 0xebe2d0, fogD: 0.0072, env: 0.5, exposure: 0.86, key: [0xfff6e8, 4.0], keyPos: [1.1, 1.05, 1.35], fill: [0xd6e6f2, 0x9c8d76, 0.78], rim: [0xfff4e0, 0.5], rimPos: [1.2, 0.7, -1.5], pool: 0, lantern: 0, floor: 0xdcd3c0, floorRough: 0.7, plinth: plinthDay, glass: 0, medallion: 0.16, contact: 0.4 },
   };
   // Kabus diskalakan dengan jarak asas kamera: skrin potret meletakkan kamera lebih jauh,
   // jadi ketumpatan tetap akan menenggelamkan model pada telefon.

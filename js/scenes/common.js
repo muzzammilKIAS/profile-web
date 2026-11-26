@@ -52,7 +52,7 @@ export function studio(ctx, radius = 3) {
   scene.background = new THREE.Color(0x091a14);
   scene.environment = ctx.env;
   scene.environmentIntensity = 0.65;
-  scene.fog = new THREE.FogExp2(0x091a14, 0.05);
+  scene.fog = new THREE.FogExp2(0x091a14, 0.04);
   const camera = new THREE.PerspectiveCamera(32, 1, 0.025, 100);
   const material = options => own(new THREE.MeshStandardMaterial(options));
   const mesh = (parent, geometry, mat, x = 0, y = 0, z = 0) => {
@@ -85,10 +85,10 @@ export function studio(ctx, radius = 3) {
   scene.add(key, rim, sky);
   // Versi Pagi / Malam (Claude): mengikut suis tema laman, sama seperti babak Jamiah.
   const MOODS = {
-    night: { bg: 0x091a14, floor: 0x0b1d16, floorRough: 0.9, env: 0.65, exposure: 1.12, key: [0xffe6cb, 3.3], rim: [0xc4e1da, 2.2], sky: [0xc8ded8, 0x332919, 0.65] },
-    day: { bg: 0xeee6d6, floor: 0xe3d8c3, floorRough: 0.8, env: 0.95, exposure: 1.0, key: [0xfff3e0, 3.6], rim: [0xffffff, 1.1], sky: [0xf3efe6, 0xb59f7c, 1.15] },
+    night: { bg: 0x091a14, fog: 0.04, floor: 0x0b1d16, floorRough: 0.9, env: 0.5, exposure: 1.0, key: [0xfff0dc, 3.6], rim: [0xbfe6dc, 2.4], sky: [0xc8ded8, 0x2b2114, 0.42] },
+    day: { bg: 0xeee6d6, fog: 0.016, floor: 0xe6e0d2, floorRough: 0.8, env: 0.6, exposure: 0.92, key: [0xfff7ec, 3.4], rim: [0xffffff, 1.0], sky: [0xf1f1ee, 0x9a8f7c, 0.7] },
   };
-  let moodName = null, exposureNow = 1.12;
+  let moodName = null, exposureNow = 1.0;
   function mood() {
     const next = isNight() ? 'night' : 'day';
     if (next === moodName) return false;
@@ -96,6 +96,7 @@ export function studio(ctx, radius = 3) {
     const m = MOODS[next];
     scene.background.setHex(m.bg);
     scene.fog.color.setHex(m.bg);
+    scene.fog.density = m.fog;
     floorMaterial.color.setHex(m.floor); floorMaterial.roughness = m.floorRough;
     scene.environmentIntensity = m.env;
     exposureNow = m.exposure;

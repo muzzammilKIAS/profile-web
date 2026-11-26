@@ -29,7 +29,8 @@ function book(s, entry, cover, paper, edges) {
   const depth = 0.075 + entry.page_count / 2 * 0.0012;
   const leatherMap = s.own(surfaceTexture('leather'));
   const leather = s.material({ color: entry.dominant_color_hex, map: leatherMap, bumpMap: leatherMap, bumpScale: 0.006, roughness: 0.56 });
-  const front = s.material({ map: cover, roughness: 0.49, metalness: 0, envMapIntensity: 0.45 });
+  // Kulit sebenar: sedikit emisif daripada imej yang sama supaya warnanya kekal terang pada semua sudut.
+  const front = s.material({ map: cover, emissive: 0xffffff, emissiveMap: cover, emissiveIntensity: 0.14, roughness: 0.56, metalness: 0, envMapIntensity: 0.3, fog: false });
   s.mesh(root, rounded(w, h, 0.036, 0.018), leather, 0, 0, -depth / 2 - 0.018);
   s.mesh(root, rounded(w - 0.065, h - 0.06, depth, 0.012), edges);
   s.mesh(root, rounded(0.07, h, depth + 0.06, 0.025), leather, -w / 2 + 0.025);
@@ -63,8 +64,8 @@ export default async function create(ctx) {
     // Sequential loading means a later failure can dispose every completed resource.
     for (const entry of entries) covers.push(await s.texture(`assets/textures/books/${entry.slug}-front-${ctx.tier === 'low' ? 1024 : 2048}.webp`));
     const pageMap = s.own(surfaceTexture('page')), edgeMap = s.own(surfaceTexture('edge'));
-    const paper = s.material({ map: pageMap, side: THREE.DoubleSide, roughness: 0.96 });
-    const edges = s.material({ map: edgeMap, roughness: 0.93, color: 0xe4d9bd });
+    const paper = s.material({ map: pageMap, color: 0xe6e8ea, side: THREE.DoubleSide, roughness: 0.96 });
+    const edges = s.material({ map: edgeMap, roughness: 0.93, color: 0xe6e4de });
     const books = entries.map((entry, i) => book(s, entry, covers[i], paper, edges));
     const k = {}, target = new THREE.Vector3();
     // Kedudukan buku: tiga sebaris; buku yang difokus mara ke hadapan, yang lain berundur dan merenggang.

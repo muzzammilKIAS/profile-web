@@ -71,7 +71,21 @@ export class SceneManager {
       canvas.setAttribute('aria-hidden', 'true');
       const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
       renderer.outputColorSpace = THREE.SRGBColorSpace;
-      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      // Gred warna: tone mapping Neutral (mengekalkan warna asal kulit buku dan batu, tidak
+      // dilunturkan seperti ACES), kemudian sedikit ketepuan dan lengkung-S untuk kontras.
+      // Dibuat di dalam shader, jadi tiada pas tambahan dan tiada kos prestasi.
+      const chunk = THREE.ShaderChunk.tonemapping_pars_fragment, stub = 'vec3 CustomToneMapping( vec3 color ) { return color; }';
+      if (chunk.includes(stub)) {
+        THREE.ShaderChunk.tonemapping_pars_fragment = chunk.replace(stub, `vec3 CustomToneMapping( vec3 color ) {
+	color = NeutralToneMapping( color );
+	float luma = dot( color, vec3( 0.2126, 0.7152, 0.0722 ) );
+	color = clamp( mix( vec3( luma ), color, 1.1 ), 0.0, 1.0 );
+	vec3 display = pow( color, vec3( 1.0 / 2.2 ) );
+	display = mix( display, display * display * ( 3.0 - 2.0 * display ), 0.4 );
+	return pow( display, vec3( 2.2 ) );
+}`);
+        renderer.toneMapping = THREE.CustomToneMapping;
+      } else renderer.toneMapping = THREE.NeutralToneMapping;
       renderer.toneMappingExposure = 1.12;
       renderer.shadowMap.enabled = true;
       renderer.shadowMap.type = this.tier === 'high' ? THREE.VSMShadowMap : THREE.PCFShadowMap;

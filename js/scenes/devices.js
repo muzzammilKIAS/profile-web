@@ -18,7 +18,7 @@ const KEYS = [
 
 function screen(s, parent, map, w, h, x, y, z) {
   // Emissive preserves the actual screenshot; no recreated UI or overlay glass glare.
-  const material = s.material({ color: 0x000000, emissive: 0xffffff, emissiveMap: map, emissiveIntensity: 1, roughness: 0.3, toneMapped: false });
+  const material = s.material({ color: 0x000000, emissive: 0xffffff, emissiveMap: map, emissiveIntensity: 1, roughness: 1, metalness: 0, envMapIntensity: 0, fog: false, toneMapped: false });
   const mesh = s.mesh(parent, new THREE.PlaneGeometry(w, h), material, x, y, z);
   mesh.castShadow = false;
   return mesh;

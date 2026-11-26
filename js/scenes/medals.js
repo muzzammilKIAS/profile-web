@@ -67,11 +67,11 @@ export default async function create(ctx) {
       g.fillStyle = '#dedede'; g.fillRect(0, 0, w, h);
       for (let y = 0; y < h; y += 2) { g.fillStyle = y % 6 ? '#c8c8c8' : '#eeeeee'; g.fillRect(0, y, w, 1); }
     }));
-    const gold = s.own(new THREE.MeshPhysicalMaterial({ color: 0xd4a448, metalness: 0.96, roughness: 0.24, roughnessMap: brush, anisotropy: ctx.tier === 'high' ? 0.2 : 0 }));
+    const gold = s.own(new THREE.MeshPhysicalMaterial({ color: 0xd9a63c, metalness: 0.96, roughness: 0.24, roughnessMap: brush, anisotropy: ctx.tier === 'high' ? 0.2 : 0 }));
     const silver = s.own(new THREE.MeshPhysicalMaterial({ color: 0xc7d0d4, metalness: 1, roughness: 0.35, roughnessMap: brush, anisotropy: ctx.tier === 'high' ? 0.17 : 0 }));
     // Reben satin: zamrud untuk emas, lapis untuk perak (tiada logo atau teks pertandingan).
-    const ribbon = s.own(new THREE.MeshPhysicalMaterial({ color: 0x0b2d21, roughness: 0.74, metalness: 0.02, sheen: 0.45, sheenColor: new THREE.Color(0x3d7a62), side: THREE.DoubleSide }));
-    const ribbonSilver = s.own(new THREE.MeshPhysicalMaterial({ color: 0x1a3556, roughness: 0.74, metalness: 0.02, sheen: 0.45, sheenColor: new THREE.Color(0x5b84b8), side: THREE.DoubleSide }));
+    const ribbon = s.own(new THREE.MeshPhysicalMaterial({ color: 0x0a4a32, roughness: 0.74, metalness: 0.02, sheen: 0.45, sheenColor: new THREE.Color(0x2f8a68), side: THREE.DoubleSide }));
+    const ribbonSilver = s.own(new THREE.MeshPhysicalMaterial({ color: 0x173f7c, roughness: 0.74, metalness: 0.02, sheen: 0.45, sheenColor: new THREE.Color(0x4a7fc8), side: THREE.DoubleSide }));
     const goldMedal = medal(s, gold, ribbon, -0.58, 1.48, 0.3);
     const silverMedal = medal(s, silver, ribbonSilver, 0.65, 1.21, -0.12);
     // Physical light sweeps over the raised relief; no emissive/neon effect.

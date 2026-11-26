@@ -10,10 +10,10 @@ const KEYS = [
   { p: 1, d: 0.8, e: 46, sx: 0, syPortrait: 0.04, ty: 1.5 },
 ];
 const TEX_W = 1024, TEX_H = 1572;
-const INK = '#1c140d', GOLD = '#8a6b34', RUBRIC = '#7a2e1e';
+const INK = '#1c140d', GOLD = '#9a6c1e', LAPIS = '#1f4877', GILT = '#e2bd62', RUBRIC = '#7a2e1e';
 
-function rosette(g, cx, cy, r, lw = 2) {
-  g.save(); g.translate(cx, cy); g.strokeStyle = GOLD; g.lineWidth = lw;
+function rosette(g, cx, cy, r, lw = 2, ink = GOLD) {
+  g.save(); g.translate(cx, cy); g.strokeStyle = ink; g.lineWidth = lw;
   for (const [n, k, rr] of [[8, 3, r], [8, 2, r * 0.62], [16, 7, r * 0.36]]) {
     g.beginPath();
     for (let i = 0; i <= n; i++) {
@@ -40,9 +40,9 @@ function wrap(g, text, max) {
 // bukan tulisan olok-olok). spineRight = halaman kiri, tulang di sebelah kanan lukisan.
 function paintPage(g, w, h, kind, copy, spineRight) {
   const rtl = copy.rtl, serif = rtl ? '"Amiri", "Noto Naskh Arabic", "Geeza Pro", serif' : '"Cormorant Garamond", Georgia, serif';
-  g.fillStyle = '#e9dcc0'; g.fillRect(0, 0, w, h);
+  g.fillStyle = '#f0e6d0'; g.fillRect(0, 0, w, h);
   const glow = g.createRadialGradient(w / 2, h / 2, 60, w / 2, h / 2, h * 0.72);
-  glow.addColorStop(0, 'rgba(255,250,236,.5)'); glow.addColorStop(1, 'rgba(150,118,70,.2)');
+  glow.addColorStop(0, 'rgba(255,250,236,.5)'); glow.addColorStop(1, 'rgba(150,118,70,.16)');
   g.fillStyle = glow; g.fillRect(0, 0, w, h);
   let seed = 4127;
   const random = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
@@ -50,10 +50,13 @@ function paintPage(g, w, h, kind, copy, spineRight) {
   const gutter = g.createLinearGradient(spineRight ? w : 0, 0, spineRight ? w - 150 : 150, 0);
   gutter.addColorStop(0, 'rgba(60,40,18,.34)'); gutter.addColorStop(1, 'rgba(60,40,18,0)');
   g.fillStyle = gutter; g.fillRect(0, 0, w, h);
-  g.strokeStyle = GOLD; g.lineWidth = 5; g.strokeRect(74, 74, w - 148, h - 148);
-  g.lineWidth = 1.6; g.strokeRect(90, 90, w - 180, h - 180); g.strokeRect(62, 62, w - 124, h - 124);
+  // Bingkai berhias: jalur lapis di antara dua garis emas, seperti halaman kitab bertazhib.
+  g.strokeStyle = LAPIS; g.lineWidth = 18; g.strokeRect(76, 76, w - 152, h - 152);
+  g.strokeStyle = GILT; g.lineWidth = 2; g.strokeRect(76, 76, w - 152, h - 152);
+  g.strokeStyle = GOLD; g.lineWidth = 4; g.strokeRect(90, 90, w - 180, h - 180); g.strokeRect(62, 62, w - 124, h - 124);
+  g.lineWidth = 1.6; g.strokeRect(102, 102, w - 204, h - 204);
   for (const [x, y] of [[90, 90], [w - 90, 90], [90, h - 90], [w - 90, h - 90]]) {
-    g.fillStyle = '#e9dcc0'; g.beginPath(); g.arc(x, y, 30, 0, Math.PI * 2); g.fill(); rosette(g, x, y, 22, 1.6);
+    g.fillStyle = LAPIS; g.beginPath(); g.arc(x, y, 32, 0, Math.PI * 2); g.fill(); g.strokeStyle = GOLD; g.lineWidth = 3; g.stroke(); rosette(g, x, y, 21, 2, GILT);
   }
   g.textAlign = 'center'; g.textBaseline = 'middle'; g.direction = rtl ? 'rtl' : 'ltr';
   const cx = w / 2, max = w - 290;
@@ -68,10 +71,10 @@ function paintPage(g, w, h, kind, copy, spineRight) {
     try { g.letterSpacing = '0px'; } catch { /* pilihan */ }
   };
   // Tiada tulisan pada mana-mana halaman (permintaan pemilik): hiasan geometri sahaja.
-  if (kind === 'body' || kind === 'fields') { rule(330); rosette(g, cx, h / 2, 130, 2.2); rosette(g, cx, h / 2, 50, 1.6); rule(h - 330); return; }
+  if (kind === 'body' || kind === 'fields') { rule(330); rosette(g, cx, h / 2, 130, 3.6); g.fillStyle = LAPIS; g.beginPath(); g.arc(cx, h / 2, 58, 0, Math.PI * 2); g.fill(); rosette(g, cx, h / 2, 50, 2.4, GILT); rule(h - 330); return; }
   if (kind === 'title') kind = 'ornament';
   if (kind === 'ornament') {
-    rosette(g, cx, h / 2, 250, 2.6); rosette(g, cx, h / 2, 96, 1.8);
+    rosette(g, cx, h / 2, 250, 4.2); g.fillStyle = LAPIS; g.beginPath(); g.arc(cx, h / 2, 111, 0, Math.PI * 2); g.fill(); rosette(g, cx, h / 2, 96, 3, GILT);
     rule(h / 2 - 400); rule(h / 2 + 400);
     return;
   }
@@ -151,7 +154,7 @@ export default async function create(ctx) {
       map.anisotropy = aniso;
       // Halaman kiri dicermin oleh geometri (scale.x = -1 atau muka belakang); tekstur dibalikkan semula.
       if (mirrored) { map.wrapS = THREE.RepeatWrapping; map.repeat.x = -1; map.offset.x = 1; }
-      faces[kind] = { map, mirrored, material: s.material({ map, color: 0xd9d2c4, roughness: 0.94, side: kind === 'body' ? THREE.FrontSide : kind === 'ornament' ? THREE.BackSide : THREE.DoubleSide }) };
+      faces[kind] = { map, mirrored, material: s.material({ map, color: 0xe4e4e2, roughness: 0.94, side: kind === 'body' ? THREE.FrontSide : kind === 'ornament' ? THREE.BackSide : THREE.DoubleSide }) };
     }
     const repaint = () => {
       const copy = readCopy(feature);

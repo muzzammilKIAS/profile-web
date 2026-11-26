@@ -34,5 +34,13 @@
 - **Pepijat dibaiki:** kad "Bidang" dan panel "Pengalaman" tidak pernah muncul kerana animasi masuknya menggunakan `clip-path` penuh, yang menjadikan luas elemen sifar bagi IntersectionObserver. Kini menggunakan topeng (`mask-size`).
 - Inventori kini 13 penerbitan (3 buku). QA automatik: 31/31 lulus.
 
+### Pusingan 5 (26 Nov 2026, permintaan pemilik: warna 3D lebih terang, jelas dan tajam)
+- **Gred warna dalam shader:** tone mapping ACES (yang melunturkan warna) diganti dengan Neutral, ditambah sedikit ketepuan dan lengkung-S kontras. Tiada pas tambahan, jadi tiada kos prestasi.
+- **Buku:** kulit sebenar kini memaparkan merah, biru dan emas asalnya (sedikit emisif, tidak dikaburkan kabus).
+- **Peranti:** skrin tidak lagi berkabus atau memantul; tangkapan aplikasi sebenar jelas dalam Pagi dan Malam.
+- **Jamiah:** kubah biru lebih kaya, tingkap bercahaya ambar pada waktu Malam, tumbuhan lebih hijau, langit Pagi lebih biru, bayang lebih tegas.
+- **Kitab di atas rehal:** bingkai lapis dan emas serta roset berisi lapis (masih tanpa teks). **Pingat:** emas dan reben lebih kaya.
+- Poster semua pentas dijana semula. QA automatik: 31/31 lulus (Chromium dan WebKit).
+
 ### Tidak diubah
 - Semua fakta akademik, terjemahan, potret, PDF dan pautan. Inventori disahkan sama dengan baseline: 7 pendidikan, 3 bidang, 2 anugerah, 4 kepujian, 10 sijil, 13 penerbitan (12 asal + buku ketiga), 9 aplikasi, 6 pengalaman, 7 kursus.
